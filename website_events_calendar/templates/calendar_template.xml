@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add Calendar View button on the events list page -->
+    <template id="events_calendar_nav_link" inherit_id="website_event.index" name="Events Calendar Nav">
+        <xpath expr="//div[hasclass('o_wevent_events_list')]" position="before">
+            <div class="d-flex justify-content-end mb-3">
+                <div class="btn-group" role="group">
+                    <a href="/events" class="btn btn-outline-primary">
+                        <i class="fa fa-list me-1"/>List View
+                    </a>
+                    <a href="/events/calendar" class="btn btn-primary">
+                        <i class="fa fa-calendar me-1"/>Calendar View
+                    </a>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Main Calendar Page -->
+    <template id="events_calendar_page" name="Events Calendar">
+        <t t-call="website.layout">
+            <div id="wrap" class="wec-calendar-wrap">
+
+                <!-- Page Header -->
+                <section class="wec-header">
+                    <div class="wec-eyebrow">Live Events Calendar</div>
+                    <div class="container">
+                        <div class="row align-items-center g-4">
+
+                            <!-- Left: Eyebrow + Title + Subtitle + Stats -->
+                            <div class="col-lg-8">
+                                <div class="wec-header-stats">
+                                    <div class="wec-stat">
+                                        <span class="wec-stat-num" t-esc="events_count"/>
+                                        <span class="wec-stat-label">Total Events</span>
+                                    </div>
+                                    <div class="wec-stat-divider"/>
+                                    <div class="wec-stat">
+                                        <span class="wec-stat-num" t-esc="len(upcoming_events)"/>
+                                        <span class="wec-stat-label">Upcoming</span>
+                                    </div>
+                                    <div class="wec-stat-divider"/>
+                                    <div class="wec-stat">
+                                        <span class="wec-stat-num" t-esc="len(event_types)"/>
+                                        <span class="wec-stat-label">Event Types</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right: List View button -->
+                            <div class="col-lg-4 d-flex justify-content-lg-end">
+                                <a href="/events" class="wec-btn wec-btn-ghost">
+                                    <i class="fa fa-list"/>&#160;List View
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Main Content -->
+                <section class="wec-main">
+                    <div class="container-fluid px-3 px-md-4">
+                        <div class="wec-layout">
+
+                            <!-- Sidebar -->
+                            <div class="wec-sidebar">
+
+                                <!-- 1. View Toggle -->
+                                <div class="wec-sidebar-card">
+                                    <div class="wec-sidebar-label">Calendar View</div>
+                                    <div class="wec-view-group">
+                                        <button class="wec-view-btn active" data-view="dayGridMonth">
+                                            <i class="fa fa-th-large"/>Month
+                                        </button>
+                                        <button class="wec-view-btn" data-view="timeGridWeek">
+                                            <i class="fa fa-columns"/>Week
+                                        </button>
+                                        <button class="wec-view-btn" data-view="listMonth">
+                                            <i class="fa fa-list-ul"/>Agenda
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- 2. Filter by Type -->
+                                <div class="wec-sidebar-card">
+                                    <div class="wec-sidebar-label">Filter by Type</div>
+                                    <div class="wec-filter-scroll">
+                                        <div class="wec-filter-list">
+                                            <a href="/events/calendar"
+                                               t-att-class="'wec-filter-btn active' if current_type == 0 else 'wec-filter-btn'">
+                                                <span class="wec-filter-dot" style="background:#4f46e5"/>
+                                                All Events
+                                            </a>
+                                            <t t-foreach="event_types" t-as="etype">
+                                                <a t-att-href="'/events/calendar?type=' + str(etype.id)"
+                                                   t-att-class="'wec-filter-btn active' if current_type == etype.id else 'wec-filter-btn'">
+                                                    <span class="wec-filter-dot"
+                                                          t-att-style="'background:' + type_colors.get(etype.id, '#6A4C93')"/>
+                                                    <t t-esc="etype.name"/>
+                                                </a>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 3. Upcoming Events -->
+                                <div class="wec-sidebar-card">
+                                    <div class="wec-sidebar-label">Upcoming Events</div>
+                                    <div class="wec-upcoming-scroll">
+                                        <div class="wec-upcoming-list">
+                                            <t t-if="not upcoming_events">
+                                                <p class="wec-no-events">No upcoming events</p>
+                                            </t>
+                                            <t t-foreach="upcoming_events" t-as="ev">
+                                                <a t-att-href="get_event_url(ev)" class="wec-upcoming-item">
+                                                    <div class="wec-upcoming-date-block">
+                                                        <span class="wec-upcoming-mon"
+                                                              t-esc="ev.date_begin.strftime('%b') if ev.date_begin else ''"/>
+                                                        <span class="wec-upcoming-day"
+                                                              t-esc="ev.date_begin.strftime('%d') if ev.date_begin else ''"/>
+                                                    </div>
+                                                    <div class="wec-upcoming-meta">
+                                                        <div class="wec-upcoming-name" t-esc="ev.name"/>
+                                                        <div class="wec-upcoming-where" t-if="ev.address_id">
+                                                            <i class="fa fa-map-marker me-1"/>
+                                                            <t t-esc="ev.address_id.city or ev.address_id.name"/>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Calendar -->
+                            <div class="wec-calendar-card">
+                                <div id="wec-calendar" t-att-data-events="events_json"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Hover Tooltip -->
+                <div id="wec-tooltip" class="wec-tooltip" style="display:none;">
+                    <div class="wec-tooltip-header">
+                        <div class="wec-tooltip-colorbar" id="wec-tooltip-colorbar"/>
+                        <div class="wec-tooltip-head-inner">
+                            <span id="wec-tooltip-title" class="wec-tooltip-title"/>
+                            <span id="wec-tooltip-type" class="wec-tooltip-badge"/>
+                        </div>
+                    </div>
+                    <div class="wec-tooltip-body">
+                        <div class="wec-tooltip-row">
+                            <i class="fa fa-calendar-o"/>
+                            <span id="wec-tooltip-date"/>
+                        </div>
+                        <div class="wec-tooltip-row" id="wec-tooltip-loc-row">
+                            <i class="fa fa-map-marker"/>
+                            <span id="wec-tooltip-loc"/>
+                        </div>
+                        <div class="wec-tooltip-row" id="wec-tooltip-seats-row">
+                            <i class="fa fa-ticket"/>
+                            <span id="wec-tooltip-seats"/>
+                        </div>
+                        <div class="wec-tooltip-hint">
+                            <i class="fa fa-mouse-pointer me-1"/>Click to view and register
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action to open the website events calendar page -->
+    <record id="action_website_events_calendar" model="ir.actions.act_url">
+        <field name="name">Events Calendar</field>
+        <field name="url">/events/calendar</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
