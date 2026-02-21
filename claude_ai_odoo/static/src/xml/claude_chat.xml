@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+<t t-name="claude_ai.ChatWidget">
+
+<div t-att-class="'cl-root ' + (state.dark ? 'cl-dark' : 'cl-light')">
+<div class="cl-layout">
+
+<!-- ═══════════════════════════════════════════
+     SIDEBAR
+═══════════════════════════════════════════ -->
+<aside class="cl-side">
+  <!-- Brand -->
+  <div class="cl-brand">
+    <div class="cl-logo">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="cl-brand-name">Claude AI</span>
+    <button class="cl-theme-btn" t-on-click="toggleTheme"
+            t-att-title="state.dark ? 'Light mode' : 'Dark mode'">
+      <t t-if="state.dark">☀</t><t t-else="">🌙</t>
+    </button>
+  </div>
+
+  <!-- Status -->
+  <div t-att-class="'cl-conn ' + (state.hasKey ? 'cl-conn-ok' : 'cl-conn-err')">
+    <span class="cl-conn-dot"/>
+    <span t-if="state.hasKey" t-esc="state.modelName || 'Connected'"/>
+    <span t-else="">API key missing</span>
+  </div>
+
+  <!-- Tokens -->
+  <div class="cl-stat-box">
+    <span class="cl-stat-label">Tokens used</span>
+    <span class="cl-stat-val" t-esc="state.totalTokens.toLocaleString()"/>
+  </div>
+
+  <div class="cl-divider"/>
+  <p class="cl-section-title">⚡ Quick Actions</p>
+
+  <!-- Quick prompts -->
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show today's sales orders with customer names and totals">📋 Today's Sales</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show a pie chart of total revenue grouped by customer for this month">🥧 Revenue Pie Chart</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="List all unpaid invoices with customer name, amount and due date">💰 Unpaid Invoices</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="Generate a professional Excel report with sales orders for this month">📊 Monthly Excel Report</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show a bar chart of top 10 products by revenue this year">📈 Top Products Chart</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show current stock levels for all products with quantity available">📦 Stock Levels</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="List all employees with their department and job title">👥 Employees</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show a line chart of monthly revenue for the past 6 months">📉 Revenue Trend</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="What Odoo modules are available to install? Show the most useful ones.">📦 Browse Modules</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show purchase orders pending approval with supplier names and amounts">🛒 Pending POs</button>
+
+  <div class="cl-divider"/>
+  <p class="cl-section-title">✚ Quick Create</p>
+  <button class="cl-q cl-q-create" t-on-click="onQuickCreate" data-type="customer">👤 New Customer</button>
+  <button class="cl-q cl-q-create" t-on-click="onQuickCreate" data-type="product">📦 New Product</button>
+  <button class="cl-q cl-q-create" t-on-click="onQuickCreate" data-type="invoice">🧾 New Invoice</button>
+  <button class="cl-q cl-q-create" t-on-click="onQuickCreate" data-type="employee">👥 New Employee</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="I want to edit a record. Which model and record would you like to update?">✎ Edit Record</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-q="What records can I create? Show me the available models and their fields.">📋 Browse Models</button>
+
+  <!-- Footer -->
+  <div class="cl-side-foot">
+    <button class="cl-foot-btn" t-on-click="clearChat" title="Clear chat history">🗑 Clear</button>
+    <button class="cl-foot-btn" t-on-click="goConfig" title="Open configuration">⚙ Config</button>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════════════
+     MAIN CHAT
+═══════════════════════════════════════════ -->
+<div class="cl-main">
+
+  <!-- Feed -->
+  <div class="cl-feed" t-ref="msgEl">
+    <t t-foreach="state.msgs" t-as="msg" t-key="msg.id">
+
+      <!-- USER MESSAGE -->
+      <div t-if="msg.role === 'user'" class="cl-row cl-user-row">
+        <div class="cl-user-meta">
+          <span class="cl-ts" t-esc="msg.time"/>
+          <t t-foreach="msg.attachNames or []" t-as="an" t-key="an">
+            <span class="cl-att-badge">📎 <t t-esc="an"/></span>
+          </t>
+        </div>
+        <div class="cl-bubble cl-user-bubble">
+          <t t-out="msg.userHtml"/>
+        </div>
+      </div>
+
+      <!-- ASSISTANT MESSAGE -->
+      <div t-if="msg.role === 'assistant'" class="cl-row cl-ai-row">
+        <div class="cl-av">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                  stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="cl-ai-body">
+
+          <!-- Typing -->
+          <div t-if="msg.status === 'typing'" class="cl-bubble cl-ai-bubble cl-typing-wrap">
+            <span class="cl-dot cl-dot-1"/><span class="cl-dot cl-dot-2"/><span class="cl-dot cl-dot-3"/>
+            <span class="cl-thinking">Thinking…</span>
+          </div>
+
+          <!-- Text -->
+          <div t-if="msg.status !== 'typing'" class="cl-bubble cl-ai-bubble">
+            <t t-out="msg.html"/>
+          </div>
+
+          <!-- Install result -->
+          <div t-if="msg.installResult" t-att-class="'cl-install-badge ' + (msg.installResult.success ? 'cl-install-ok' : 'cl-install-err')">
+            <t t-if="msg.installResult.success">✅</t><t t-else="">❌</t>
+            <span t-esc="msg.installResult.message"/>
+          </div>
+
+          <!-- Batch import result -->
+          <div t-if="msg.batchResult" class="cl-batch-result">
+            <t t-if="!msg.batchResult.error">
+              <span class="cl-batch-ok">✅ Imported <strong t-esc="msg.batchResult.created"/> records successfully</span>
+            </t>
+            <t t-else="">
+              <span class="cl-err-text">❌ Import failed: <t t-esc="msg.batchResult.error"/></span>
+            </t>
+          </div>
+
+          <!-- CRUD Form button -->
+          <div t-if="msg.crudForm" class="cl-crud-card">
+            <div class="cl-crud-card-icon">
+              <t t-if="msg.crudForm.action === 'create'">✚</t>
+              <t t-elif="msg.crudForm.action === 'write'">✎</t>
+              <t t-else="">🗑</t>
+            </div>
+            <div class="cl-crud-card-info">
+              <div class="cl-crud-card-title" t-esc="msg.crudForm.title || 'Record Operation'"/>
+              <div class="cl-crud-card-sub">Model: <t t-esc="msg.crudForm.model"/> · <t t-esc="(msg.crudForm.fields||[]).length"/> fields</div>
+            </div>
+            <button class="cl-crud-open-btn" t-on-click="onOpenCrudForm" t-att-data-msgid="msg.id">
+              <t t-if="msg.crudForm.action === 'create'">Open Form →</t>
+              <t t-elif="msg.crudForm.action === 'write'">Edit Record →</t>
+              <t t-else="">Delete Record →</t>
+            </button>
+          </div>
+
+          <!-- Query result panel -->
+          <div t-if="msg.opResultHtml and !msg.needsConfirm" class="cl-result-panel">
+            <div class="cl-result-hdr" t-on-click="onToggleResult" t-att-data-msgid="msg.id">
+              <span>📋 Query Results</span>
+              <span class="cl-result-toggle"><t t-if="msg.showResult">▲ Hide</t><t t-else="">▼ Show</t></span>
+            </div>
+            <div t-if="msg.showResult" class="cl-result-body">
+              <t t-out="msg.opResultHtml"/>
+            </div>
+          </div>
+
+          <!-- Excel download card -->
+          <div t-if="msg.excel" class="cl-excel-card" t-on-click="onDlExcel" t-att-data-msgid="msg.id">
+            <div class="cl-excel-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="3" fill="#1D6F42"/>
+                <path d="M8 8l3 4-3 4M12 8h4M12 12h3M12 16h4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="cl-excel-info">
+              <div class="cl-excel-title">Download Excel Report</div>
+              <div class="cl-excel-name" t-esc="msg.excelName"/>
+              <div class="cl-excel-hint">Click to download</div>
+            </div>
+            <div class="cl-excel-arrow">⬇</div>
+          </div>
+
+          <!-- Chart -->
+          <div t-if="msg.chartSpec" class="cl-chart-card">
+            <div class="cl-chart-header">
+              <span class="cl-chart-type" t-esc="(msg.chartSpec.type || 'bar').toUpperCase() + ' CHART'"/>
+              <span class="cl-chart-title-txt" t-esc="msg.chartSpec.title || ''"/>
+              <button class="cl-chart-expand-btn"
+                      t-on-click="onExpandChart"
+                      t-att-data-msgid="msg.id"
+                      title="Open fullscreen">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Fullscreen
+              </button>
+            </div>
+            <div t-att-id="msg.chartId" class="cl-chart-container"/>
+          </div>
+
+          <!-- Write op confirm -->
+          <div t-if="msg.op and msg.needsConfirm and !msg.confirmed and !msg.cancelled" class="cl-confirm">
+            <div class="cl-confirm-hdr">
+              <span class="cl-confirm-icon">⚠️</span>
+              <span>Review Operation Before Executing</span>
+            </div>
+            <div class="cl-confirm-model">
+              Model: <strong t-esc="msg.op.model"/> · Method: <strong t-esc="msg.op.method"/>
+            </div>
+            <pre class="cl-confirm-code" t-esc="JSON.stringify(msg.op, null, 2)"/>
+            <div class="cl-confirm-btns">
+              <button class="cl-btn-exec" t-on-click="onConfirmOp" t-att-data-msgid="msg.id">✓ Execute</button>
+              <button class="cl-btn-skip" t-on-click="onCancelOp"  t-att-data-msgid="msg.id">✕ Cancel</button>
+            </div>
+          </div>
+          <div t-if="msg.confirmed" class="cl-op-done">✅ Operation executed</div>
+          <div t-if="msg.cancelled" class="cl-op-done" style="color:#f87171;">✕ Operation cancelled</div>
+
+          <!-- Executed op result -->
+          <div t-if="msg.opResultHtml and msg.needsConfirm and msg.confirmed" class="cl-result-panel">
+            <div class="cl-result-hdr" t-on-click="onToggleResult" t-att-data-msgid="msg.id">
+              <span>📋 Result</span>
+              <span class="cl-result-toggle"><t t-if="msg.showResult">▲</t><t t-else="">▼</t></span>
+            </div>
+            <div t-if="msg.showResult" class="cl-result-body"><t t-out="msg.opResultHtml"/></div>
+          </div>
+
+          <span class="cl-ts" t-esc="msg.time"/>
+        </div>
+      </div>
+
+    </t>
+  </div><!-- /feed -->
+
+  <!-- Attachment preview strip -->
+  <div t-if="state.attachments.length" class="cl-att-strip">
+    <t t-foreach="state.attachments" t-as="att" t-key="att_index">
+      <div class="cl-att-chip">
+        <span class="cl-att-icon">📎</span>
+        <span class="cl-att-name" t-esc="att.name"/>
+        <button class="cl-att-rm" t-on-click="removeAttachment" t-att-data-idx="att_index">✕</button>
+      </div>
+    </t>
+  </div>
+
+  <!-- Input row -->
+  <div class="cl-input-row">
+    <button class="cl-attach-btn" t-on-click="onAttachClick" title="Attach file (CSV, Excel)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <!-- Hidden real file input -->
+    <input type="file" t-ref="fileInput" class="cl-file-hidden"
+           accept=".csv,.xlsx,.xls,.txt"
+           t-on-change="onFileChange" multiple="multiple"/>
+    <textarea
+      class="cl-input"
+      t-model="state.input"
+      t-on-keydown="onKeyDown"
+      placeholder="Ask anything about your Odoo data… attach CSV/Excel to import • Enter to send"
+      rows="2"
+      t-att-disabled="state.loading"/>
+    <button class="cl-send" t-on-click="send" t-att-disabled="state.loading or (!state.input.trim() and !state.attachments.length)">
+      <t t-if="state.loading"><span class="cl-spinner"/></t>
+      <t t-else="">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"
+                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </t>
+    </button>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /layout -->
+</div><!-- /root -->
+</t>
+</templates>

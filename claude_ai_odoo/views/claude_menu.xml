@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_claude_root" name="Claude AI" sequence="100"
+              groups="claude_ai_odoo.group_claude_user"/>
+    <menuitem id="menu_claude_chat" name="AI Assistant"
+              parent="menu_claude_root" action="action_claude_chat"
+              sequence="10" groups="claude_ai_odoo.group_claude_user"/>
+    <menuitem id="menu_claude_sessions" name="Sessions"
+              parent="menu_claude_root" action="action_claude_sessions"
+              sequence="20" groups="claude_ai_odoo.group_claude_admin"/>
+    <menuitem id="menu_claude_config" name="Configuration"
+              parent="menu_claude_root" action="action_claude_config"
+              sequence="90" groups="claude_ai_odoo.group_claude_admin"/>
+</odoo>

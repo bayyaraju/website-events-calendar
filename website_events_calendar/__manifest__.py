@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Website Events Calendar View',
-    'version': '19.0.2.0.0',
+    'version': '19.0.2.0.1',
     'category': 'Website/Events',
     'summary': 'Interactive calendar view for published events on website',
     'description': """

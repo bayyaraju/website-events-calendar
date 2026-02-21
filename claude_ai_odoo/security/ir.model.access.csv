@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_claude_config_admin,claude.config admin,model_claude_config,claude_ai_odoo.group_claude_admin,1,1,1,1
+access_claude_config_user,claude.config user,model_claude_config,claude_ai_odoo.group_claude_user,1,0,0,0
+access_claude_session_user,claude.session user,model_claude_session,claude_ai_odoo.group_claude_user,1,1,1,1
+access_claude_message_user,claude.message user,model_claude_message,claude_ai_odoo.group_claude_user,1,1,1,1

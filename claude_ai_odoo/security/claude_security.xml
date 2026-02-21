@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_claude_user" model="res.groups">
+            <field name="name">Claude AI / User</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_claude_admin" model="res.groups">
+            <field name="name">Claude AI / Administrator</field>
+            <field name="implied_ids" eval="[(4, ref('group_claude_user'))]"/>
+        </record>
+<!--        <record id="base.user_admin" model="res.users">-->
+<!--            <field name="groups_id" eval="[(4, ref('claude_ai_odoo.group_claude_admin'))]"/>-->
+<!--        </record>-->
+    </data>
+</odoo>
