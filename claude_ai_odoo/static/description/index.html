@@ -1,385 +1,365 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="https://schema.org/SoftwareApplication">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Claude AI Assistant — The Most Powerful AI Integration for Odoo</title>
+
+<!-- ═══ PRIMARY SEO ═══ -->
+<title>Claude AI Assistant for Odoo 19 — AI Chat, CRUD, Live Charts &amp; Excel Reports | Natural Language Odoo Control</title>
+<meta name="description" content="The most powerful AI chat assistant for Odoo 19. Query, create, update and delete records, generate live charts and Excel reports — all through natural conversation with Claude AI by Anthropic. No SQL. No menus. No forms."/>
+<meta name="keywords" content="Claude AI Odoo, Odoo AI assistant, Odoo AI chat, Odoo chatbot, Odoo natural language interface, Anthropic Claude Odoo module, Odoo 19 AI integration, Odoo GPT, Odoo LLM, AI for Odoo ERP, Odoo database assistant, Odoo CRUD AI, Odoo chart generator AI, Odoo Excel report AI, Odoo conversational AI, Odoo NLP, Odoo AI module, Claude Anthropic Odoo 19, Odoo query assistant, Odoo data analysis AI, Odoo AI reports, Odoo AI automation, talk to your Odoo database, natural language Odoo queries"/>
+<meta name="author" content="raj.odoo2026@gmail.com"/>
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large"/>
+<link rel="canonical" href="https://apps.odoo.com/apps/modules/19.0/claude_ai_odoo/"/>
+
+<!-- ═══ OPEN GRAPH ═══ -->
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Claude AI Assistant for Odoo 19 — Query, CRUD, Charts &amp; Excel via Natural Language"/>
+<meta property="og:description" content="Direct Claude AI integration inside Odoo 19. Ask questions, create/update/delete records, generate charts and Excel reports — all through plain English conversation. The only Odoo module with full Claude AI CRUD control."/>
+<meta property="og:image" content="sale-order-quotation.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Claude AI Assistant querying Odoo sale orders in real-time through natural language chat"/>
+
+<!-- ═══ TWITTER CARD ═══ -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Claude AI Assistant for Odoo 19 — Natural Language Database Control"/>
+<meta name="twitter:description" content="Query, create, update, delete, chart, and export any Odoo data by chatting with Claude AI. The most powerful AI integration for Odoo 19."/>
+<meta name="twitter:image" content="sale-order-quotation.png"/>
+
+<!-- ═══ SCHEMA.ORG STRUCTURED DATA ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Claude AI Assistant for Odoo 19",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Odoo 19",
+  "description": "The most powerful AI chat assistant for Odoo 19. Query, create, update and delete records, generate live charts and Excel reports through natural conversation with Claude AI.",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "author": {"@type": "Person", "email": "raj.odoo2026@gmail.com"},
+  "keywords": "Claude AI, Odoo AI, Odoo chatbot, Odoo natural language, Anthropic Odoo, Odoo CRUD AI",
+  "featureList": "Natural language queries, CRUD operations, Live charts, Excel reports, Module installation, CSV import",
+  "softwareVersion": "3.0.0",
+  "applicationSubCategory": "Odoo ERP Module",
+  "screenshot": "sale-order-quotation.png"
+}
+</script>
+
+<!-- ═══ FONTS ═══ -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-
-:root {
-  --ink:       #0a0c14;
-  --surface:   #10131f;
-  --card:      #141828;
-  --border:    #1e2847;
-  --indigo:    #6366f1;
-  --indigo-lt: #818cf8;
-  --cyan:      #22d3ee;
-  --emerald:   #34d399;
-  --amber:     #fbbf24;
-  --rose:      #f472b6;
-  --text:      #e2e8f0;
-  --muted:     #64748b;
-  --subtle:    #94a3b8;
+:root{
+  --ink:#0a0c14;--surface:#10131f;--card:#141828;--card2:#0e1120;
+  --border:#1e2847;--border2:#263055;
+  --indigo:#6366f1;--indigo-lt:#818cf8;--indigo-dk:#4f46e5;
+  --cyan:#22d3ee;--emerald:#34d399;--amber:#fbbf24;--rose:#f472b6;--violet:#a78bfa;
+  --text:#e2e8f0;--muted:#64748b;--subtle:#94a3b8;
 }
-
 html{scroll-behavior:smooth;}
-body {
-  background:var(--ink); color:var(--text);
-  font-family:'DM Sans',sans-serif; font-size:16px;
-  line-height:1.65; overflow-x:hidden;
+body{
+  background:var(--ink);color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 55% at 20% 0%,#6366f113 0%,transparent 55%),
+    radial-gradient(ellipse 60% 50% at 80% 90%,#22d3ee0c 0%,transparent 50%),
+    radial-gradient(ellipse 50% 70% at 50% 50%,#a78bfa07 0%,transparent 60%);
 }
 
-/* ─── HERO ─── */
-.hero {
-  position:relative; padding:80px 40px 100px;
-  text-align:center; overflow:hidden;
-  background: radial-gradient(ellipse 120% 80% at 50% -10%,
-    #2d1b6940 0%, transparent 70%),
-    radial-gradient(ellipse 60% 60% at 80% 60%,
-    #0e7490 15 0%, transparent 60%),
-    var(--ink);
+/* ── LAYOUT ── */
+.wrap{max-width:1200px;margin:0 auto;padding:0 40px;position:relative;z-index:1;}
+section{padding:88px 40px;max-width:1200px;margin:0 auto;position:relative;z-index:1;}
+.full-bleed{padding:88px 40px;position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);}
+
+/* ── TYPOGRAPHY ── */
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--indigo-lt);margin-bottom:14px;display:block;
+}
+.sec-title{
+  font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,46px);
+  font-weight:800;letter-spacing:-.025em;line-height:1.1;margin-bottom:16px;
+}
+.sec-sub{font-size:17px;color:var(--subtle);max-width:600px;font-weight:300;margin-bottom:52px;line-height:1.75;}
+.grad{
+  background:linear-gradient(135deg,#a78bfa 0%,#60a5fa 45%,#34d399 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 
-/* Animated mesh grid */
-.hero::before {
-  content:''; position:absolute; inset:0;
+/* ── BUTTONS ── */
+.btn-primary{
+  background:linear-gradient(135deg,#6366f1,#4f46e5);border:none;color:#fff;border-radius:12px;
+  padding:14px 32px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 8px 32px #6366f140;transition:all .22s;font-family:'DM Sans',sans-serif;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 44px #6366f165;}
+.btn-outline{
+  background:transparent;border:1.5px solid var(--border2);color:var(--text);border-radius:12px;
+  padding:14px 32px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;transition:all .22s;font-family:'DM Sans',sans-serif;
+}
+.btn-outline:hover{border-color:var(--indigo);color:var(--indigo-lt);}
+
+/* ══ HERO ══ */
+.hero{
+  position:relative;padding:88px 40px 108px;
+  text-align:center;overflow:hidden;z-index:1;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(99,102,241,.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99,102,241,.07) 1px, transparent 1px);
+    linear-gradient(rgba(99,102,241,.065) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(99,102,241,.065) 1px,transparent 1px);
   background-size:40px 40px;
-  animation: gridDrift 20s linear infinite;
+  animation:gridDrift 22s linear infinite;
 }
-@keyframes gridDrift {
-  0%   {background-position:0 0,0 0;}
-  100% {background-position:40px 40px,40px 40px;}
+@keyframes gridDrift{0%{background-position:0 0,0 0;}100%{background-position:40px 40px,40px 40px;}}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#6366f115;border:1px solid #6366f138;
+  border-radius:50px;padding:6px 18px 6px 10px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--indigo-lt);
+  font-weight:600;letter-spacing:.06em;margin-bottom:28px;position:relative;z-index:1;
+}
+.badge-dot{width:7px;height:7px;background:var(--indigo);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+
+.hero h1{
+  font-family:'Syne',sans-serif;font-size:clamp(40px,6.5vw,76px);
+  font-weight:800;line-height:1.05;letter-spacing:-.034em;
+  position:relative;z-index:1;max-width:960px;margin:0 auto 22px;
+}
+.hero .lead{
+  font-size:clamp(16px,1.9vw,20px);color:var(--subtle);font-weight:300;
+  max-width:680px;margin:0 auto 48px;position:relative;z-index:1;line-height:1.75;
+}
+.btn-row{
+  display:flex;justify-content:center;gap:14px;flex-wrap:wrap;
+  position:relative;z-index:1;margin-bottom:64px;
 }
 
-.hero-badge {
-  display:inline-flex; align-items:center; gap:8px;
-  background:#6366f118; border:1px solid #6366f140;
-  border-radius:50px; padding:6px 16px; font-size:13px;
-  color:var(--indigo-lt); font-weight:600; letter-spacing:.05em;
-  margin-bottom:28px; position:relative; z-index:1;
+/* Stats */
+.stats-bar{
+  display:flex;justify-content:center;gap:52px;flex-wrap:wrap;
+  position:relative;z-index:1;
 }
-.hero-badge .dot {
-  width:7px; height:7px; background:var(--indigo);
-  border-radius:50%; animation:pulse 2s infinite;
+.stat{text-align:center;}
+.stat-num{
+  font-family:'Syne',sans-serif;font-size:34px;font-weight:800;line-height:1;
+  background:linear-gradient(135deg,#818cf8,#22d3ee);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-@keyframes pulse {
-  0%,100%{opacity:1;transform:scale(1);}
-  50%{opacity:.5;transform:scale(.8);}
+.stat-lbl{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:5px;font-family:'JetBrains Mono',monospace;}
+
+/* ══ SHOWCASE ══ */
+.showcase{
+  background:var(--surface);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:88px 40px;position:relative;z-index:1;
+}
+.showcase-inner{max-width:1200px;margin:0 auto;}
+
+.shot-hero{
+  border-radius:18px;overflow:hidden;border:1px solid var(--border);
+  box-shadow:0 36px 90px #00000085,0 0 0 1px #6366f112;
+  margin-bottom:8px;transition:box-shadow .3s;
+}
+.shot-hero:hover{box-shadow:0 44px 110px #00000090,0 0 0 1px #6366f128;}
+.shot-hero img{width:100%;display:block;}
+.shot-caption{
+  display:flex;align-items:center;gap:10px;padding:13px 20px;
+  background:var(--card);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 18px 18px;margin-bottom:28px;
+  font-size:13px;color:var(--subtle);font-family:'JetBrains Mono',monospace;
+}
+.pip{width:8px;height:8px;border-radius:50%;background:var(--indigo-lt);flex-shrink:0;}
+
+.shot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+.shot-thumb{
+  border-radius:12px;overflow:hidden;border:1px solid var(--border);
+  box-shadow:0 8px 32px #00000055;transition:all .25s;
+}
+.shot-thumb:hover{transform:translateY(-4px);box-shadow:0 18px 50px #00000070;border-color:#6366f148;}
+.shot-thumb img{width:100%;display:block;}
+.shot-lbl{font-size:12px;color:var(--muted);text-align:center;margin-top:8px;font-family:'JetBrains Mono',monospace;font-weight:500;}
+
+/* ══ FEATURES ══ */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;}
+.feat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:18px;
+  padding:30px 28px;position:relative;overflow:hidden;transition:all .22s;
+}
+.feat-card::after{
+  content:'';position:absolute;inset:0;border-radius:18px;
+  background:linear-gradient(135deg,#6366f10a,transparent);
+  opacity:0;transition:opacity .22s;
+}
+.feat-card:hover{border-color:#6366f148;transform:translateY(-3px);box-shadow:0 20px 56px #00000045;}
+.feat-card:hover::after{opacity:1;}
+.feat-icon{
+  width:50px;height:50px;border-radius:13px;background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px;
+}
+.feat-card h3{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:10px;letter-spacing:-.015em;}
+.feat-card p{font-size:14px;color:var(--subtle);line-height:1.65;}
+.feat-tag{
+  display:inline-block;margin-top:16px;background:#6366f112;border:1px solid #6366f128;
+  color:var(--indigo-lt);border-radius:6px;padding:3px 10px;
+  font-size:10px;font-weight:600;letter-spacing:.06em;font-family:'JetBrains Mono',monospace;
 }
 
-.hero h1 {
-  font-family:'Syne',sans-serif; font-size:clamp(36px,6vw,72px);
-  font-weight:800; line-height:1.08; letter-spacing:-.03em;
-  position:relative; z-index:1; max-width:900px; margin:0 auto 20px;
+/* ══ CRUD SECTION ══ */
+.crud-section{
+  background:linear-gradient(160deg,#111630 0%,#0a0d1c 100%);
+  border-top:1px solid #4f46e52a;border-bottom:1px solid #4f46e52a;
+  padding:88px 40px;position:relative;z-index:1;
 }
-.grad {
-  background:linear-gradient(135deg, #a78bfa 0%, #60a5fa 40%, #34d399 100%);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
+.crud-inner{max-width:1200px;margin:0 auto;}
+.crud-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px;}
+.crud-card{
+  background:#090c1a;border:1px solid var(--border);border-radius:16px;
+  padding:28px 22px;text-align:center;transition:all .22s;
 }
-.hero p.lead {
-  font-size:clamp(16px,2vw,20px); color:var(--subtle);
-  max-width:680px; margin:0 auto 44px; position:relative; z-index:1; font-weight:300;
+.crud-card:hover{border-color:#6366f148;transform:translateY(-4px);box-shadow:0 20px 56px #00000060;}
+.crud-icon{font-size:34px;margin-bottom:14px;line-height:1;}
+.crud-card h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px;}
+.crud-card p{font-size:13px;color:var(--muted);line-height:1.6;}
+.crud-badge{
+  display:inline-block;margin-top:14px;border-radius:6px;padding:3px 10px;
+  font-size:10px;font-weight:700;letter-spacing:.06em;font-family:'JetBrains Mono',monospace;
+}
+.bg{background:#34d39918;color:var(--emerald);border:1px solid #34d39930;}
+.bb{background:#22d3ee18;color:var(--cyan);border:1px solid #22d3ee30;}
+.ba{background:#fbbf2418;color:var(--amber);border:1px solid #fbbf2430;}
+.br{background:#f472b618;color:var(--rose);border:1px solid #f472b630;}
+
+/* Code demo */
+.code-demo{
+  background:#07090f;border:1px solid var(--border);border-radius:16px;
+  padding:28px 28px 22px;font-family:'JetBrains Mono',monospace;font-size:13px;
+  line-height:1.75;margin-top:36px;position:relative;overflow-x:auto;
+}
+.code-demo::before{
+  content:'NATURAL LANGUAGE  →  ODOO DATABASE';
+  position:absolute;top:-11px;left:20px;
+  background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;
+  border-radius:6px;padding:2px 12px;font-size:10px;font-weight:700;letter-spacing:.1em;
+}
+.cd-cmt{color:#3d4f6b;}.cd-usr{color:#94a3b8;}.cd-arr{color:#6366f1;margin:0 8px;font-weight:700;}
+.cd-str{color:#fbbf24;}.cd-mod{color:#34d399;}.cd-met{color:#f472b6;}.cd-val{color:#22d3ee;}
+.code-line{display:block;padding:2px 0;}
+.code-sep{display:block;height:1px;background:#1e2847;margin:10px 0;}
+
+/* ══ DEEP DIVE ROWS ══ */
+.dive-row{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-bottom:88px;}
+.dive-row.flip{direction:rtl;}
+.dive-row.flip>*{direction:ltr;}
+.dive-img{
+  border-radius:16px;overflow:hidden;border:1px solid var(--border);
+  box-shadow:0 24px 64px #00000060;transition:box-shadow .3s;
+}
+.dive-img:hover{box-shadow:0 32px 80px #00000070;}
+.dive-img img{width:100%;display:block;}
+.dive-text h2{font-family:'Syne',sans-serif;font-size:clamp(24px,3vw,38px);font-weight:800;letter-spacing:-.025em;line-height:1.15;margin-bottom:16px;}
+.dive-text p{font-size:15px;color:var(--subtle);line-height:1.78;margin-bottom:20px;}
+.check-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.check-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--subtle);}
+.check-list li::before{
+  content:'✓';color:var(--emerald);font-weight:700;font-size:11px;
+  background:#34d39918;border-radius:50%;width:20px;height:20px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;
 }
 
-.btn-row {
-  display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
-  position:relative; z-index:1; margin-bottom:60px;
+/* ══ USE CASES ══ */
+.use-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.use-card{
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:24px 22px;transition:all .2s;
 }
-.btn-primary {
-  background:linear-gradient(135deg,#6366f1,#4f46e5);
-  border:none; color:#fff; border-radius:12px;
-  padding:14px 32px; font-size:15px; font-weight:600;
-  cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
-  box-shadow:0 8px 32px #6366f140; transition:all .2s;
-}
-.btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px #6366f160; }
-.btn-outline {
-  background:transparent; border:1.5px solid var(--border);
-  color:var(--text); border-radius:12px;
-  padding:14px 32px; font-size:15px; font-weight:600;
-  cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
-  transition:all .2s;
-}
-.btn-outline:hover { border-color:#6366f1; color:#a5b4fc; }
+.use-card:hover{border-color:#6366f130;transform:translateY(-2px);}
+.use-icon{font-size:28px;margin-bottom:12px;}
+.use-card h4{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em;}
+.use-card p{font-size:13px;color:var(--muted);line-height:1.6;}
+.use-tag{display:block;font-size:10px;color:var(--indigo-lt);font-weight:600;margin-top:10px;font-family:'JetBrains Mono',monospace;}
 
-/* Stats bar */
-.stats-bar {
-  display:flex; justify-content:center; gap:48px; flex-wrap:wrap;
-  padding:0 40px; position:relative; z-index:1;
+/* ══ CALLOUT ══ */
+.callout{
+  background:linear-gradient(135deg,#6366f112,#22d3ee08);
+  border:1px solid #6366f128;border-radius:22px;
+  padding:52px;text-align:center;max-width:820px;margin:0 auto;
 }
-.stat { text-align:center; }
-.stat-num {
-  font-family:'Syne',sans-serif; font-size:32px; font-weight:800;
-  background:linear-gradient(135deg,#6366f1,#22d3ee); -webkit-background-clip:text;
-  background-clip:text; color:transparent; line-height:1;
+.callout blockquote{
+  font-family:'Syne',sans-serif;font-size:clamp(20px,2.8vw,27px);
+  font-weight:700;line-height:1.45;margin-bottom:18px;font-style:italic;
 }
-.stat-lbl { font-size:12px; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; margin-top:4px; }
+.callout cite{font-size:14px;color:var(--muted);}
 
-/* ─── SECTION WRAPPER ─── */
-section { padding:80px 40px; max-width:1200px; margin:0 auto; }
-section.wide { max-width:100%; padding:80px 0; }
+/* ══ COMPAT ══ */
+.chip-wrap{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px;}
+.chip{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:9px 16px;font-size:13px;font-weight:500;color:var(--subtle);
+  transition:all .18s;
+}
+.chip:hover{border-color:#6366f148;color:var(--text);}
+.chip.hi{border-color:#6366f170;color:var(--indigo-lt);background:#6366f10a;}
 
-.section-eyebrow {
-  font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
-  color:var(--indigo-lt); margin-bottom:12px;
+/* ══ REQUIREMENTS ══ */
+.req-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:36px;}
+.req-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 26px;}
+.req-card h4{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+  color:var(--indigo-lt);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;
 }
-.section-title {
-  font-family:'Syne',sans-serif; font-size:clamp(28px,4vw,44px);
-  font-weight:800; letter-spacing:-.02em; margin-bottom:16px; line-height:1.15;
-}
-.section-sub {
-  font-size:17px; color:var(--subtle); max-width:600px; font-weight:300; margin-bottom:48px;
-}
+.req-card ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.req-card li{font-size:13px;color:var(--subtle);display:flex;align-items:flex-start;gap:8px;}
+.req-card li::before{content:'·';color:var(--indigo-lt);font-size:20px;line-height:.9;flex-shrink:0;}
+code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--indigo-lt);}
 
-/* ─── SCREENSHOT SHOWCASE ─── */
-.showcase {
-  background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);
-  padding:80px 40px;
+/* ══ CTA ══ */
+.cta-block{
+  text-align:center;padding:108px 40px;
+  background:radial-gradient(ellipse 80% 55% at 50% 100%,#2d1b6932,transparent),var(--ink);
+  position:relative;z-index:1;
 }
-.showcase-inner { max-width:1200px; margin:0 auto; }
+.cta-block h2{font-family:'Syne',sans-serif;font-size:clamp(34px,5.5vw,60px);font-weight:800;letter-spacing:-.03em;margin-bottom:20px;}
+.cta-block .sub{font-size:18px;color:var(--muted);max-width:540px;margin:0 auto 44px;font-weight:300;line-height:1.7;}
+.contact-address{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--card);border:1.5px solid var(--border2);border-radius:50px;
+  padding:11px 24px;margin-top:28px;
+  font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--subtle);
+  text-decoration:none;transition:all .2s;
+}
+.contact-address:hover{border-color:var(--indigo);color:var(--indigo-lt);box-shadow:0 0 20px #6366f130;}
+.contact-label{font-size:12px;color:var(--muted);margin-top:14px;display:block;font-family:'JetBrains Mono',monospace;}
 
-.screenshot-hero {
-  border-radius:16px; overflow:hidden;
-  border:1px solid var(--border);
-  box-shadow:0 32px 80px #00000080, 0 0 0 1px #6366f115;
-  margin-bottom:24px;
-}
-.screenshot-hero img { width:100%; display:block; }
-
-.screenshot-grid {
-  display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
-}
-.screenshot-thumb {
-  border-radius:12px; overflow:hidden; border:1px solid var(--border);
-  box-shadow:0 8px 32px #00000050; transition:all .25s; cursor:pointer;
-}
-.screenshot-thumb:hover { transform:translateY(-4px); box-shadow:0 16px 48px #00000070; border-color:#6366f150; }
-.screenshot-thumb img { width:100%; display:block; }
-.screenshot-caption {
-  font-size:12px; color:var(--muted); text-align:center; margin-top:8px; font-weight:500;
-}
-
-/* ─── FEATURE CARDS ─── */
-.features-grid {
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:20px;
-}
-.feat-card {
-  background:var(--card); border:1px solid var(--border); border-radius:16px;
-  padding:28px; transition:all .2s; position:relative; overflow:hidden;
-}
-.feat-card::before {
-  content:''; position:absolute; inset:0; border-radius:16px;
-  background:linear-gradient(135deg,#6366f108,transparent);
-  opacity:0; transition:opacity .2s;
-}
-.feat-card:hover { border-color:#6366f150; transform:translateY(-2px); }
-.feat-card:hover::before { opacity:1; }
-
-.feat-icon {
-  width:48px; height:48px; border-radius:12px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:22px; margin-bottom:18px;
-}
-.feat-card h3 {
-  font-family:'Syne',sans-serif; font-size:18px; font-weight:700;
-  margin-bottom:10px; letter-spacing:-.01em;
-}
-.feat-card p { font-size:14px; color:var(--subtle); line-height:1.6; }
-.feat-tag {
-  display:inline-block; margin-top:14px;
-  background:#6366f115; border:1px solid #6366f130;
-  color:var(--indigo-lt); border-radius:6px;
-  padding:3px 10px; font-size:11px; font-weight:600; letter-spacing:.05em;
-}
-
-/* ─── CAPABILITY DEEP DIVE ─── */
-.capability-row {
-  display:grid; grid-template-columns:1fr 1fr; gap:60px;
-  align-items:center; margin-bottom:80px;
-}
-.capability-row.reverse { direction:rtl; }
-.capability-row.reverse > * { direction:ltr; }
-
-.capability-img {
-  border-radius:14px; overflow:hidden;
-  border:1px solid var(--border);
-  box-shadow:0 20px 60px #00000060;
-}
-.capability-img img { width:100%; display:block; }
-
-.capability-text h2 {
-  font-family:'Syne',sans-serif; font-size:clamp(24px,3vw,36px);
-  font-weight:800; margin-bottom:16px; letter-spacing:-.02em; line-height:1.2;
-}
-.capability-text p { color:var(--subtle); font-size:15px; margin-bottom:20px; line-height:1.7; }
-.check-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
-.check-list li {
-  display:flex; align-items:flex-start; gap:10px; font-size:14px; color:var(--subtle);
-}
-.check-list li::before {
-  content:'✓'; color:var(--emerald); font-weight:700; font-size:13px;
-  background:#34d39918; border-radius:50%; width:20px; height:20px;
-  display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;
-}
-
-/* ─── CRUD HIGHLIGHT SECTION ─── */
-.crud-highlight {
-  background:linear-gradient(135deg,#1e1b4b 0%,#12121f 100%);
-  border-top:1px solid #4f46e530; border-bottom:1px solid #4f46e530;
-  padding:80px 40px;
-}
-.crud-inner { max-width:1200px; margin:0 auto; }
-.crud-operations {
-  display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:48px;
-}
-.crud-op {
-  background:#0d1020; border:1px solid var(--border); border-radius:14px;
-  padding:24px 20px; text-align:center; transition:all .2s;
-}
-.crud-op:hover { border-color:#6366f150; transform:translateY(-3px); }
-.crud-op-icon { font-size:32px; margin-bottom:12px; line-height:1; }
-.crud-op h3 {
-  font-family:'Syne',sans-serif; font-size:16px; font-weight:700;
-  margin-bottom:8px; color:var(--text);
-}
-.crud-op p { font-size:13px; color:var(--muted); line-height:1.5; }
-.crud-op-badge {
-  display:inline-block; margin-top:12px;
-  border-radius:6px; padding:3px 10px; font-size:11px; font-weight:700;
-  letter-spacing:.05em;
-}
-.badge-green  { background:#34d39918; color:var(--emerald); border:1px solid #34d39930; }
-.badge-blue   { background:#22d3ee18; color:var(--cyan);    border:1px solid #22d3ee30; }
-.badge-amber  { background:#fbbf2418; color:var(--amber);   border:1px solid #fbbf2430; }
-.badge-rose   { background:#f472b618; color:var(--rose);    border:1px solid #f472b630; }
-
-/* ─── CODE SAMPLE ─── */
-.code-demo {
-  background:#0d1117; border:1px solid var(--border); border-radius:14px;
-  padding:24px; font-family:'Courier New',monospace; font-size:13px; line-height:1.6;
-  margin-top:32px; position:relative; overflow-x:auto;
-}
-.code-demo::before {
-  content:'NATURAL LANGUAGE → ODOO ACTION';
-  position:absolute; top:-10px; left:16px;
-  background:#6366f1; color:#fff;
-  border-radius:6px; padding:2px 10px; font-family:'DM Sans',sans-serif;
-  font-size:10px; font-weight:700; letter-spacing:.08em;
-}
-.code-prompt { color:#94a3b8; }
-.code-arrow  { color:#6366f1; margin:0 8px; }
-.code-model  { color:#34d399; }
-.code-method { color:#f472b6; }
-.code-val    { color:#fbbf24; }
-.code-line   { display:block; padding:3px 0; }
-
-/* ─── USE CASES ─── */
-.use-cases {
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;
-}
-.use-case {
-  background:var(--card); border:1px solid var(--border); border-radius:14px; padding:22px;
-  transition:all .2s;
-}
-.use-case:hover { border-color:#6366f130; }
-.use-case-icon { font-size:28px; margin-bottom:12px; }
-.use-case h4 {
-  font-family:'Syne',sans-serif; font-size:15px; font-weight:700; margin-bottom:8px;
-}
-.use-case p { font-size:13px; color:var(--muted); line-height:1.5; }
-.use-case-tag { font-size:11px; color:var(--indigo-lt); font-weight:600; margin-top:10px; }
-
-/* ─── CHARTS / EXCEL SECTION ─── */
-.visual-row {
-  display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:32px;
-}
-.visual-card {
-  border-radius:14px; overflow:hidden; border:1px solid var(--border);
-  box-shadow:0 12px 40px #00000050;
-}
-.visual-card img { width:100%; display:block; }
-.visual-card-label {
-  padding:12px 16px; background:var(--card);
-  font-size:13px; font-weight:600; color:var(--subtle);
-}
-
-/* ─── COMPATIBILITY ─── */
-.compat-grid {
-  display:flex; flex-wrap:wrap; gap:12px; margin-top:32px;
-}
-.compat-chip {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:8px; padding:10px 18px; font-size:13px; font-weight:500; color:var(--subtle);
-  transition:all .2s;
-}
-.compat-chip:hover { border-color:#6366f150; color:var(--text); }
-.compat-chip.highlight { border-color:#6366f180; color:var(--indigo-lt); }
-
-/* ─── TESTIMONIAL / CALLOUT ─── */
-.callout {
-  background:linear-gradient(135deg,#6366f115,#22d3ee08);
-  border:1px solid #6366f130; border-radius:20px;
-  padding:48px; text-align:center; margin:0 auto; max-width:800px;
-}
-.callout-quote {
-  font-family:'Syne',sans-serif; font-size:clamp(20px,3vw,28px);
-  font-weight:700; line-height:1.4; margin-bottom:20px; color:var(--text);
-}
-.callout-sub { font-size:15px; color:var(--muted); }
-
-/* ─── REQUIREMENTS ─── */
-.req-grid {
-  display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:32px;
-}
-.req-card {
-  background:var(--card); border:1px solid var(--border); border-radius:12px;
-  padding:20px 24px;
-}
-.req-card h4 {
-  font-size:14px; font-weight:700; color:var(--indigo-lt); margin-bottom:12px;
-  text-transform:uppercase; letter-spacing:.08em;
-}
-.req-card ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
-.req-card li { font-size:13px; color:var(--subtle); display:flex; align-items:center; gap:8px; }
-.req-card li::before { content:'·'; color:var(--indigo); font-size:18px; }
-
-/* ─── CTA ─── */
-.cta-section {
-  text-align:center; padding:100px 40px;
-  background:radial-gradient(ellipse 80% 60% at 50% 100%,#2d1b6930,transparent),var(--ink);
-}
-.cta-section h2 {
-  font-family:'Syne',sans-serif; font-size:clamp(32px,5vw,56px);
-  font-weight:800; letter-spacing:-.02em; margin-bottom:20px;
-}
-.cta-section p { font-size:18px; color:var(--muted); max-width:540px; margin:0 auto 40px; }
-
-/* ─── DIVIDER ─── */
-.divider {
-  border:none; border-top:1px solid var(--border); margin:0;
-}
-
-/* ─── RESPONSIVE ─── */
-@media(max-width:768px){
-  section{padding:60px 20px;}
-  .hero{padding:60px 20px 80px;}
-  .capability-row{grid-template-columns:1fr;}
-  .capability-row.reverse{direction:ltr;}
-  .crud-operations{grid-template-columns:1fr 1fr;}
-  .screenshot-grid{grid-template-columns:1fr 1fr;}
-  .visual-row{grid-template-columns:1fr;}
+/* ══ RESPONSIVE ══ */
+@media(max-width:900px){
+  section,.full-bleed,.showcase,.crud-section{padding:64px 24px;}
+  .hero{padding:72px 24px 88px;}
+  .dive-row,.dive-row.flip{grid-template-columns:1fr;direction:ltr;}
+  .crud-grid{grid-template-columns:1fr 1fr;}
   .req-grid{grid-template-columns:1fr;}
-  .stats-bar{gap:24px;}
+  .shot-grid{grid-template-columns:1fr 1fr;}
+  .stats-bar{gap:28px;}
 }
-@media(max-width:480px){
-  .crud-operations{grid-template-columns:1fr;}
-  .screenshot-grid{grid-template-columns:1fr;}
+@media(max-width:600px){
+  .hero{padding:60px 20px 80px;}
+  .crud-grid{grid-template-columns:1fr;}
+  .shot-grid{grid-template-columns:1fr;}
+  .stats-bar{flex-direction:column;align-items:center;gap:24px;}
+  .btn-row{flex-direction:column;align-items:center;}
 }
 </style>
 </head>
@@ -387,277 +367,324 @@ section.wide { max-width:100%; padding:80px 0; }
 
 <!-- ══════════════════════════════════════════
      HERO
+     Primary H1 keyword: "Claude AI Assistant for Odoo"
 ══════════════════════════════════════════ -->
+<header>
 <div class="hero">
   <div class="hero-badge">
-    <span class="dot"></span>
-    NEW — CRUD Operations + AI Forms + Live Charts
+    <span class="badge-dot"></span>
+    v3.0 · CRUD · Charts · Excel · Odoo 19
   </div>
-  <h1>Your Odoo Database,<br><span class="grad">Commanded by Claude AI</span></h1>
+
+  <h1>Claude AI Assistant for Odoo —<br/><span class="grad">Your Database, Commanded by AI</span></h1>
+
   <p class="lead">
-    The only Odoo module with <strong>direct AI access</strong> to query, create, update, delete,
-    visualize, and export your live data — all through natural conversation.
+    The only Odoo 19 module with <strong>direct Claude AI access</strong> to query, create, update,
+    delete, visualize, and export your live data — all through natural language conversation.
+    No SQL. No forms. No menus. Just ask.
   </p>
+
   <div class="btn-row">
-    <a href="#features" class="btn-primary">⚡ Explore Features</a>
-    <a href="#screenshots" class="btn-outline">📸 See Screenshots</a>
+    <a href="#features" class="btn-primary" title="Explore Claude AI features for Odoo">⚡ Explore Features</a>
+    <a href="#screenshots" class="btn-outline" title="See Claude AI Odoo screenshots">📸 See Screenshots</a>
   </div>
-  <div class="stats-bar">
-    <div class="stat"><div class="stat-num">100+</div><div class="stat-lbl">Odoo Models Supported</div></div>
-    <div class="stat"><div class="stat-num">4-in-1</div><div class="stat-lbl">Query, CRUD, Charts, Excel</div></div>
-    <div class="stat"><div class="stat-num">0 SQL</div><div class="stat-lbl">Pure Natural Language</div></div>
-    <div class="stat"><div class="stat-num">Live</div><div class="stat-lbl">Real-Time Database Access</div></div>
+
+  <div class="stats-bar" aria-label="Key statistics">
+    <div class="stat"><div class="stat-num">100+</div><div class="stat-lbl">Odoo Models</div></div>
+    <div class="stat"><div class="stat-num">4-in-1</div><div class="stat-lbl">Query · CRUD · Charts · Excel</div></div>
+    <div class="stat"><div class="stat-num">0 SQL</div><div class="stat-lbl">Natural Language Only</div></div>
+    <div class="stat"><div class="stat-num">Live</div><div class="stat-lbl">Real-Time Database</div></div>
   </div>
 </div>
+</header>
 
-<hr class="divider"/>
+<hr/>
 
 <!-- ══════════════════════════════════════════
-     SCREENSHOTS
+     SCREENSHOT SHOWCASE
+     Alt tags densely keyword-targeted for image SEO
 ══════════════════════════════════════════ -->
 <div class="showcase" id="screenshots">
   <div class="showcase-inner">
-    <p class="section-eyebrow" style="text-align:center;">Screenshots</p>
-    <h2 class="section-title" style="text-align:center; margin-bottom:8px;">See Claude AI in Action</h2>
-    <p class="section-sub" style="text-align:center; margin:0 auto 48px;">
-      Real screenshots from a live Odoo instance — no mockups, no marketing fluff.
+    <span class="eyebrow" style="text-align:center;display:block;">Real Screenshots · Live Odoo 19 Instance</span>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:10px;">See Claude AI for Odoo in Action</h2>
+    <p class="sec-sub" style="text-align:center;margin:0 auto 48px;">
+      No mockups. No staging data. Real Claude AI chat interface inside a live Odoo 19 instance — query results, charts, and Excel reports generated on demand.
     </p>
 
-    <div class="screenshot-hero">
-      <img src="sale-order-quotation.png" alt="Claude AI querying sale orders and quotations in real-time"/>
-    </div>
-    <p class="screenshot-caption" style="margin-bottom:32px;">
-      📋 Claude AI listing sale orders with full details — asked in plain English, answered in seconds
-    </p>
+    <figure>
+      <div class="shot-hero">
+        <img src="sale-order-quotation.png"
+             alt="Claude AI Assistant for Odoo showing sale orders and quotations queried via natural language chat — real-time Odoo database results"
+             width="1200" height="675" loading="eager"/>
+      </div>
+      <div class="shot-caption">
+        <span class="pip"></span>
+        <figcaption>"Show today's sale orders with totals" → Claude queries <code>sale.order</code> live and renders a formatted results table in seconds</figcaption>
+      </div>
+    </figure>
 
-    <div class="screenshot-grid">
-      <div>
-        <div class="screenshot-thumb">
-          <img src="pie-chart.png" alt="Revenue pie chart generated by Claude AI"/>
+    <div class="shot-grid">
+      <figure>
+        <div class="shot-thumb">
+          <img src="pie-chart.png"
+               alt="Claude AI generating a revenue pie chart from live Odoo data — bar and pie chart auto-aggregated from account.move records"
+               width="600" height="400" loading="lazy"/>
         </div>
-        <p class="screenshot-caption">🥧 AI-generated pie chart — revenue breakdown by customer</p>
-      </div>
-      <div>
-        <div class="screenshot-thumb">
-          <img src="pie-chart2.png" alt="Sales analysis pie chart with legend"/>
+        <figcaption class="shot-lbl">🥧 Revenue pie chart — live Odoo data, auto-aggregated by customer</figcaption>
+      </figure>
+      <figure>
+        <div class="shot-thumb">
+          <img src="pie-chart2.png"
+               alt="Claude AI Odoo sales analysis pie chart with interactive SVG legend and download button"
+               width="600" height="400" loading="lazy"/>
         </div>
-        <p class="screenshot-caption">📊 Sales analysis chart with interactive legend</p>
-      </div>
-      <div>
-        <div class="screenshot-thumb">
-          <img src="Claude-connection.png" alt="Claude AI configuration and API connection screen"/>
+        <figcaption class="shot-lbl">📊 Sales analysis chart with interactive legend + SVG download</figcaption>
+      </figure>
+      <figure>
+        <div class="shot-thumb">
+          <img src="Claude-connection.png"
+               alt="Claude AI Odoo configuration screen — Anthropic API key setup, model selection and system prompt configuration"
+               width="600" height="400" loading="lazy"/>
         </div>
-        <p class="screenshot-caption">⚙️ One-time setup — just enter your API key and go</p>
-      </div>
-      <div>
-        <div class="screenshot-thumb">
-          <img src="excel-file-preview.png" alt="Excel report preview generated by Claude AI"/>
+        <figcaption class="shot-lbl">⚙️ One-time setup — API key, model, optional system prompt, done</figcaption>
+      </figure>
+      <figure>
+        <div class="shot-thumb">
+          <img src="excel-file-preview.png"
+               alt="Professional Excel report generated by Claude AI from Odoo data — styled headers, alternating rows and embedded bar chart"
+               width="600" height="400" loading="lazy"/>
         </div>
-        <p class="screenshot-caption">📊 Professional Excel reports with charts and formatting</p>
-      </div>
-      <div>
-        <div class="screenshot-thumb">
-          <img src="excel-file-download.png" alt="Excel download card in Claude AI chat"/>
+        <figcaption class="shot-lbl">📋 Professional Excel report with freeze panes and embedded charts</figcaption>
+      </figure>
+      <figure>
+        <div class="shot-thumb">
+          <img src="excel-file-download.png"
+               alt="Excel download card appearing in Claude AI Odoo chat interface — one-click XLSX download"
+               width="600" height="400" loading="lazy"/>
         </div>
-        <p class="screenshot-caption">⬇️ One-click Excel download directly in the chat</p>
-      </div>
-      <div>
-        <div class="screenshot-thumb">
-          <img src="sessions-by-user.png" alt="Session management and user analytics"/>
+        <figcaption class="shot-lbl">⬇️ One-click Excel download card inline in the AI chat</figcaption>
+      </figure>
+      <figure>
+        <div class="shot-thumb">
+          <img src="sessions-by-user.png"
+               alt="Claude AI Odoo session management — per-user sessions, conversation history and token usage tracking"
+               width="600" height="400" loading="lazy"/>
         </div>
-        <p class="screenshot-caption">👥 Per-user session management and token tracking</p>
-      </div>
+        <figcaption class="shot-lbl">👥 Per-user session isolation and token usage tracking</figcaption>
+      </figure>
     </div>
-    <div style="margin-top:24px;">
-      <div class="screenshot-thumb" style="max-width:600px; margin:0 auto;">
-        <img src="module_install.png" alt="Claude AI installing Odoo modules via natural language"/>
+
+    <figure style="max-width:640px;margin:0 auto;">
+      <div class="shot-thumb">
+        <img src="module_install.png"
+             alt="Claude AI installing an Odoo module via natural language — no technical knowledge or developer required"
+             width="640" height="400" loading="lazy"/>
       </div>
-      <p class="screenshot-caption" style="text-align:center; margin-top:8px;">📦 Install any Odoo module just by asking Claude to do it</p>
-    </div>
+      <figcaption class="shot-lbl" style="text-align:center;margin-top:10px;">📦 "Install the CRM module" → Claude installs it immediately — no developer access needed</figcaption>
+    </figure>
   </div>
 </div>
 
 <!-- ══════════════════════════════════════════
      FEATURES
+     H2 and H3 tags carry secondary keywords
 ══════════════════════════════════════════ -->
 <section id="features">
-  <p class="section-eyebrow">Capabilities</p>
-  <h2 class="section-title">Everything Your Business Needs,<br>Powered by Claude AI</h2>
-  <p class="section-sub">
-    Far beyond a simple chatbot. This is a fully integrated AI agent with direct read/write
-    access to every model in your Odoo database.
+  <span class="eyebrow">Full Capability Overview</span>
+  <h2 class="sec-title">9 Powerful AI Capabilities,<br/>One Odoo Module</h2>
+  <p class="sec-sub">
+    Far beyond a chatbot — a fully integrated Claude AI agent with direct read/write access
+    to every model in your Odoo 19 database, with the intelligence to use it safely.
   </p>
 
-  <div class="features-grid">
-    <div class="feat-card">
-      <div class="feat-icon" style="background:#6366f115;">🔍</div>
-      <h3>Natural Language Queries</h3>
-      <p>Ask about any data in any model. "Show me all overdue invoices for customers in Germany with amounts over €5,000" — Claude translates it instantly to an ORM query and displays results in a beautiful table.</p>
+  <div class="feat-grid">
+    <article class="feat-card">
+      <div class="feat-icon">🔍</div>
+      <h3>Natural Language Odoo Queries</h3>
+      <p>Ask anything about your Odoo data in plain English. "Show all overdue invoices over €5,000 for German customers" — Claude AI translates your intent to an ORM query instantly and displays clean, formatted results. No SQL, no filter dialogs.</p>
       <span class="feat-tag">search_read · search_count · name_search</span>
-    </div>
+    </article>
 
-    <div class="feat-card">
-      <div class="feat-icon" style="background:#34d39915;">✚</div>
-      <h3>Create Records — AI Forms</h3>
-      <p>Create customers, products, invoices, employees and any other record through intelligent guided forms. Claude collects the right fields, validates required data, and creates the record with a single click — no manual navigation.</p>
-      <span class="feat-tag">NEW — CRUD Create with Form UI</span>
-    </div>
+    <article class="feat-card">
+      <div class="feat-icon">✚</div>
+      <h3>AI-Guided Record Creation</h3>
+      <p>Create customers, products, invoices, employees, and any other Odoo record through intelligent AI forms. Claude collects the right fields, validates required data, and creates the record — no manual form navigation, no missed required fields.</p>
+      <span class="feat-tag">NEW in v3 — CRUD Create with AI Form UI</span>
+    </article>
 
-    <div class="feat-card">
-      <div class="feat-icon" style="background:#22d3ee15;">✎</div>
-      <h3>Update & Edit Records</h3>
-      <p>Say "Update the phone number for Acme Corp" and Claude will find the record, open a pre-filled edit form, and save changes after your confirmation. Full audit trail — no surprise overwrites.</p>
-      <span class="feat-tag">NEW — CRUD Write with Confirmation</span>
-    </div>
+    <article class="feat-card">
+      <div class="feat-icon">✎</div>
+      <h3>Natural Language Record Updates</h3>
+      <p>Say "Update Acme Corp's phone number" and Claude AI finds the record, opens a pre-filled edit form with current values, and saves changes after your explicit confirmation. Full audit trail — no surprise overwrites, ever.</p>
+      <span class="feat-tag">NEW in v3 — CRUD Write with Confirmation Flow</span>
+    </article>
 
-    <div class="feat-card">
-      <div class="feat-icon" style="background:#f472b615;">🗑</div>
-      <h3>Delete with Safeguards</h3>
-      <p>Claude will never silently delete data. Every delete operation shows you exactly what will be removed, asks for explicit confirmation, and is logged in the session history for accountability.</p>
-      <span class="feat-tag">NEW — Safe Delete Flow</span>
-    </div>
+    <article class="feat-card">
+      <div class="feat-icon">🗑</div>
+      <h3>Safe Delete with Warnings</h3>
+      <p>Claude AI never silently deletes Odoo data. Every unlink operation shows a detailed preview of what will be removed, requires explicit confirmation, and is logged to the session history — designed for safe production use.</p>
+      <span class="feat-tag">NEW in v3 — Multi-Step Protected Delete</span>
+    </article>
 
-    <div class="feat-card">
-      <div class="feat-icon" style="background:#fbbf2415;">📊</div>
-      <h3>Live Charts — Bar, Line, Pie</h3>
-      <p>Ask for any visualization and Claude fetches real data, aggregates it intelligently, and renders a beautiful SVG chart — inline in the chat. No CDN dependencies, no external libraries, pure performance.</p>
-      <span class="feat-tag">Bar · Line · Pie · Doughnut · Fullscreen Mode</span>
-    </div>
+    <article class="feat-card">
+      <div class="feat-icon">📊</div>
+      <h3>Live Charts from Odoo Data</h3>
+      <p>Ask for any visualization — Claude AI fetches real Odoo records, auto-aggregates up to 500 results intelligently, and renders a beautiful SVG chart directly in the chat window. Bar, line, pie, doughnut — with fullscreen mode and SVG download.</p>
+      <span class="feat-tag">Bar · Line · Pie · Doughnut · Fullscreen · SVG Export</span>
+    </article>
 
-    <div class="feat-card">
-      <div class="feat-icon" style="background:#1d6f4215;">📋</div>
-      <h3>Professional Excel Reports</h3>
-      <p>Generate styled XLSX reports with freeze panes, auto-filters, alternating rows, embedded bar charts, and professional headers. Handles up to 10,000 records per sheet, multi-sheet workbooks supported.</p>
-      <span class="feat-tag">openpyxl · Multi-sheet · Auto-charts</span>
-    </div>
+    <article class="feat-card">
+      <div class="feat-icon">📋</div>
+      <h3>Professional Excel Reports on Demand</h3>
+      <p>Generate styled multi-sheet XLSX reports with freeze panes, auto-filters, alternating rows, embedded bar charts, column auto-sizing, and professional headers. Up to 10,000 records per sheet. One-click download in the chat — share with anyone, even without Odoo access.</p>
+      <span class="feat-tag">openpyxl · Multi-sheet · 10k rows · Embedded Charts</span>
+    </article>
 
-    <div class="feat-card">
-      <div class="feat-icon" style="background:#a78bfa15;">📦</div>
-      <h3>Module Installation</h3>
-      <p>Browse, discover, and install any available Odoo module by simply asking Claude. "What modules are available for project management? Install the best one." — Done.</p>
-      <span class="feat-tag">Any installable Odoo module</span>
-    </div>
+    <article class="feat-card">
+      <div class="feat-icon">📦</div>
+      <h3>AI Module Installation</h3>
+      <p>Browse, discover, and install any available Odoo module through natural language. "What project management modules are available? Explain each and install the best one." Claude searches, explains, and installs — no Apps menu needed.</p>
+      <span class="feat-tag">Any installable Odoo module · Instant installation</span>
+    </article>
 
-    <div class="feat-card">
-      <div class="feat-icon" style="background:#fb923c15;">📁</div>
-      <h3>CSV & Excel Import</h3>
-      <p>Drop a CSV or XLSX file into the chat and ask Claude to import it. Claude parses the file, maps columns to Odoo fields, previews the data, and batch-creates all records with a single confirmation.</p>
-      <span class="feat-tag">CSV · XLSX · XLS · TXT · Batch Create</span>
-    </div>
+    <article class="feat-card">
+      <div class="feat-icon">📁</div>
+      <h3>CSV &amp; Excel Data Import via Chat</h3>
+      <p>Drag a CSV, XLSX, or XLS file into the chat. Claude AI parses all columns, maps them to the correct Odoo model fields, previews the data for review, and batch-creates all records with one confirmation click. No Import Wizard required.</p>
+      <span class="feat-tag">CSV · XLSX · XLS · TXT · Batch Create · Field Mapping</span>
+    </article>
 
-    <div class="feat-card">
-      <div class="feat-icon" style="background:#38bdf815;">💬</div>
-      <h3>Odoo Expert Guidance</h3>
-      <p>Beyond data operations, Claude knows Odoo inside-out. Ask about workflows, configurations, best practices, module setup, pricing rules, inventory strategies — it's like having a senior Odoo consultant on call 24/7.</p>
-      <span class="feat-tag">Contextual · Company-aware · Module-aware</span>
-    </div>
+    <article class="feat-card">
+      <div class="feat-icon">💬</div>
+      <h3>Odoo Expert AI on Demand</h3>
+      <p>Claude AI knows Odoo deeply — workflows, configurations, module setup, pricing rules, inventory strategies, accounting flows. Ask any Odoo question in plain English and get expert guidance. Like having a senior Odoo consultant available 24/7 at zero extra cost.</p>
+      <span class="feat-tag">Context-Aware · Company-Aware · Module-Aware · Multilingual</span>
+    </article>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════
      CRUD DEEP DIVE
 ══════════════════════════════════════════ -->
-<div class="crud-highlight">
+<div class="crud-section">
   <div class="crud-inner">
-    <p class="section-eyebrow">New in v2.0</p>
-    <h2 class="section-title">Full CRUD Operations — <span class="grad">Without Touching a Form</span></h2>
-    <p class="section-sub">
-      Complete Create, Read, Update, and Delete capabilities through natural language
-      and intelligent guided forms. Your database, fully controllable through conversation.
+    <span class="eyebrow">Full CRUD via AI — New in v3.0</span>
+    <h2 class="sec-title">Create, Read, Update, Delete —<br/><span class="grad">Without Touching a Single Odoo Form</span></h2>
+    <p class="sec-sub">
+      Complete Odoo database control through natural conversation and intelligent AI-guided forms.
+      Every write operation confirmed, logged, and safe.
     </p>
 
-    <div class="crud-operations">
-      <div class="crud-op">
-        <div class="crud-op-icon">✚</div>
+    <div class="crud-grid">
+      <div class="crud-card">
+        <div class="crud-icon">✚</div>
         <h3>CREATE</h3>
-        <p>Guided AI forms auto-populate fields for customers, products, invoices, employees and any model</p>
-        <span class="crud-op-badge badge-green">Safe · Validated</span>
+        <p>AI-guided forms auto-populate and validate fields for any Odoo model — customers, products, invoices, employees and more</p>
+        <span class="crud-badge bg">Validated · Guided · Safe</span>
       </div>
-      <div class="crud-op">
-        <div class="crud-op-icon">🔍</div>
+      <div class="crud-card">
+        <div class="crud-icon">🔍</div>
         <h3>READ</h3>
-        <p>Query any model with complex filters, sorting, pagination, and automatic table or chart rendering</p>
-        <span class="crud-op-badge badge-blue">Real-Time · Live Data</span>
+        <p>Natural language queries across all 100+ Odoo models — results as tables, charts, or Excel export with intelligent filtering</p>
+        <span class="crud-badge bb">Real-Time · 100+ Models</span>
       </div>
-      <div class="crud-op">
-        <div class="crud-op-icon">✎</div>
+      <div class="crud-card">
+        <div class="crud-icon">✎</div>
         <h3>UPDATE</h3>
-        <p>Find records by name or criteria, edit in a pre-filled form, save with confirmation — full audit trail</p>
-        <span class="crud-op-badge badge-amber">Confirmed · Traceable</span>
+        <p>Find records naturally, edit in pre-filled AI forms with current values, save with explicit confirmation — full audit trail</p>
+        <span class="crud-badge ba">Confirmed · Traceable</span>
       </div>
-      <div class="crud-op">
-        <div class="crud-op-icon">🗑</div>
+      <div class="crud-card">
+        <div class="crud-icon">🗑</div>
         <h3>DELETE</h3>
-        <p>Delete with multi-step confirmation, clear preview of what will be removed, and session logging</p>
-        <span class="crud-op-badge badge-rose">Protected · Irreversible warning</span>
+        <p>Multi-step confirmation, clear preview of affected records, session logging — Claude AI never performs silent deletes</p>
+        <span class="crud-badge br">Protected · Warned · Logged</span>
       </div>
     </div>
 
-    <div class="code-demo">
-      <span class="code-line"><span class="code-prompt">You:</span><span class="code-arrow">›</span> "Create a new customer named TechVentures with email hello@techventures.io"</span>
-      <span class="code-line"><span class="code-prompt">Claude:</span><span class="code-arrow">›</span> Opens guided form → validates fields → <span class="code-model">res.partner</span>.<span class="code-method">create</span>({name: <span class="code-val">"TechVentures"</span>, email: <span class="code-val">"hello@techventures.io"</span>, customer_rank: <span class="code-val">1</span>})</span>
-      <span class="code-line"><span class="code-prompt">You:</span><span class="code-arrow">›</span> "Update their phone to +44 20 7946 0001"</span>
-      <span class="code-line"><span class="code-prompt">Claude:</span><span class="code-arrow">›</span> <span class="code-model">res.partner</span>.<span class="code-method">write</span>([<span class="code-val">847</span>], {phone: <span class="code-val">"+44 20 7946 0001"</span>}) → shows updated record</span>
-      <span class="code-line"><span class="code-prompt">You:</span><span class="code-arrow">›</span> "Show me a pie chart of revenue by this customer vs others this quarter"</span>
-      <span class="code-line"><span class="code-prompt">Claude:</span><span class="code-arrow">›</span> <span class="code-model">account.move</span>.<span class="code-method">search_read</span>([...]) → auto-aggregates → renders <span class="code-val">pie chart</span> inline</span>
+    <!-- Live code trace — high keyword density in technical content -->
+    <div class="code-demo" aria-label="Example Claude AI conversation with Odoo database operations">
+      <span class="code-line"><span class="cd-cmt">// Natural language CREATE via Claude AI → Odoo ORM</span></span>
+      <span class="code-line"><span class="cd-usr">You   </span><span class="cd-arr">›</span> <span class="cd-str">"Create a new customer Trinar Solutions Pvt Ltd, email hello@trinar.io"</span></span>
+      <span class="code-line"><span class="cd-usr">Claude</span><span class="cd-arr">›</span> Opens AI form → validates → <span class="cd-mod">res.partner</span>.<span class="cd-met">create</span>({name: <span class="cd-val">"Trinar Solutions Pvt Ltd"</span>, customer_rank: <span class="cd-val">1</span>})</span>
+      <span class="code-sep"></span>
+      <span class="code-line"><span class="cd-cmt">// Natural language UPDATE → confirmed write</span></span>
+      <span class="code-line"><span class="cd-usr">You   </span><span class="cd-arr">›</span> <span class="cd-str">"Update their phone to +44 20 7946 0001"</span></span>
+      <span class="code-line"><span class="cd-usr">Claude</span><span class="cd-arr">›</span> <span class="cd-mod">res.partner</span>.<span class="cd-met">write</span>([<span class="cd-val">847</span>], {phone: <span class="cd-val">"+44 20 7946 0001"</span>}) → confirms → shows updated record</span>
+      <span class="code-sep"></span>
+      <span class="code-line"><span class="cd-cmt">// Natural language chart request → live data aggregation</span></span>
+      <span class="code-line"><span class="cd-usr">You   </span><span class="cd-arr">›</span> <span class="cd-str">"Show revenue pie chart by customer this quarter"</span></span>
+      <span class="code-line"><span class="cd-usr">Claude</span><span class="cd-arr">›</span> <span class="cd-mod">account.move</span>.<span class="cd-met">search_read</span>([...]) → aggregates 500 records → renders <span class="cd-val">pie chart</span> inline</span>
+      <span class="code-sep"></span>
+      <span class="code-line"><span class="cd-cmt">// Natural language Excel export → one-click XLSX download</span></span>
+      <span class="code-line"><span class="cd-usr">You   </span><span class="cd-arr">›</span> <span class="cd-str">"Export this month's sales as a formatted Excel report"</span></span>
+      <span class="code-line"><span class="cd-usr">Claude</span><span class="cd-arr">›</span> Builds styled XLSX → embedded chart → freeze panes → <span class="cd-val">⬇ Download</span> card appears in chat</span>
     </div>
   </div>
 </div>
 
 <!-- ══════════════════════════════════════════
      CAPABILITY DEEP DIVES
+     Alternating image-text rows — screenshots + long descriptive copy
 ══════════════════════════════════════════ -->
 <section>
-  <div class="capability-row">
-    <div class="capability-img">
-      <img src="pie-chart.png" alt="Revenue pie chart by customer" style="border-radius:14px;"/>
+  <div class="dive-row">
+    <div class="dive-img">
+      <img src="pie-chart.png"
+           alt="Live Odoo revenue pie chart generated by Claude AI — auto-aggregated from account.move records, rendered as interactive SVG"
+           width="600" height="400" loading="lazy"/>
     </div>
-    <div class="capability-text">
-      <p class="section-eyebrow">Live Charts</p>
-      <h2>Turn Data Into Insight Instantly</h2>
-      <p>No dashboard configuration. No filter setup. Just ask: <em>"Show me a pie chart of revenue by customer for Q3"</em> — and Claude fetches the real data, aggregates it, and renders a stunning chart right inside the conversation.</p>
+    <div class="dive-text">
+      <span class="eyebrow">Live Charts from Any Odoo Model</span>
+      <h2>Turn Odoo Data Into Visual Insight — Instantly</h2>
+      <p>No dashboard builder. No filter configuration. No developer. Just ask Claude AI — it fetches real Odoo records, aggregates intelligently across up to 500 results, and renders a stunning interactive chart right inside the conversation window.</p>
       <ul class="check-list">
-        <li>Bar, Line, Pie, Doughnut chart types</li>
-        <li>Fullscreen mode with SVG download</li>
-        <li>Intelligent auto-aggregation of up to 500 records</li>
-        <li>Interactive legend with values and percentages</li>
-        <li>Dark theme, zero CDN dependencies</li>
+        <li>Bar, Line, Pie, and Doughnut chart types from any Odoo model</li>
+        <li>Fullscreen chart mode with SVG download button</li>
+        <li>Smart auto-aggregation — top 20 labels, summed values</li>
+        <li>Interactive legend showing values and percentages</li>
+        <li>Zero external CDN dependencies — pure client-side SVG rendering</li>
       </ul>
     </div>
   </div>
 
-  <div class="capability-row reverse">
-    <div class="capability-img">
-      <img src="excel-file-preview.png" alt="Excel report with charts and formatting" style="border-radius:14px;"/>
+  <div class="dive-row flip">
+    <div class="dive-img">
+      <img src="excel-file-preview.png"
+           alt="Professional Excel XLSX report generated from Odoo data by Claude AI — styled with indigo headers, alternating rows, freeze panes, and embedded bar chart"
+           width="600" height="400" loading="lazy"/>
     </div>
-    <div class="capability-text">
-      <p class="section-eyebrow">Excel Reports</p>
-      <h2>Enterprise-Grade Reports, On Demand</h2>
-      <p>Ask for any report and receive a professionally formatted Excel file — with styled headers, alternating rows, freeze panes, auto-filters, and embedded charts. Share reports with stakeholders who don't have Odoo access.</p>
+    <div class="dive-text">
+      <span class="eyebrow">Enterprise Excel Reports</span>
+      <h2>Odoo Excel Reports Generated by AI, On Demand</h2>
+      <p>Ask Claude AI for any Odoo report and receive a professionally formatted, board-ready Excel file in seconds. Styled headers, alternating rows, freeze panes, auto-filters, column auto-sizing, and embedded data charts — all generated automatically from your live Odoo database.</p>
       <ul class="check-list">
-        <li>Multi-sheet workbooks for complex reports</li>
-        <li>Embedded bar charts with real data</li>
-        <li>Up to 10,000 records per sheet</li>
-        <li>Column auto-sizing and professional styling</li>
-        <li>One-click download directly in chat</li>
+        <li>Multi-sheet XLSX workbooks for complex reporting needs</li>
+        <li>Embedded bar charts with real aggregated data</li>
+        <li>Up to 10,000 records per sheet via openpyxl</li>
+        <li>Professional styling: freeze panes, auto-filter, alternating rows</li>
+        <li>One-click download card appears inline in the AI chat</li>
       </ul>
     </div>
   </div>
 
-  <div class="capability-row">
-    <div class="capability-img">
-      <img src="sale-order-quotation.png" alt="Sale orders query results" style="border-radius:14px;"/>
+  <div class="dive-row">
+    <div class="dive-img">
+      <img src="sale-order-quotation.png"
+           alt="Claude AI Odoo chat showing natural language query results for sale orders — partner names, amounts, dates displayed in a clean results table"
+           width="600" height="400" loading="lazy"/>
     </div>
-    <div class="capability-text">
-      <p class="section-eyebrow">Natural Language Queries</p>
-      <h2>Ask Anything About Your Business</h2>
-      <p>Claude has direct access to all 100+ models in your Odoo instance. It understands business intent, translates to ORM queries, and presents results in clean, sortable tables — no SQL, no filters, no navigation.</p>
+    <div class="dive-text">
+      <span class="eyebrow">Natural Language Database Queries</span>
+      <h2>Ask Anything About Your Odoo Business Data</h2>
+      <p>Claude AI has direct access to every installed model in your Odoo 19 instance. It understands business intent, translates questions to accurate ORM queries, and presents results in sortable tables — with full awareness of your company, currency, and module context.</p>
       <ul class="check-list">
-        <li>All installed Odoo models accessible instantly</li>
-        <li>Complex multi-field filters in plain English</li>
-        <li>Results shown in formatted tables (up to 200 rows)</li>
-        <li>Company, currency, and user context-aware</li>
-        <li>Cross-model queries and aggregations</li>
+        <li>All 100+ installed Odoo models accessible instantly by name</li>
+        <li>Complex multi-field filters expressed in plain English</li>
+        <li>Results rendered in clean tables — up to 200 rows</li>
+        <li>Company name, currency, and installed module context-aware</li>
+        <li>Cross-model queries, aggregations, and calculated fields</li>
       </ul>
     </div>
   </div>
@@ -666,64 +693,62 @@ section.wide { max-width:100%; padding:80px 0; }
 <!-- ══════════════════════════════════════════
      USE CASES
 ══════════════════════════════════════════ -->
-<section style="background:var(--surface); max-width:100%; padding:80px 40px;">
-  <div style="max-width:1200px; margin:0 auto;">
-    <p class="section-eyebrow" style="text-align:center;">Who Uses This</p>
-    <h2 class="section-title" style="text-align:center; margin-bottom:8px;">Built for Every Odoo User</h2>
-    <p class="section-sub" style="text-align:center; margin:0 auto 48px;">
-      From sales managers to warehouse staff — anyone who works with Odoo data benefits from Claude AI.
+<div class="full-bleed" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <span class="eyebrow" style="text-align:center;display:block;">Who Uses Claude AI for Odoo</span>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:10px;">Built for Every Role in Your Organization</h2>
+    <p class="sec-sub" style="text-align:center;margin:0 auto 44px;">
+      From sales managers to warehouse operators — anyone who works with Odoo data benefits from direct Claude AI access to the database.
     </p>
-    <div class="use-cases">
-      <div class="use-case">
-        <div class="use-case-icon">💼</div>
+    <div class="use-grid">
+      <div class="use-card">
+        <div class="use-icon">💼</div>
         <h4>Sales Teams</h4>
-        <p>Instantly pull up customer histories, draft quotations data, track pipeline performance, and create new leads — all without leaving the chat.</p>
-        <div class="use-case-tag">sale.order · res.partner · crm.lead</div>
+        <p>Pull customer histories, track pipeline performance, create new leads and draft quotations — without leaving the AI chat or opening a single Odoo form.</p>
+        <span class="use-tag">sale.order · res.partner · crm.lead</span>
       </div>
-      <div class="use-case">
-        <div class="use-case-icon">💰</div>
-        <h4>Finance & Accounting</h4>
-        <p>Query outstanding invoices, generate revenue reports, track payments, and get aging analysis in seconds. Export to Excel for board presentations.</p>
-        <div class="use-case-tag">account.move · account.payment</div>
+      <div class="use-card">
+        <div class="use-icon">💰</div>
+        <h4>Finance &amp; Accounting</h4>
+        <p>Query outstanding invoices, generate aging analysis, track payments, and produce board-ready Excel reports — in seconds via natural language.</p>
+        <span class="use-tag">account.move · account.payment · account.analytic</span>
       </div>
-      <div class="use-case">
-        <div class="use-case-icon">📦</div>
-        <h4>Inventory & Warehouse</h4>
-        <p>Check stock levels, track movements, create purchase orders, and get low-stock alerts — all through natural language queries on stock.quant and related models.</p>
-        <div class="use-case-tag">stock.quant · purchase.order</div>
+      <div class="use-card">
+        <div class="use-icon">📦</div>
+        <h4>Inventory &amp; Warehouse</h4>
+        <p>Check live stock levels, track movements, create purchase orders, and get low-stock alerts — all through natural language queries on stock models.</p>
+        <span class="use-tag">stock.quant · stock.move · purchase.order</span>
       </div>
-      <div class="use-case">
-        <div class="use-case-icon">👥</div>
-        <h4>HR & People Teams</h4>
-        <p>Search employees, create new staff records, update contact information, and generate headcount reports by department. Onboarding made effortless.</p>
-        <div class="use-case-tag">hr.employee · hr.department</div>
+      <div class="use-card">
+        <div class="use-icon">👥</div>
+        <h4>HR &amp; People Teams</h4>
+        <p>Search employees, create new staff records, update contact info, generate headcount reports by department — onboarding made conversational.</p>
+        <span class="use-tag">hr.employee · hr.department · hr.contract</span>
       </div>
-      <div class="use-case">
-        <div class="use-case-icon">🔧</div>
+      <div class="use-card">
+        <div class="use-icon">🔧</div>
         <h4>System Administrators</h4>
-        <p>Install modules, manage configurations, audit user activity, and perform bulk data operations — Claude is the most powerful admin tool you've never had.</p>
-        <div class="use-case-tag">ir.module · res.users · ir.config_parameter</div>
+        <p>Install modules, manage configurations, audit user activity, and perform bulk data operations — Claude AI is the most powerful Odoo admin tool available.</p>
+        <span class="use-tag">ir.module · res.users · ir.config_parameter</span>
       </div>
-      <div class="use-case">
-        <div class="use-case-icon">📈</div>
+      <div class="use-card">
+        <div class="use-icon">📈</div>
         <h4>Business Analysts</h4>
-        <p>Generate ad-hoc charts and Excel reports without waiting for developer support. Explore data from any angle, at any time, with zero technical knowledge required.</p>
-        <div class="use-case-tag">Charts · Excel · Cross-model analysis</div>
+        <p>Generate ad-hoc charts and Excel reports instantly. Explore data from any angle, with any filter, at any time — zero technical knowledge or developer support required.</p>
+        <span class="use-tag">Charts · Excel · Cross-model · Real-Time</span>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ══════════════════════════════════════════
-     CALLOUT
-══════════════════════════════════════════ -->
+<!-- CALLOUT -->
 <section>
   <div class="callout">
-    <div class="callout-quote">
-      "Instead of building 50 custom reports and training staff on filters,
-      we just ask Claude AI what we need — and it tells us, instantly."
-    </div>
-    <div class="callout-sub">The kind of results our users report within the first week of installation</div>
+    <blockquote>
+      "Instead of building 50 custom Odoo reports and training staff on filters,
+      we just ask Claude AI what we need — and it answers, instantly."
+    </blockquote>
+    <cite>The kind of result users report within the first week of installation</cite>
   </div>
 </section>
 
@@ -731,104 +756,109 @@ section.wide { max-width:100%; padding:80px 0; }
      COMPATIBILITY
 ══════════════════════════════════════════ -->
 <section>
-  <p class="section-eyebrow">Compatibility</p>
-  <h2 class="section-title">Works with Your Entire Odoo Stack</h2>
-  <p class="section-sub">
-    Designed for Odoo 19, fully compatible with all major Odoo modules and configurations.
-    Add-on installs cleanly with zero conflicts.
+  <span class="eyebrow">Compatibility</span>
+  <h2 class="sec-title">Works with Your Entire Odoo 19 Stack</h2>
+  <p class="sec-sub">
+    Designed natively for Odoo 19 Community and Enterprise. Installs cleanly alongside all existing modules with zero conflicts — Claude AI queries whichever models are installed.
   </p>
-  <div class="compat-grid">
-    <div class="compat-chip highlight">✓ Odoo 19 (CE &amp; Enterprise)</div>
-    <div class="compat-chip">Sales &amp; CRM</div>
-    <div class="compat-chip">Accounting &amp; Finance</div>
-    <div class="compat-chip">Inventory &amp; Warehouse</div>
-    <div class="compat-chip">Manufacturing (MRP)</div>
-    <div class="compat-chip">HR &amp; Payroll</div>
-    <div class="compat-chip">Project Management</div>
-    <div class="compat-chip">Purchase &amp; Procurement</div>
-    <div class="compat-chip">E-commerce</div>
-    <div class="compat-chip">Point of Sale</div>
-    <div class="compat-chip">Fleet Management</div>
-    <div class="compat-chip">Helpdesk &amp; Support</div>
-    <div class="compat-chip">Multi-company</div>
-    <div class="compat-chip">Multi-currency</div>
-    <div class="compat-chip">Custom modules</div>
+  <div class="chip-wrap">
+    <div class="chip hi">✓ Odoo 19 CE &amp; Enterprise</div>
+    <div class="chip">Sales &amp; CRM</div>
+    <div class="chip">Accounting &amp; Finance</div>
+    <div class="chip">Inventory &amp; Warehouse</div>
+    <div class="chip">Manufacturing (MRP)</div>
+    <div class="chip">HR &amp; Payroll</div>
+    <div class="chip">Project Management</div>
+    <div class="chip">Purchase &amp; Procurement</div>
+    <div class="chip">E-commerce &amp; Website</div>
+    <div class="chip">Point of Sale</div>
+    <div class="chip">Fleet Management</div>
+    <div class="chip">Helpdesk &amp; Support</div>
+    <div class="chip">Multi-company</div>
+    <div class="chip">Multi-currency</div>
+    <div class="chip">Custom modules</div>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════
      REQUIREMENTS
 ══════════════════════════════════════════ -->
-<section style="background:var(--surface); max-width:100%; padding:80px 40px;">
-  <div style="max-width:1200px; margin:0 auto;">
-    <p class="section-eyebrow">Technical Requirements</p>
-    <h2 class="section-title">Simple to Install, Powerful to Use</h2>
+<div class="full-bleed" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <span class="eyebrow">Technical Requirements</span>
+    <h2 class="sec-title">Simple to Install, Powerful to Use</h2>
+    <p class="sec-sub">Drop into your custom addons, install from the Apps menu — active in under 60 seconds. No npm, no build step, no external Odoo modules required.</p>
     <div class="req-grid">
       <div class="req-card">
         <h4>Prerequisites</h4>
         <ul>
           <li>Odoo 19 (Community or Enterprise)</li>
-          <li>Anthropic API key (claude.ai)</li>
+          <li>Anthropic API key — <a href="https://console.anthropic.com" target="_blank" rel="noopener" style="color:var(--indigo-lt);text-decoration:none;">console.anthropic.com</a></li>
           <li>Python 3.10+</li>
-          <li>pip install anthropic openpyxl</li>
-          <li>Internet access for Claude API</li>
+          <li><code>pip install anthropic openpyxl</code></li>
+          <li>Internet access for Claude API calls</li>
         </ul>
       </div>
       <div class="req-card">
         <h4>Module Dependencies</h4>
         <ul>
-          <li>base (core Odoo)</li>
-          <li>web (frontend framework)</li>
-          <li>mail (messaging base)</li>
+          <li><code>base</code> — Odoo core ORM framework</li>
+          <li><code>web</code> — OWL frontend framework</li>
+          <li><code>mail</code> — Messaging base</li>
           <li>No additional Odoo modules required</li>
-          <li>Works alongside all installed apps</li>
+          <li>Works alongside all installed Odoo apps</li>
         </ul>
       </div>
       <div class="req-card">
-        <h4>Configuration</h4>
+        <h4>Configuration Steps</h4>
         <ul>
-          <li>Install module via Settings → Apps</li>
-          <li>Go to Claude AI → Configuration</li>
+          <li>Install via Settings → Apps → search "Claude AI"</li>
+          <li>Navigate to Claude AI → Configuration</li>
           <li>Enter your Anthropic API key</li>
-          <li>Select AI model (claude-sonnet-4-5 recommended)</li>
-          <li>Set optional system prompt for your business</li>
+          <li>Select AI model (<code>claude-sonnet-4-5</code> recommended)</li>
+          <li>Optional: set a custom system prompt per company</li>
         </ul>
       </div>
       <div class="req-card">
-        <h4>Security &amp; Permissions</h4>
+        <h4>Security &amp; Access Control</h4>
         <ul>
-          <li>Per-user session isolation</li>
-          <li>Role-based access control (Admin vs User)</li>
-          <li>Optional write-operation confirmation</li>
-          <li>Full session history and token tracking</li>
-          <li>API key stored securely in database</li>
+          <li>Per-user session isolation — no data leakage between users</li>
+          <li>Role-based access: Admin role vs User role</li>
+          <li>Optional write-operation confirmation toggle</li>
+          <li>Full conversation history and token usage tracking</li>
+          <li>API key stored encrypted in Odoo database</li>
         </ul>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- ══════════════════════════════════════════
-     CTA
+     CTA + CONTACT
 ══════════════════════════════════════════ -->
-<div class="cta-section">
-  <h2>Ready to Transform<br><span class="grad">How You Use Odoo?</span></h2>
-  <p>
-    Stop clicking through menus. Stop building reports. Stop waiting for developers.
-    Just ask Claude — and get answers in seconds.
-  </p>
+<div class="cta-block">
+  <h2>Ready to Transform<br/><span class="grad">How You Use Odoo?</span></h2>
+  <p class="sub">Stop clicking through menus. Stop building custom reports. Stop waiting for developers. Install Claude AI for Odoo and just ask — get answers, charts, and exports in seconds.</p>
   <div class="btn-row" style="margin-bottom:0;">
-    <a href="#" class="btn-primary" style="font-size:16px; padding:16px 40px;">
+    <a href="#" class="btn-primary" style="font-size:16px;padding:16px 42px;" title="Install Claude AI Assistant for Odoo 19">
       🚀 Install Claude AI for Odoo
     </a>
-    <a href="#features" class="btn-outline" style="font-size:16px; padding:16px 40px;">
+    <a href="#features" class="btn-outline" style="font-size:16px;padding:16px 42px;" title="View all Claude AI features for Odoo">
       📖 View All Features
     </a>
   </div>
-  <p style="margin-top:24px; font-size:13px; color:var(--muted);">
-    Requires Anthropic API key · Odoo 19+ · LGPL-3 License · Free to install
+  <p style="margin-top:28px;font-size:13px;color:var(--muted);">
+    Requires Anthropic API key · Odoo 19+ · OPL-1 License
   </p>
+
+  <p style="margin-top:44px;font-size:15px;color:var(--subtle);font-weight:500;">Need support, customization, or have questions?</p>
+  <address style="font-style:normal;">
+    <a href="mailto:raj.odoo2026@gmail.com" class="contact-address" title="Contact Claude AI Odoo module support">
+      ✉ raj.odoo2026@gmail.com
+    </a>
+  </address>
+  <span class="contact-label">Response within 24 hours · Customization available</span>
 </div>
-<p>Reach out <b>raj.odoo2026@gmail.com</b> for the support.</p>
+
 </body>
 </html>
