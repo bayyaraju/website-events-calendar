@@ -19,6 +19,7 @@
             'claude_ai_odoo/static/src/js/claude_chat.js',
         ],
     },
+    'images': ['static/description/icon.png'],
     'post_init_hook': 'post_init_hook',
     'author': 'Rajashekar B',
     'website': '',
