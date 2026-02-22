@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="mail_template_negative_stock_alert" model="mail.template">
+            <field name="name">Negative Stock Daily Alert</field>
+            <field name="model_id" ref="model_negative_stock_dashboard"/>
+            <field name="subject">⚠️ [Odoo] Negative Stock Alert - {{object.warehouse_id.name or 'All Warehouses'}} - {{date_today()}}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
+    <div style="background: linear-gradient(135deg, #c0392b, #e74c3c); padding: 20px; border-radius: 6px 6px 0 0; text-align: center;">
+        <h1 style="color: white; margin: 0; font-size: 22px;">⚠️ Negative Stock Alert</h1>
+        <p style="color: #fadbd8; margin: 5px 0 0 0;">Daily Inventory Control Report</p>
+    </div>
+    <div style="padding: 20px; background: #fdfefe;">
+        <p style="font-size: 14px; color: #555;">The following products are currently at <strong>negative stock levels</strong> and require immediate attention:</p>
+
+        <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 13px;">
+            <thead>
+                <tr style="background: #2c3e50; color: white;">
+                    <th style="padding: 10px; text-align: left;">Product</th>
+                    <th style="padding: 10px; text-align: center;">Warehouse</th>
+                    <th style="padding: 10px; text-align: right;">On Hand</th>
+                    <th style="padding: 10px; text-align: center;">Days Negative</th>
+                    <th style="padding: 10px; text-align: left;">Responsible</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set records = ctx.get('negative_records', [object]) %}
+                {% for rec in records %}
+                <tr style="background: {% if loop.index % 2 == 0 %}#f9f9f9{% else %}white{% endif %}; border-bottom: 1px solid #eee;">
+                    <td style="padding: 8px 10px;"><strong>{{rec.product_id.display_name}}</strong></td>
+                    <td style="padding: 8px 10px; text-align: center;">{{rec.warehouse_id.name or '-'}}</td>
+                    <td style="padding: 8px 10px; text-align: right; color: #e74c3c; font-weight: bold;">{{rec.qty_on_hand}}</td>
+                    <td style="padding: 8px 10px; text-align: center;">
+                        <span style="background: {% if rec.days_negative >= 7 %}#c0392b{% elif rec.days_negative >= 3 %}#e67e22{% else %}#27ae60{% endif %}; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">
+                            {{rec.days_negative}} days
+                        </span>
+                    </td>
+                    <td style="padding: 8px 10px;">{{rec.responsible_user_id.name or 'Unassigned'}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p style="font-size: 12px; color: #888; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee;">
+            This is an automated alert from your Odoo Inventory Control system.
+            Please review and resolve negative stock levels as soon as possible.
+        </p>
+    </div>
+</div>
+            ]]></field>
+            <field name="auto_delete">True</field>
+        </record>
+    </data>
+</odoo>

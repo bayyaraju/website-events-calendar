@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_warehouse_negative_stock_form" model="ir.ui.view">
+        <field name="name">stock.warehouse.negative.stock.form</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="🔴 Negative Stock Control" name="negative_stock_control">
+                    <group string="Policy Settings">
+                        <group>
+                            <field name="negative_stock_policy" widget="radio"/>
+                            <field name="stock_calculation_method"/>
+                        </group>
+                        <group>
+                            <field name="allow_manager_override"
+                                   invisible="negative_stock_policy != 'block'"/>
+                            <field name="override_requires_reason"
+                                   invisible="negative_stock_policy == 'allow'"/>
+                        </group>
+                    </group>
+                    <group string="Forecast Options"
+                           invisible="stock_calculation_method != 'forecasted'">
+                        <field name="consider_incoming"/>
+                        <field name="consider_manufacturing"/>
+                    </group>
+                    <group string="Alert Recipients">
+                        <field name="alert_email_ids" widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                    </group>
+                    <group string="Current Status">
+                        <field name="negative_count" readonly="1"/>
+                        <button name="action_view_negative_stock"
+                                string="View Negative Products"
+                                type="object"
+                                class="btn-warning"
+                                invisible="negative_count == 0"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

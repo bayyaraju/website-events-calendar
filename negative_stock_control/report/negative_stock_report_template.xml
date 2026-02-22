@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_negative_stock_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 style="color: #c0392b; border-bottom: 2px solid #c0392b; padding-bottom: 8px;">
+                                🔴 Negative Stock Report
+                            </h2>
+                            <p style="color: #555;">
+                                Generated: <t t-esc="datetime.datetime.now().strftime('%d/%m/%Y %H:%M')"/>
+                                | Company: <t t-esc="res_company.name"/>
+                            </p>
+                        </div>
+                    </div>
+
+                    <table class="table table-sm table-striped" style="font-size: 11px; margin-top: 16px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Product</th>
+                                <th>Warehouse</th>
+                                <th>Location</th>
+                                <th class="text-right">On Hand</th>
+                                <th class="text-right">Available</th>
+                                <th class="text-right">Forecasted</th>
+                                <th class="text-center">Negative Since</th>
+                                <th class="text-center">Days</th>
+                                <th class="text-center">Severity</th>
+                                <th>Responsible</th>
+                                <th class="text-center">Overrides</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="doc">
+                                <tr t-att-style="'background: #fde8e8;' if doc.state == 'critical' else ('background: #fff8e1;' if doc.state == 'warning' else '')">
+                                    <td><strong><t t-esc="doc.product_id.display_name"/></strong></td>
+                                    <td><t t-esc="doc.warehouse_id.name or '-'"/></td>
+                                    <td><t t-esc="doc.location_id.display_name or '-'"/></td>
+                                    <td class="text-right" style="color: #c0392b; font-weight: bold;">
+                                        <t t-esc="'%.2f' % doc.qty_on_hand"/>
+                                    </td>
+                                    <td class="text-right"><t t-esc="'%.2f' % doc.qty_available"/></td>
+                                    <td class="text-right"><t t-esc="'%.2f' % doc.qty_forecasted"/></td>
+                                    <td class="text-center">
+                                        <t t-if="doc.negative_since">
+                                            <t t-esc="doc.negative_since.strftime('%d/%m/%Y')"/>
+                                        </t>
+                                        <t t-else="">-</t>
+                                    </td>
+                                    <td class="text-center"><t t-esc="doc.days_negative"/></td>
+                                    <td class="text-center">
+                                        <span t-att-style="'background: #c0392b; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;' if doc.state == 'critical' else ('background: #e67e22; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;' if doc.state == 'warning' else 'background: #27ae60; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;')">
+                                            <t t-esc="doc.state.upper()"/>
+                                        </span>
+                                    </td>
+                                    <td><t t-esc="doc.responsible_user_id.name or '-'"/></td>
+                                    <td class="text-center"><t t-esc="doc.override_count"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <!-- Summary Statistics -->
+                    <div class="row mt-4" style="margin-top: 24px;">
+                        <div class="col-4">
+                            <div style="background: #fde8e8; border: 1px solid #e74c3c; border-radius: 6px; padding: 12px; text-align: center;">
+                                <strong style="font-size: 24px; color: #c0392b;">
+                                    <t t-esc="len([d for d in docs if d.state == 'critical'])"/>
+                                </strong><br/>
+                                <span style="font-size: 11px; color: #555;">Critical Products</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div style="background: #fff8e1; border: 1px solid #f39c12; border-radius: 6px; padding: 12px; text-align: center;">
+                                <strong style="font-size: 24px; color: #e67e22;">
+                                    <t t-esc="len([d for d in docs if d.state == 'warning'])"/>
+                                </strong><br/>
+                                <span style="font-size: 11px; color: #555;">Warning Products</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div style="background: #f0f0f0; border: 1px solid #bbb; border-radius: 6px; padding: 12px; text-align: center;">
+                                <strong style="font-size: 24px; color: #333;">
+                                    <t t-esc="len(docs)"/>
+                                </strong><br/>
+                                <span style="font-size: 11px; color: #555;">Total Products</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

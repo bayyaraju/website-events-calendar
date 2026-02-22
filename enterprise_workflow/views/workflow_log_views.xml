@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_wf_log_list" model="ir.ui.view">
+    <field name="name">wf.instance.log.list</field>
+    <field name="model">wf.instance.log</field>
+    <field name="arch" type="xml">
+      <list string="Audit Log" create="false" edit="false" delete="false">
+        <field name="create_date" string="Timestamp"/>
+        <field name="instance_id"/>
+        <field name="log_type" widget="badge"
+               decoration-danger="log_type == 'error'"
+               decoration-warning="log_type == 'sla_breach'"
+               decoration-success="log_type in ('completed','approval')"
+               decoration-info="log_type in ('stage_entry','transition')"/>
+        <field name="user_id"/>
+        <field name="message"/>
+        <field name="from_stage_id" optional="show"/>
+        <field name="to_stage_id"   optional="show"/>
+        <field name="comment"       optional="show"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="action_wf_log" model="ir.actions.act_window">
+    <field name="name">Audit Log</field>
+    <field name="res_model">wf.instance.log</field>
+    <field name="view_mode">list</field>
+  </record>
+
+</odoo>

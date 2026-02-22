@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_wf_action_form" model="ir.ui.view">
+    <field name="name">wf.action.form</field>
+    <field name="model">wf.action</field>
+    <field name="arch" type="xml">
+      <form string="Workflow Action">
+        <sheet>
+          <group>
+            <group>
+              <field name="name"/>
+              <field name="action_type"/>
+              <field name="sequence"/>
+              <field name="active"/>
+            </group>
+            <group string="Condition (optional)">
+              <field name="has_condition"/>
+              <field name="condition_python" invisible="not has_condition"
+                     placeholder="record.state == 'confirmed'"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Update Field"   invisible="action_type != 'update_field'">
+              <group>
+                <field name="field_id"/>
+                <field name="field_value_type"/>
+                <field name="field_value" placeholder="value or expression"/>
+              </group>
+            </page>
+            <page string="Email"          invisible="action_type != 'send_email'">
+              <group>
+                <field name="email_template_id"/>
+                <field name="email_to" placeholder="record.partner_id.email"/>
+              </group>
+            </page>
+            <page string="Activity"       invisible="action_type not in ('create_activity',)">
+              <group>
+                <field name="activity_type_id"/>
+                <field name="activity_summary"/>
+                <field name="activity_note"/>
+                <field name="activity_deadline_days"/>
+                <field name="activity_user_id"/>
+                <field name="activity_user_field_id"/>
+              </group>
+            </page>
+            <page string="Python Code"    invisible="action_type != 'python_code'">
+              <field name="python_code" widget="ace" options="{'mode':'python'}"
+                     placeholder="# record, env, user, instance, datetime available"/>
+            </page>
+            <page string="Webhook"        invisible="action_type != 'webhook'">
+              <group>
+                <field name="webhook_url"    placeholder="https://api.example.com/hook"/>
+                <field name="webhook_method"/>
+                <field name="webhook_headers" widget="ace" options="{'mode':'json'}"/>
+                <field name="webhook_body"    widget="ace" options="{'mode':'python'}"
+                       placeholder="{'id': record.id, 'state': record.state}"/>
+                <field name="webhook_timeout"/>
+                <field name="webhook_on_error"/>
+              </group>
+            </page>
+            <page string="Server Action"  invisible="action_type != 'server_action'">
+              <group><field name="server_action_id"/></group>
+            </page>
+            <page string="Create Record"  invisible="action_type != 'create_record'">
+              <group>
+                <field name="create_model_id"/>
+                <field name="create_values" widget="ace" options="{'mode':'python'}"
+                       placeholder="{'name': record.name}"/>
+              </group>
+            </page>
+            <page string="Notification"   invisible="action_type != 'send_notification'">
+              <group>
+                <field name="notification_message"/>
+                <field name="notification_user_ids" widget="many2many_tags"/>
+              </group>
+            </page>
+            <page string="Chatter"        invisible="action_type != 'write_chatter'">
+              <group>
+                <field name="chatter_message"
+                       placeholder="'Stage changed to ' + instance.current_stage_id.name"/>
+              </group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_wf_action" model="ir.actions.act_window">
+    <field name="name">Actions Library</field>
+    <field name="res_model">wf.action</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

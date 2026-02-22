@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main menu under Inventory > Reporting -->
+    <menuitem id="menu_negative_stock_root"
+              name="Negative Stock Control"
+              parent="stock.menu_stock_config_settings"
+              sequence="100"/>
+
+    <!-- Actually put under Inventory > Reporting -->
+    <menuitem id="menu_negative_stock_dashboard"
+              name="🔴 Negative Stock Dashboard"
+              action="action_negative_stock_dashboard"
+              parent="stock.menu_stock_root"
+              sequence="50"
+              groups="negative_stock_control.group_negative_stock_analyst,stock.group_stock_manager"/>
+
+    <menuitem id="menu_negative_stock_audit"
+              name="Override Audit Log"
+              action="action_negative_stock_log"
+              parent="stock.menu_stock_root"
+              sequence="51"
+              groups="stock.group_stock_manager"/>
+
+    <!-- Under Inventory > Configuration -->
+    <menuitem id="menu_negative_stock_config"
+              name="Negative Stock Policies"
+              parent="stock.menu_stock_config_settings"
+              sequence="50"/>
+</odoo>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_wf_approval_list" model="ir.ui.view">
+    <field name="name">wf.approval.list</field>
+    <field name="model">wf.approval</field>
+    <field name="arch" type="xml">
+      <list string="Approvals"
+            decoration-warning="state == 'pending'"
+            decoration-success="state == 'approved'"
+            decoration-danger="state == 'rejected'">
+        <field name="definition_name" string="Workflow"/>
+        <field name="res_name"        string="Record"/>
+        <field name="stage_id"/>
+        <field name="approver_id"/>
+        <field name="state" widget="badge"
+               decoration-warning="state == 'pending'"
+               decoration-success="state == 'approved'"
+               decoration-danger="state == 'rejected'"/>
+        <field name="create_date"   string="Requested"/>
+        <field name="responded_at"/>
+        <button name="action_approve"     type="object" string="Approve"
+                class="btn-sm btn-success" invisible="state != 'pending'"/>
+        <button name="action_reject"      type="object" string="Reject"
+                class="btn-sm btn-danger"  invisible="state != 'pending'"/>
+        <button name="action_open_record" type="object"
+                icon="fa-external-link" string="Open"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_wf_approval_form" model="ir.ui.view">
+    <field name="name">wf.approval.form</field>
+    <field name="model">wf.approval</field>
+    <field name="arch" type="xml">
+      <form string="Approval Request">
+        <header>
+          <button name="action_approve"  type="object" string="Approve"
+                  class="btn-success" invisible="state != 'pending'"/>
+          <button name="action_reject"   type="object" string="Reject"
+                  class="btn-danger"  invisible="state != 'pending'"/>
+          <button name="action_delegate" type="object" string="Delegate"
+                  class="btn-secondary" invisible="state != 'pending'"/>
+          <button name="action_open_record" type="object" string="Open Record"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <group string="Request">
+              <field name="instance_id"/>
+              <field name="stage_id"/>
+              <field name="approver_id"/>
+              <field name="delegate_id" invisible="state != 'delegated'"/>
+            </group>
+            <group string="Record">
+              <field name="definition_name" readonly="1"/>
+              <field name="res_name"        readonly="1"/>
+            </group>
+            <group string="Response">
+              <field name="responded_at" readonly="1"/>
+              <field name="comment"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- My pending approvals -->
+  <record id="action_wf_my_approvals" model="ir.actions.act_window">
+    <field name="name">My Pending Approvals</field>
+    <field name="res_model">wf.approval</field>
+    <field name="view_mode">list,form</field>
+    <field name="domain">[('approver_id','=',uid),('state','=','pending')]</field>
+  </record>
+
+  <!-- All approvals (manager) -->
+  <record id="action_wf_all_approvals" model="ir.actions.act_window">
+    <field name="name">All Approvals</field>
+    <field name="res_model">wf.approval</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

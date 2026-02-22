@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Override Wizard -->
+    <record id="view_stock_override_wizard_form" model="ir.ui.view">
+        <field name="name">stock.override.wizard.form</field>
+        <field name="model">stock.override.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Negative Stock Warning">
+                <sheet>
+                    <div class="o_form_view">
+                        <!-- Header Banner -->
+                        <div class="o_notification bg-danger text-white" role="status"
+                             invisible="warn_only">
+                            <h4 class="fw-bold">🔴 STRICT BLOCK: Negative Stock Detected</h4>
+                            <p>As a manager, you can override this block. A mandatory reason is required and will be logged in the audit trail.</p>
+                        </div>
+                        <div class="o_notification bg-warning" role="status"
+                             invisible="not warn_only">
+                            <h4 class="fw-bold">⚠️ WARNING: Insufficient Stock</h4>
+                            <p>Proceeding will result in negative stock. This action will be logged.</p>
+                        </div>
+
+                        <!-- Stats Bar -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="o_stat_button" style="pointer-events: none;">
+                                    <span class="o_stat_value">
+                                        <field name="override_count_total" readonly="1"/>
+                                    </span>
+                                    <span class="o_stat_text">Total Overrides (30d)</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="o_stat_button" style="pointer-events: none;">
+                                    <span class="o_stat_value">
+                                        <field name="override_count_user" readonly="1"/>
+                                    </span>
+                                    <span class="o_stat_text">Your Overrides (30d)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Issue Lines -->
+                        <field name="line_ids" readonly="1" nolabel="1">
+                            <list string="Affected Products" create="false" delete="false"
+                                  decoration-danger="policy == 'block'"
+                                  decoration-warning="policy == 'warn'">
+                                <field name="product_id"/>
+                                <field name="location_id"/>
+                                <field name="qty_available" string="Available"/>
+                                <field name="qty_requested" string="Requested"/>
+                                <field name="qty_shortfall" string="Shortfall"/>
+                                <field name="policy" widget="badge"
+                                       decoration-danger="policy == 'block'"
+                                       decoration-warning="policy == 'warn'"/>
+                            </list>
+                        </field>
+
+                        <!-- Reason Field -->
+                        <group string="Override Reason *" invisible="warn_only">
+                            <field name="reason" nolabel="1"
+                                   placeholder="Required: Explain why negative stock is acceptable here (e.g., 'Customer urgent order, stock arriving tomorrow ref PO-0042')..."
+                                   required="not warn_only"/>
+                        </group>
+                        <group string="Reason (Optional)" invisible="not warn_only">
+                            <field name="reason" nolabel="1"
+                                   placeholder="Optional: Provide context for this action..."/>
+                        </group>
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="action_proceed" string="⚠️ Proceed Anyway"
+                            type="object" class="btn-warning"
+                            invisible="not warn_only"/>
+                    <button name="action_proceed" string="🔓 Override &amp; Validate"
+                            type="object" class="btn-danger"
+                            invisible="warn_only"/>
+                    <button name="action_cancel" string="Cancel"
+                            type="object" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Sale Order Warning Wizard -->
+    <record id="view_sale_negative_stock_wizard_form" model="ir.ui.view">
+        <field name="name">sale.negative.stock.wizard.form</field>
+        <field name="model">sale.negative.stock.wizard</field>
+        <field name="arch" type="xml">
+            <form string="⚠️ Stock Availability Warning">
+                <sheet>
+                    <div class="o_notification bg-warning" role="status">
+                        <h4 class="fw-bold">⚠️ Insufficient Stock for This Order</h4>
+                        <p>Confirming this sale order may result in negative stock for the following products:</p>
+                    </div>
+                    <group>
+                        <field name="sale_order_id" readonly="1"/>
+                    </group>
+                    <group string="Stock Issues">
+                        <pre style="white-space: pre-wrap; font-family: monospace; background: #fff3cd; padding: 12px; border-radius: 4px; border: 1px solid #ffc107;">
+                            <field name="warning_message" readonly="1" nolabel="1"/>
+                        </pre>
+                    </group>
+                    <p style="font-size: 12px; color: #888;">
+                        💡 Tip: Consider checking alternative warehouses or adjusting delivery dates.
+                    </p>
+                </sheet>
+                <footer>
+                    <button name="action_confirm_anyway" string="✅ Confirm Anyway"
+                            type="object" class="btn-warning"/>
+                    <button name="action_cancel" string="🔙 Go Back &amp; Review"
+                            type="object" class="btn-primary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_negative_stock" model="ir.actions.report">
+        <field name="name">Negative Stock Report</field>
+        <field name="model">negative.stock.dashboard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">negative_stock_control.report_negative_stock_template</field>
+        <field name="report_file">negative_stock_control.report_negative_stock_template</field>
+        <field name="print_report_name">'Negative_Stock_Report_%s' % (object.create_date or '')</field>
+        <field name="binding_model_id" ref="model_negative_stock_dashboard"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

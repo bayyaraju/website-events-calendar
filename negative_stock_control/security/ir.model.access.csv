@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_negative_stock_log_user,negative.stock.log.user,model_negative_stock_log,stock.group_stock_user,1,0,0,0
+access_negative_stock_log_manager,negative.stock.log.manager,model_negative_stock_log,stock.group_stock_manager,1,1,1,1
+access_negative_stock_dashboard_user,negative.stock.dashboard.user,model_negative_stock_dashboard,stock.group_stock_user,1,0,0,0
+access_negative_stock_dashboard_manager,negative.stock.dashboard.manager,model_negative_stock_dashboard,stock.group_stock_manager,1,1,1,1
+access_stock_override_wizard,stock.override.wizard,model_stock_override_wizard,stock.group_stock_user,1,1,1,1
+access_stock_override_wizard_line,stock.override.wizard.line,model_stock_override_wizard_line,stock.group_stock_user,1,1,1,1
+access_sale_negative_stock_wizard,sale.negative.stock.wizard,model_sale_negative_stock_wizard,stock.group_stock_user,1,1,1,1

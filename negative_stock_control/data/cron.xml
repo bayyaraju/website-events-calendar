@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Daily cron: refresh dashboard + send alerts -->
+        <record id="ir_cron_negative_stock_monitor" model="ir.cron">
+            <field name="name">Negative Stock: Daily Monitor &amp; Alert</field>
+            <field name="model_id" ref="model_negative_stock_dashboard"/>
+            <field name="state">code</field>
+            <field name="code">
+model.refresh_dashboard()
+# Send email alert if enabled
+config = env['ir.config_parameter'].sudo()
+if config.get_param('negative_stock_control.cron_email', 'True') == 'True':
+    negative_records = model.search([('qty_on_hand', '&lt;', 0)])
+    if negative_records:
+        template = env.ref('negative_stock_control.mail_template_negative_stock_alert', raise_if_not_found=False)
+        if template:
+            admin_email = config.get_param('negative_stock_control.admin_email')
+            if admin_email:
+                template.with_context(negative_records=negative_records).send_mail(
+                    negative_records[0].id, force_send=True,
+                    email_values={'email_to': admin_email}
+                )
+            </field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active">True</field>
+            <field name="nextcall" eval="(datetime.now() + timedelta(days=1)).replace(hour=7, minute=0, second=0)"/>
+        </record>
+    </data>
+</odoo>

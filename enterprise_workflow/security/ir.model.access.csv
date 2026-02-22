@@ -1,0 +1,24 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acl_wf_def_user,wf.def user,model_wf_definition,group_wf_user,1,0,0,0
+acl_wf_def_designer,wf.def designer,model_wf_definition,group_wf_designer,1,1,1,0
+acl_wf_def_manager,wf.def manager,model_wf_definition,group_wf_manager,1,1,1,1
+acl_wf_stage_user,wf.stage user,model_wf_stage,group_wf_user,1,0,0,0
+acl_wf_stage_designer,wf.stage designer,model_wf_stage,group_wf_designer,1,1,1,0
+acl_wf_stage_manager,wf.stage manager,model_wf_stage,group_wf_manager,1,1,1,1
+acl_wf_trans_user,wf.transition user,model_wf_transition,group_wf_user,1,0,0,0
+acl_wf_trans_designer,wf.transition designer,model_wf_transition,group_wf_designer,1,1,1,0
+acl_wf_trans_manager,wf.transition manager,model_wf_transition,group_wf_manager,1,1,1,1
+acl_wf_action_user,wf.action user,model_wf_action,group_wf_user,1,0,0,0
+acl_wf_action_designer,wf.action designer,model_wf_action,group_wf_designer,1,1,1,0
+acl_wf_action_manager,wf.action manager,model_wf_action,group_wf_manager,1,1,1,1
+acl_wf_sla_user,wf.sla user,model_wf_sla,group_wf_user,1,0,0,0
+acl_wf_sla_designer,wf.sla designer,model_wf_sla,group_wf_designer,1,1,1,1
+acl_wf_inst_user,wf.instance user,model_wf_instance,group_wf_user,1,0,0,0
+acl_wf_inst_designer,wf.instance designer,model_wf_instance,group_wf_designer,1,1,1,0
+acl_wf_inst_manager,wf.instance manager,model_wf_instance,group_wf_manager,1,1,1,1
+acl_wf_log_user,wf.log user,model_wf_instance_log,group_wf_user,1,0,0,0
+acl_wf_log_manager,wf.log manager,model_wf_instance_log,group_wf_manager,1,0,0,0
+acl_wf_appr_user,wf.approval user,model_wf_approval,group_wf_user,1,1,0,0
+acl_wf_appr_manager,wf.approval manager,model_wf_approval,group_wf_manager,1,1,1,1
+access_wf_trigger_wizard,access_wf_trigger_wizard,model_wf_trigger_wizard,base.group_user,1,1,1,1
+access_wf_delegate_wizard,access_wf_delegate_wizard,model_wf_delegate_wizard,base.group_user,1,1,1,1

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_wf_trans_form" model="ir.ui.view">
+    <field name="name">wf.transition.form</field>
+    <field name="model">wf.transition</field>
+    <field name="arch" type="xml">
+      <form string="Transition">
+        <sheet>
+          <group>
+            <group string="Identity">
+              <field name="definition_id"/>
+              <field name="name"/>
+              <field name="sequence"/>
+              <field name="active"/>
+            </group>
+            <group string="Stages">
+              <field name="from_stage_id" domain="[('definition_id','=',definition_id)]"/>
+              <field name="to_stage_id"   domain="[('definition_id','=',definition_id)]"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Trigger">
+              <group>
+                <field name="trigger_type"/>
+                <field name="button_label" invisible="trigger_type != 'button'"
+                       placeholder="Approve"/>
+                <field name="button_icon"  invisible="trigger_type != 'button'"/>
+                <field name="button_style" invisible="trigger_type != 'button'"/>
+              </group>
+            </page>
+            <page string="Condition">
+              <group>
+                <field name="condition_type"/>
+                <field name="condition_domain"
+                       invisible="condition_type != 'domain'"
+                       placeholder="[('amount_total','>',1000)]"/>
+                <field name="condition_python"
+                       invisible="condition_type != 'python'"
+                       placeholder="record.amount_total > 1000"/>
+                <field name="condition_field_id" invisible="condition_type != 'field_value'"/>
+                <field name="condition_operator"  invisible="condition_type != 'field_value'"/>
+                <field name="condition_value"     invisible="condition_type != 'field_value'"/>
+              </group>
+            </page>
+            <page string="Permissions">
+              <group>
+                <field name="allowed_user_ids"  widget="many2many_tags"/>
+                <field name="allowed_group_ids" widget="many2many_tags"/>
+              </group>
+            </page>
+            <page string="Validation">
+              <group>
+                <field name="require_comment"/>
+                <field name="confirm_message"/>
+              </group>
+            </page>
+            <page string="Actions">
+              <field name="action_ids"
+                     context="{'default_transition_id': id,
+                               'default_definition_id': definition_id}">
+                <list editable="bottom">
+                  <field name="sequence" widget="handle"/>
+                  <field name="name"/>
+                  <field name="action_type"/>
+                  <field name="active"/>
+                </list>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_wf_transition" model="ir.actions.act_window">
+    <field name="name">Transitions</field>
+    <field name="res_model">wf.transition</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

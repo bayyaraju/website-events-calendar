@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Root -->
+  <menuitem id="menu_wf_root"
+            name="Workflows"
+            sequence="200"
+            groups="enterprise_workflow.group_wf_user"/>
+
+  <!-- My Work -->
+  <menuitem id="menu_wf_my"
+            name="My Work"
+            parent="menu_wf_root"
+            sequence="10"/>
+
+  <menuitem id="menu_wf_my_approvals"
+            name="My Pending Approvals"
+            parent="menu_wf_my"
+            action="action_wf_my_approvals"
+            sequence="10"/>
+
+  <menuitem id="menu_wf_my_instances"
+            name="My Workflow Instances"
+            parent="menu_wf_my"
+            action="action_wf_instance"
+            sequence="20"/>
+
+  <!-- Operations -->
+  <menuitem id="menu_wf_ops"
+            name="Operations"
+            parent="menu_wf_root"
+            sequence="20"
+            groups="enterprise_workflow.group_wf_designer"/>
+
+  <menuitem id="menu_wf_all_instances"
+            name="All Instances"
+            parent="menu_wf_ops"
+            action="action_wf_instance"
+            sequence="10"/>
+
+  <menuitem id="menu_wf_all_approvals"
+            name="All Approvals"
+            parent="menu_wf_ops"
+            action="action_wf_all_approvals"
+            sequence="20"/>
+
+  <menuitem id="menu_wf_audit_log"
+            name="Audit Log"
+            parent="menu_wf_ops"
+            action="action_wf_log"
+            sequence="30"
+            groups="enterprise_workflow.group_wf_manager"/>
+
+  <!-- Design -->
+  <menuitem id="menu_wf_design"
+            name="Design"
+            parent="menu_wf_root"
+            sequence="30"
+            groups="enterprise_workflow.group_wf_designer"/>
+
+  <menuitem id="menu_wf_definitions"
+            name="Workflow Definitions"
+            parent="menu_wf_design"
+            action="action_wf_definition"
+            sequence="10"/>
+
+  <menuitem id="menu_wf_stages"
+            name="Stages"
+            parent="menu_wf_design"
+            action="action_wf_stage"
+            sequence="20"/>
+
+  <menuitem id="menu_wf_transitions"
+            name="Transitions"
+            parent="menu_wf_design"
+            action="action_wf_transition"
+            sequence="30"/>
+
+  <menuitem id="menu_wf_actions"
+            name="Actions Library"
+            parent="menu_wf_design"
+            action="action_wf_action"
+            sequence="40"/>
+
+  <menuitem id="menu_wf_sla"
+            name="SLA Rules"
+            parent="menu_wf_design"
+            action="action_wf_sla"
+            sequence="50"/>
+
+  <!-- Analytics -->
+  <menuitem id="menu_wf_analytics"
+            name="Analytics"
+            parent="menu_wf_root"
+            sequence="40"
+            groups="enterprise_workflow.group_wf_manager"/>
+
+  <menuitem id="menu_wf_analytics_main"
+            name="Dashboard"
+            parent="menu_wf_analytics"
+            action="action_wf_instance_analytics"
+            sequence="10"/>
+
+</odoo>

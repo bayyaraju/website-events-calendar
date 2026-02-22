@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_negative_stock_dashboard_list" model="ir.ui.view">
+        <field name="name">negative.stock.dashboard.list</field>
+        <field name="model">negative.stock.dashboard</field>
+        <field name="arch" type="xml">
+            <list string="Negative Stock Dashboard" create="false" edit="false"
+                  decoration-danger="state == 'critical'"
+                  decoration-warning="state == 'warning'"
+                  decoration-info="state == 'info'">
+                <field name="product_id"/>
+                <field name="warehouse_id"/>
+                <field name="location_id"/>
+                <field name="qty_on_hand" string="On Hand" sum="Total On Hand"/>
+                <field name="qty_reserved" string="Reserved"/>
+                <field name="qty_available" string="Available"/>
+                <field name="qty_forecasted" string="Forecasted"/>
+                <field name="negative_since"/>
+                <field name="days_negative" string="Days Neg."/>
+                <field name="override_count" string="Overrides"/>
+                <field name="last_override_user_id" string="Last Override By"/>
+                <field name="responsible_user_id" string="Responsible"/>
+                <field name="state" widget="badge"
+                       decoration-danger="state == 'critical'"
+                       decoration-warning="state == 'warning'"
+                       decoration-success="state == 'info'"/>
+                <button name="action_view_overrides" string="History"
+                        type="object" icon="fa-history"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_negative_stock_dashboard_form" model="ir.ui.view">
+        <field name="name">negative.stock.dashboard.form</field>
+        <field name="model">negative.stock.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Negative Stock Record" create="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="product_id" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Location">
+                            <field name="warehouse_id" readonly="1"/>
+                            <field name="location_id" readonly="1"/>
+                            <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Stock Levels">
+                            <field name="qty_on_hand" readonly="1"/>
+                            <field name="qty_reserved" readonly="1"/>
+                            <field name="qty_available" readonly="1"/>
+                            <field name="qty_incoming" readonly="1"/>
+                            <field name="qty_forecasted" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Timeline">
+                        <field name="negative_since" readonly="1"/>
+                        <field name="days_negative" readonly="1"/>
+                        <field name="state" readonly="1" widget="badge"/>
+                    </group>
+                    <group string="Responsibility">
+                        <field name="responsible_user_id" readonly="1"/>
+                        <field name="last_override_user_id" readonly="1"/>
+                        <field name="override_count" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_negative_stock_dashboard_search" model="ir.ui.view">
+        <field name="name">negative.stock.dashboard.search</field>
+        <field name="model">negative.stock.dashboard</field>
+        <field name="arch" type="xml">
+            <search string="Negative Stock">
+                <field name="product_id"/>
+                <field name="warehouse_id"/>
+                <field name="responsible_user_id"/>
+                <filter string="Critical (7+ days)" name="critical"
+                        domain="[('state', '=', 'critical')]"/>
+                <filter string="Warning (3+ days)" name="warning"
+                        domain="[('state', '=', 'warning')]"/>
+                <filter string="Critically Negative (&lt; -100)" name="very_negative"
+                        domain="[('qty_on_hand', '&lt;', -100)]"/>
+<!--                <group expand="0" string="Group By">-->
+<!--                    <filter name="group_warehouse" string="Warehouse"-->
+<!--                            context="{'group_by': 'warehouse_id'}"/>-->
+<!--                    <filter name="group_product" string="Product"-->
+<!--                            context="{'group_by': 'product_id'}"/>-->
+<!--                    <filter name="group_responsible" string="Responsible"-->
+<!--                            context="{'group_by': 'responsible_user_id'}"/>-->
+<!--                </group>-->
+            </search>
+        </field>
+    </record>
+
+    <!-- Action: Dashboard -->
+    <record id="action_negative_stock_dashboard" model="ir.actions.act_window">
+        <field name="name">Negative Stock Dashboard</field>
+        <field name="res_model">negative.stock.dashboard</field>
+        <field name="search_view_id" ref="negative_stock_control.view_negative_stock_dashboard_search"/>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                🟢 All Clear! No negative stock found.
+            </p>
+            <p>Use the refresh button or wait for the daily cron to update this dashboard.</p>
+        </field>
+    </record>
+
+    <!-- Server Action: Refresh Dashboard -->
+    <record id="action_refresh_negative_stock_dashboard" model="ir.actions.server">
+        <field name="name">Refresh Negative Stock Dashboard</field>
+        <field name="model_id" ref="model_negative_stock_dashboard"/>
+        <field name="binding_model_id" ref="model_negative_stock_dashboard"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+records.refresh_dashboard()
+action = {
+    'type': 'ir.actions.client',
+    'tag': 'reload',
+}
+        </field>
+    </record>
+</odoo>

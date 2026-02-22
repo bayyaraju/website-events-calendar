@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_wf_stage_form" model="ir.ui.view">
+    <field name="name">wf.stage.form</field>
+    <field name="model">wf.stage</field>
+    <field name="arch" type="xml">
+      <form string="Workflow Stage">
+        <sheet>
+          <group>
+            <group string="Identity">
+              <field name="definition_id"/>
+              <field name="name"/>
+              <field name="code"/>
+              <field name="stage_type"/>
+              <field name="sequence"/>
+              <field name="color" widget="color_picker"/>
+            </group>
+            <group string="Behaviour">
+              <field name="is_blocking"/>
+              <field name="requires_comment"/>
+              <field name="auto_advance"/>
+              <field name="auto_advance_delay" invisible="not auto_advance"/>
+            </group>
+            <group string="SLA">
+              <field name="sla_hours"/>
+              <field name="sla_action" invisible="sla_hours == 0"/>
+            </group>
+            <group string="Canvas">
+              <field name="pos_x"/>
+              <field name="pos_y"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Approval" invisible="stage_type != 'approval'">
+              <group>
+                <field name="approval_type"/>
+                <field name="approver_ids"       widget="many2many_tags"/>
+                <field name="approver_group_ids" widget="many2many_tags"/>
+                <field name="approver_field_id"/>
+              </group>
+            </page>
+            <page string="Entry Actions">
+              <field name="entry_action_ids"
+                     context="{'default_entry_stage_id': id,
+                               'default_definition_id': definition_id}">
+                <list editable="bottom">
+                  <field name="sequence" widget="handle"/>
+                  <field name="name"/>
+                  <field name="action_type"/>
+                  <field name="active"/>
+                </list>
+              </field>
+            </page>
+            <page string="Exit Actions">
+              <field name="exit_action_ids"
+                     context="{'default_exit_stage_id': id,
+                               'default_definition_id': definition_id}">
+                <list editable="bottom">
+                  <field name="sequence" widget="handle"/>
+                  <field name="name"/>
+                  <field name="action_type"/>
+                  <field name="active"/>
+                </list>
+              </field>
+            </page>
+            <page string="Sub-Workflow" invisible="stage_type != 'subprocess'">
+              <group>
+                <field name="sub_workflow_id"/>
+              </group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_wf_stage_list" model="ir.ui.view">
+    <field name="name">wf.stage.list</field>
+    <field name="model">wf.stage</field>
+    <field name="arch" type="xml">
+      <list string="Stages">
+        <field name="sequence" widget="handle"/>
+        <field name="definition_id"/>
+        <field name="name"/>
+        <field name="code"/>
+        <field name="stage_type" widget="badge"
+               decoration-success="stage_type == 'start'"
+               decoration-danger="stage_type == 'end'"
+               decoration-warning="stage_type == 'approval'"/>
+        <field name="sla_hours" string="SLA (h)"/>
+        <field name="is_blocking"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="action_wf_stage" model="ir.actions.act_window">
+    <field name="name">Stages</field>
+    <field name="res_model">wf.stage</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

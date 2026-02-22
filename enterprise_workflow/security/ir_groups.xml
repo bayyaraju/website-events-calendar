@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+
+    <!-- User: participate in workflows, respond to approvals -->
+    <record id="group_wf_user" model="res.groups">
+      <field name="name">Workflow / User</field>
+      <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Designer: create/edit workflow definitions -->
+    <record id="group_wf_designer" model="res.groups">
+      <field name="name">Workflow / Designer</field>
+      <field name="implied_ids" eval="[(4, ref('group_wf_user'))]"/>
+    </record>
+
+    <!-- Manager: full control, force-advance, audit log -->
+    <record id="group_wf_manager" model="res.groups">
+      <field name="name">Workflow / Manager</field>
+      <field name="implied_ids" eval="[(4, ref('group_wf_designer'))]"/>
+      <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <!-- ── Record Rules ─────────────────────────────────────────────────── -->
+
+    <!-- Users see active definitions only (read) -->
+    <record id="rule_wf_def_user_read" model="ir.rule">
+      <field name="name">WF Def: User read active</field>
+      <field name="model_id" ref="model_wf_definition"/>
+      <field name="groups" eval="[(4, ref('group_wf_user'))]"/>
+      <field name="domain_force">[('state','in',['active','deprecated'])]</field>
+      <field name="perm_read">1</field>
+      <field name="perm_write">0</field>
+      <field name="perm_create">0</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- Designers can edit drafts -->
+    <record id="rule_wf_def_designer" model="ir.rule">
+      <field name="name">WF Def: Designer full</field>
+      <field name="model_id" ref="model_wf_definition"/>
+      <field name="groups" eval="[(4, ref('group_wf_designer'))]"/>
+      <field name="domain_force">[(1,'=',1)]</field>
+      <field name="perm_read">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- Users see only their own approvals -->
+    <record id="rule_wf_approval_user" model="ir.rule">
+      <field name="name">WF Approval: own only</field>
+      <field name="model_id" ref="model_wf_approval"/>
+      <field name="groups" eval="[(4, ref('group_wf_user'))]"/>
+      <field name="domain_force">
+        ['|',('approver_id','=',user.id),('delegate_id','=',user.id)]
+      </field>
+      <field name="perm_read">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_create">0</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- Managers see all approvals -->
+    <record id="rule_wf_approval_manager" model="ir.rule">
+      <field name="name">WF Approval: manager all</field>
+      <field name="model_id" ref="model_wf_approval"/>
+      <field name="groups" eval="[(4, ref('group_wf_manager'))]"/>
+      <field name="domain_force">[(1,'=',1)]</field>
+      <field name="perm_read">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_unlink">1</field>
+    </record>
+
+  </data>
+</odoo>

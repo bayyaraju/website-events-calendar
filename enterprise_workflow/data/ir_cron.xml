@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+
+    <!-- SLA monitor — every 30 minutes -->
+    <record id="cron_wf_sla_check" model="ir.cron">
+      <field name="name">Workflow Engine: SLA Monitor</field>
+      <field name="model_id" ref="model_wf_instance"/>
+      <field name="state">code</field>
+      <field name="code">model.cron_check_sla()</field>
+      <field name="interval_number">30</field>
+      <field name="interval_type">minutes</field>
+<!--      <field name="numbercall">-1</field>-->
+      <field name="active">True</field>
+      <field name="user_id" ref="base.user_root"/>
+    </record>
+
+    <!-- Delayed auto-advance — every 5 minutes -->
+    <record id="cron_wf_auto_advance" model="ir.cron">
+      <field name="name">Workflow Engine: Delayed Auto-Advance</field>
+      <field name="model_id" ref="model_wf_instance"/>
+      <field name="state">code</field>
+      <field name="code">model.cron_auto_advance()</field>
+      <field name="interval_number">5</field>
+      <field name="interval_type">minutes</field>
+<!--      <field name="numbercall">-1</field>-->
+      <field name="active">True</field>
+      <field name="user_id" ref="base.user_root"/>
+    </record>
+
+  </data>
+</odoo>

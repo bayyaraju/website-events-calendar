@@ -1,0 +1,57 @@
+/* Negative Stock Control - Dashboard Styles */
+
+.o_negative_stock_critical {
+    background-color: #fde8e8 !important;
+    color: #c0392b !important;
+}
+
+.o_negative_stock_warning {
+    background-color: #fff8e1 !important;
+    color: #e67e22 !important;
+}
+
+/* Dashboard severity badge overrides */
+.badge.o_field_badge.negative_critical {
+    background-color: #c0392b !important;
+}
+
+.badge.o_field_badge.negative_warning {
+    background-color: #e67e22 !important;
+}
+
+/* Override wizard styling */
+.negative_stock_override_banner {
+    border-left: 4px solid #c0392b;
+    padding-left: 16px;
+    margin-bottom: 16px;
+}
+
+/* Stats bar in wizard */
+.negative_stock_stats_bar {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.negative_stock_stat_item {
+    flex: 1;
+    text-align: center;
+    padding: 8px;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.negative_stock_stat_value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #c0392b;
+}
+
+.negative_stock_stat_label {
+    font-size: 11px;
+    color: #6c757d;
+}

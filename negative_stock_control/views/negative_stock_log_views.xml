@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_negative_stock_log_list" model="ir.ui.view">
+        <field name="name">negative.stock.log.list</field>
+        <field name="model">negative.stock.log</field>
+        <field name="arch" type="xml">
+            <list string="Override Audit Log" create="false" edit="false"
+                  decoration-danger="override_type == 'override'"
+                  decoration-warning="override_type == 'warn_accepted'">
+                <field name="override_date"/>
+                <field name="product_id"/>
+                <field name="location_id"/>
+                <field name="warehouse_id"/>
+                <field name="user_id"/>
+                <field name="quantity_requested"/>
+                <field name="quantity_on_hand"/>
+                <field name="quantity_after"/>
+                <field name="override_type" widget="badge"
+                       decoration-danger="override_type == 'override'"
+                       decoration-warning="override_type == 'warn_accepted'"/>
+                <field name="reason"/>
+                <field name="picking_id"/>
+                <field name="sale_order_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_negative_stock_log_form" model="ir.ui.view">
+        <field name="name">negative.stock.log.form</field>
+        <field name="model">negative.stock.log</field>
+        <field name="arch" type="xml">
+            <form string="Override Log Entry" create="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="product_id" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Override Details">
+                            <field name="override_date" readonly="1"/>
+                            <field name="user_id" readonly="1"/>
+                            <field name="override_type" readonly="1" widget="badge"/>
+                            <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Stock Information">
+                            <field name="location_id" readonly="1"/>
+                            <field name="warehouse_id" readonly="1"/>
+                            <field name="quantity_requested" readonly="1"/>
+                            <field name="quantity_on_hand" readonly="1"/>
+                            <field name="quantity_after" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="References">
+                        <field name="picking_id" readonly="1"/>
+                        <field name="sale_order_id" readonly="1"/>
+                    </group>
+                    <group string="Override Reason">
+                        <field name="reason" readonly="1" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_negative_stock_log_search" model="ir.ui.view">
+        <field name="name">negative.stock.log.search</field>
+        <field name="model">negative.stock.log</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <search string="Override Audit Log">
+                <field name="product_id"/>
+                <field name="user_id"/>
+                <field name="warehouse_id"/>
+                <filter string="Manager Overrides" name="manager_override"
+                        domain="[('override_type', '=', 'override')]"/>
+                <filter string="Warnings Accepted" name="warn_accepted"
+                        domain="[('override_type', '=', 'warn_accepted')]"/>
+                <filter string="This Month" name="this_month"
+                        date="override_date" default_period="month"/>
+                <filter string="Last 30 Days" name="last_30_days"
+                        date="override_date" default_period="month"/>
+<!--                <group string="Group By">-->
+<!--                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>-->
+<!--                    <filter name="group_user" string="User" context="{'group_by': 'user_id'}"/>-->
+<!--                    <filter name="group_warehouse" string="Warehouse" context="{'group_by': 'warehouse_id'}"/>-->
+<!--                    <filter name="group_month" string="Month" context="{'group_by': 'override_date:month'}"/>-->
+<!--                </group>-->
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_negative_stock_log" model="ir.actions.act_window">
+        <field name="name">Override Audit Log</field>
+        <field name="res_model">negative.stock.log</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="negative_stock_control.view_negative_stock_log_search"/>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'list', 'view_id': ref('view_negative_stock_log_list')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_negative_stock_log_form')}),
+                         ]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No override logs yet!
+            </p>
+            <p>Override logs will appear here when stock managers override negative stock blocks.</p>
+        </field>
+    </record>
+</odoo>

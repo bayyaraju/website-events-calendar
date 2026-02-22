@@ -1,0 +1,1262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             WORKFLOW DEFINITIONS  (6 complete workflows)
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <!-- 1. Employee Onboarding -->
+        <record id="wf_def_onboarding" model="wf.definition">
+            <field name="name">Employee Onboarding</field>
+            <field name="code">employee_onboarding</field>
+            <field name="description">End-to-end onboarding process for new hires covering IT setup, HR paperwork, and manager sign-off.</field>
+            <field name="sequence">10</field>
+            <field name="color">1</field>
+            <field name="state">active</field>
+            <field name="trigger_type">manual</field>
+            <field name="allow_parallel">False</field>
+            <field name="auto_close">True</field>
+            <field name="notify_on_complete">True</field>
+            <field name="version">1</field>
+        </record>
+
+        <!-- 2. Purchase Order Approval -->
+        <record id="wf_def_po_approval" model="wf.definition">
+            <field name="name">Purchase Order Approval</field>
+            <field name="code">po_approval</field>
+            <field name="description">Multi-level approval chain for purchase orders with conditional routing based on amount.</field>
+            <field name="sequence">20</field>
+            <field name="color">2</field>
+            <field name="state">active</field>
+            <field name="trigger_type">on_create</field>
+            <field name="allow_parallel">False</field>
+            <field name="auto_close">True</field>
+            <field name="version">2</field>
+        </record>
+
+        <!-- 3. Customer Complaint Resolution -->
+        <record id="wf_def_complaint" model="wf.definition">
+            <field name="name">Customer Complaint Resolution</field>
+            <field name="code">customer_complaint</field>
+            <field name="description">Structured process to log, investigate, resolve and close customer complaints within SLA.</field>
+            <field name="sequence">30</field>
+            <field name="color">5</field>
+            <field name="state">active</field>
+            <field name="trigger_type">manual</field>
+            <field name="allow_parallel">False</field>
+            <field name="auto_close">True</field>
+            <field name="version">1</field>
+        </record>
+
+        <!-- 4. IT Change Request -->
+        <record id="wf_def_it_change" model="wf.definition">
+            <field name="name">IT Change Request</field>
+            <field name="code">it_change_request</field>
+            <field name="description">ITIL-aligned change management process with CAB approval and rollback planning.</field>
+            <field name="sequence">40</field>
+            <field name="color">3</field>
+            <field name="state">active</field>
+            <field name="trigger_type">manual</field>
+            <field name="allow_parallel">True</field>
+            <field name="auto_close">True</field>
+            <field name="version">1</field>
+        </record>
+
+        <!-- 5. Contract Renewal (Draft) -->
+        <record id="wf_def_contract" model="wf.definition">
+            <field name="name">Contract Renewal</field>
+            <field name="code">contract_renewal</field>
+            <field name="description">Automated contract renewal pipeline triggered 90 days before expiry with legal and finance review gates.</field>
+            <field name="sequence">50</field>
+            <field name="color">4</field>
+            <field name="state">draft</field>
+            <field name="trigger_type">scheduled</field>
+            <field name="cron_expression">0 8 * * 1</field>
+            <field name="allow_parallel">False</field>
+            <field name="auto_close">True</field>
+            <field name="version">1</field>
+        </record>
+
+        <!-- 6. Product Launch Approval -->
+        <record id="wf_def_product_launch" model="wf.definition">
+            <field name="name">Product Launch Approval</field>
+            <field name="code">product_launch</field>
+            <field name="description">Cross-functional product launch sign-off covering marketing, legal, finance and executive approval.</field>
+            <field name="sequence">60</field>
+            <field name="color">6</field>
+            <field name="state">active</field>
+            <field name="trigger_type">manual</field>
+            <field name="allow_parallel">False</field>
+            <field name="auto_close">True</field>
+            <field name="version">1</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             STAGES — Employee Onboarding (6 stages)
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="stage_onb_start" model="wf.stage">
+            <field name="name">New Hire Initiated</field>
+            <field name="code">onb_start</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="stage_type">start</field>
+            <field name="sequence">1</field>
+            <field name="pos_x">80</field><field name="pos_y">200</field>
+            <field name="description">Workflow begins when HR creates the onboarding record.</field>
+        </record>
+
+        <record id="stage_onb_hr_docs" model="wf.stage">
+            <field name="name">HR Documentation</field>
+            <field name="code">onb_hr_docs</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">2</field>
+            <field name="pos_x">300</field><field name="pos_y">200</field>
+            <field name="sla_hours">48</field>
+            <field name="sla_action">notify</field>
+            <field name="is_blocking">True</field>
+            <field name="requires_comment">False</field>
+            <field name="description">Collect employment contract, tax forms and ID verification.</field>
+        </record>
+
+        <record id="stage_onb_it_setup" model="wf.stage">
+            <field name="name">IT Equipment &amp; Access</field>
+            <field name="code">onb_it_setup</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">3</field>
+            <field name="pos_x">520</field><field name="pos_y">200</field>
+            <field name="sla_hours">24</field>
+            <field name="sla_action">escalate</field>
+            <field name="description">Provision laptop, email, system access and security badges.</field>
+        </record>
+
+        <record id="stage_onb_mgr_approval" model="wf.stage">
+            <field name="name">Manager Sign-Off</field>
+            <field name="code">onb_mgr_approval</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="stage_type">approval</field>
+            <field name="sequence">4</field>
+            <field name="approval_type">single</field>
+            <field name="pos_x">740</field><field name="pos_y">200</field>
+            <field name="sla_hours">8</field>
+            <field name="sla_action">escalate</field>
+            <field name="description">Hiring manager confirms all setup is complete and the employee is ready.</field>
+        </record>
+
+        <record id="stage_onb_orientation" model="wf.stage">
+            <field name="name">Orientation &amp; Training</field>
+            <field name="code">onb_orientation</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">5</field>
+            <field name="pos_x">960</field><field name="pos_y">200</field>
+            <field name="sla_hours">72</field>
+            <field name="sla_action">notify</field>
+            <field name="description">Company orientation, compliance training and team introduction.</field>
+        </record>
+
+        <record id="stage_onb_end" model="wf.stage">
+            <field name="name">Onboarding Complete</field>
+            <field name="code">onb_end</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="stage_type">end</field>
+            <field name="sequence">6</field>
+            <field name="pos_x">1180</field><field name="pos_y">200</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             STAGES — Purchase Order Approval (7 stages)
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="stage_po_start" model="wf.stage">
+            <field name="name">PO Created</field>
+            <field name="code">po_start</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="stage_type">start</field>
+            <field name="sequence">1</field>
+            <field name="pos_x">80</field><field name="pos_y">200</field>
+        </record>
+
+        <record id="stage_po_review" model="wf.stage">
+            <field name="name">Procurement Review</field>
+            <field name="code">po_review</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">2</field>
+            <field name="pos_x">300</field><field name="pos_y">200</field>
+            <field name="sla_hours">4</field>
+            <field name="sla_action">notify</field>
+            <field name="description">Procurement team validates vendor, pricing and delivery terms.</field>
+        </record>
+
+        <record id="stage_po_amount_check" model="wf.stage">
+            <field name="name">Amount Threshold Check</field>
+            <field name="code">po_amount_check</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="stage_type">condition</field>
+            <field name="sequence">3</field>
+            <field name="pos_x">520</field><field name="pos_y">200</field>
+            <field name="description">Routes to manager or director approval based on PO value.</field>
+        </record>
+
+        <record id="stage_po_mgr_approve" model="wf.stage">
+            <field name="name">Manager Approval</field>
+            <field name="code">po_mgr_approve</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="stage_type">approval</field>
+            <field name="sequence">4</field>
+            <field name="approval_type">single</field>
+            <field name="pos_x">740</field><field name="pos_y">100</field>
+            <field name="sla_hours">8</field>
+            <field name="sla_action">escalate</field>
+        </record>
+
+        <record id="stage_po_director_approve" model="wf.stage">
+            <field name="name">Director Approval</field>
+            <field name="code">po_director_approve</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="stage_type">approval</field>
+            <field name="sequence">5</field>
+            <field name="approval_type">all</field>
+            <field name="pos_x">740</field><field name="pos_y">300</field>
+            <field name="sla_hours">24</field>
+            <field name="sla_action">escalate</field>
+        </record>
+
+        <record id="stage_po_finance" model="wf.stage">
+            <field name="name">Finance Coding &amp; Release</field>
+            <field name="code">po_finance</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">6</field>
+            <field name="pos_x">960</field><field name="pos_y">200</field>
+            <field name="sla_hours">4</field>
+            <field name="sla_action">notify</field>
+        </record>
+
+        <record id="stage_po_end" model="wf.stage">
+            <field name="name">PO Approved &amp; Released</field>
+            <field name="code">po_end</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="stage_type">end</field>
+            <field name="sequence">7</field>
+            <field name="pos_x">1180</field><field name="pos_y">200</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             STAGES — Customer Complaint Resolution (6 stages)
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="stage_cmp_start" model="wf.stage">
+            <field name="name">Complaint Received</field>
+            <field name="code">cmp_start</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="stage_type">start</field>
+            <field name="sequence">1</field>
+            <field name="pos_x">80</field><field name="pos_y">200</field>
+        </record>
+
+        <record id="stage_cmp_triage" model="wf.stage">
+            <field name="name">Triage &amp; Classification</field>
+            <field name="code">cmp_triage</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">2</field>
+            <field name="pos_x">300</field><field name="pos_y">200</field>
+            <field name="sla_hours">2</field>
+            <field name="sla_action">escalate</field>
+            <field name="description">Classify severity (P1–P4) and assign to appropriate team.</field>
+        </record>
+
+        <record id="stage_cmp_investigation" model="wf.stage">
+            <field name="name">Investigation</field>
+            <field name="code">cmp_investigation</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">3</field>
+            <field name="pos_x">520</field><field name="pos_y">200</field>
+            <field name="sla_hours">24</field>
+            <field name="sla_action">notify</field>
+            <field name="requires_comment">True</field>
+            <field name="description">Root cause analysis and evidence gathering.</field>
+        </record>
+
+        <record id="stage_cmp_resolution" model="wf.stage">
+            <field name="name">Resolution &amp; Response</field>
+            <field name="code">cmp_resolution</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">4</field>
+            <field name="pos_x">740</field><field name="pos_y">200</field>
+            <field name="sla_hours">48</field>
+            <field name="sla_action">escalate</field>
+            <field name="requires_comment">True</field>
+        </record>
+
+        <record id="stage_cmp_customer_confirm" model="wf.stage">
+            <field name="name">Customer Confirmation</field>
+            <field name="code">cmp_customer_confirm</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">5</field>
+            <field name="pos_x">960</field><field name="pos_y">200</field>
+            <field name="sla_hours">72</field>
+            <field name="sla_action">auto_advance</field>
+            <field name="auto_advance">True</field>
+            <field name="auto_advance_delay">4320</field>
+            <field name="description">Awaiting customer acknowledgement. Auto-closes after 3 days if no reply.</field>
+        </record>
+
+        <record id="stage_cmp_end" model="wf.stage">
+            <field name="name">Complaint Closed</field>
+            <field name="code">cmp_end</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="stage_type">end</field>
+            <field name="sequence">6</field>
+            <field name="pos_x">1180</field><field name="pos_y">200</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             STAGES — IT Change Request (7 stages)
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="stage_itcr_start" model="wf.stage">
+            <field name="name">RFC Submitted</field>
+            <field name="code">itcr_start</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="stage_type">start</field>
+            <field name="sequence">1</field>
+            <field name="pos_x">80</field><field name="pos_y">200</field>
+        </record>
+
+        <record id="stage_itcr_impact" model="wf.stage">
+            <field name="name">Impact Assessment</field>
+            <field name="code">itcr_impact</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">2</field>
+            <field name="pos_x">300</field><field name="pos_y">200</field>
+            <field name="sla_hours">8</field>
+            <field name="sla_action">notify</field>
+            <field name="description">Assess risk, impact and rollback plan.</field>
+        </record>
+
+        <record id="stage_itcr_cab" model="wf.stage">
+            <field name="name">CAB Approval</field>
+            <field name="code">itcr_cab</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="stage_type">approval</field>
+            <field name="sequence">3</field>
+            <field name="approval_type">majority</field>
+            <field name="pos_x">520</field><field name="pos_y">200</field>
+            <field name="sla_hours">48</field>
+            <field name="sla_action">escalate</field>
+            <field name="description">Change Advisory Board votes on the RFC.</field>
+        </record>
+
+        <record id="stage_itcr_scheduled" model="wf.stage">
+            <field name="name">Scheduled &amp; Communicated</field>
+            <field name="code">itcr_scheduled</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">4</field>
+            <field name="pos_x">740</field><field name="pos_y">200</field>
+            <field name="sla_hours">24</field>
+            <field name="sla_action">notify</field>
+        </record>
+
+        <record id="stage_itcr_implementation" model="wf.stage">
+            <field name="name">Implementation</field>
+            <field name="code">itcr_implementation</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">5</field>
+            <field name="pos_x">960</field><field name="pos_y">200</field>
+            <field name="sla_hours">4</field>
+            <field name="sla_action">escalate</field>
+            <field name="requires_comment">True</field>
+        </record>
+
+        <record id="stage_itcr_pir" model="wf.stage">
+            <field name="name">Post-Implementation Review</field>
+            <field name="code">itcr_pir</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">6</field>
+            <field name="pos_x">1180</field><field name="pos_y">200</field>
+            <field name="sla_hours">72</field>
+            <field name="sla_action">notify</field>
+        </record>
+
+        <record id="stage_itcr_end" model="wf.stage">
+            <field name="name">Change Closed</field>
+            <field name="code">itcr_end</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="stage_type">end</field>
+            <field name="sequence">7</field>
+            <field name="pos_x">1400</field><field name="pos_y">200</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             STAGES — Product Launch Approval (6 stages)
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="stage_pl_start" model="wf.stage">
+            <field name="name">Launch Request Created</field>
+            <field name="code">pl_start</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="stage_type">start</field>
+            <field name="sequence">1</field>
+            <field name="pos_x">80</field><field name="pos_y">200</field>
+        </record>
+
+        <record id="stage_pl_marketing" model="wf.stage">
+            <field name="name">Marketing Review</field>
+            <field name="code">pl_marketing</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="stage_type">approval</field>
+            <field name="sequence">2</field>
+            <field name="approval_type">single</field>
+            <field name="pos_x">300</field><field name="pos_y">100</field>
+            <field name="sla_hours">48</field>
+            <field name="sla_action">notify</field>
+        </record>
+
+        <record id="stage_pl_legal" model="wf.stage">
+            <field name="name">Legal &amp; Compliance</field>
+            <field name="code">pl_legal</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="stage_type">approval</field>
+            <field name="sequence">3</field>
+            <field name="approval_type">all</field>
+            <field name="pos_x">300</field><field name="pos_y">300</field>
+            <field name="sla_hours">72</field>
+            <field name="sla_action">escalate</field>
+        </record>
+
+        <record id="stage_pl_exec" model="wf.stage">
+            <field name="name">Executive Sign-Off</field>
+            <field name="code">pl_exec</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="stage_type">approval</field>
+            <field name="sequence">4</field>
+            <field name="approval_type">single</field>
+            <field name="pos_x">520</field><field name="pos_y">200</field>
+            <field name="sla_hours">24</field>
+            <field name="sla_action">escalate</field>
+        </record>
+
+        <record id="stage_pl_prep" model="wf.stage">
+            <field name="name">Go-Live Preparation</field>
+            <field name="code">pl_prep</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="stage_type">normal</field>
+            <field name="sequence">5</field>
+            <field name="pos_x">740</field><field name="pos_y">200</field>
+            <field name="sla_hours">48</field>
+            <field name="sla_action">notify</field>
+        </record>
+
+        <record id="stage_pl_end" model="wf.stage">
+            <field name="name">Product Launched</field>
+            <field name="code">pl_end</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="stage_type">end</field>
+            <field name="sequence">6</field>
+            <field name="pos_x">960</field><field name="pos_y">200</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             TRANSITIONS — Employee Onboarding
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="trans_onb_01" model="wf.transition">
+            <field name="name">Initiate HR Documentation</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="from_stage_id" ref="stage_onb_start"/>
+            <field name="to_stage_id" ref="stage_onb_hr_docs"/>
+            <field name="trigger_type">auto</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_onb_02" model="wf.transition">
+            <field name="name">Docs Complete → IT Setup</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="from_stage_id" ref="stage_onb_hr_docs"/>
+            <field name="to_stage_id" ref="stage_onb_it_setup"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Documents Collected</field>
+            <field name="button_style">btn-primary</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_onb_03" model="wf.transition">
+            <field name="name">IT Ready → Manager Approval</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="from_stage_id" ref="stage_onb_it_setup"/>
+            <field name="to_stage_id" ref="stage_onb_mgr_approval"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Setup Complete</field>
+            <field name="button_style">btn-success</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_onb_04" model="wf.transition">
+            <field name="name">Manager Approved → Orientation</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="from_stage_id" ref="stage_onb_mgr_approval"/>
+            <field name="to_stage_id" ref="stage_onb_orientation"/>
+            <field name="trigger_type">approval_granted</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_onb_05" model="wf.transition">
+            <field name="name">Orientation Done → Complete</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="from_stage_id" ref="stage_onb_orientation"/>
+            <field name="to_stage_id" ref="stage_onb_end"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Mark Complete</field>
+            <field name="button_style">btn-success</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             TRANSITIONS — Purchase Order Approval
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="trans_po_01" model="wf.transition">
+            <field name="name">Auto → Procurement Review</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="from_stage_id" ref="stage_po_start"/>
+            <field name="to_stage_id" ref="stage_po_review"/>
+            <field name="trigger_type">auto</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_po_02" model="wf.transition">
+            <field name="name">Reviewed → Amount Check</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="from_stage_id" ref="stage_po_review"/>
+            <field name="to_stage_id" ref="stage_po_amount_check"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Reviewed — Proceed</field>
+            <field name="button_style">btn-primary</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_po_03_low" model="wf.transition">
+            <field name="name">Amount &lt; 5,000 → Manager</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="from_stage_id" ref="stage_po_amount_check"/>
+            <field name="to_stage_id" ref="stage_po_mgr_approve"/>
+            <field name="trigger_type">auto</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_po_03_high" model="wf.transition">
+            <field name="name">Amount ≥ 5,000 → Director</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="from_stage_id" ref="stage_po_amount_check"/>
+            <field name="to_stage_id" ref="stage_po_director_approve"/>
+            <field name="trigger_type">auto</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="trans_po_04a" model="wf.transition">
+            <field name="name">Manager Approved → Finance</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="from_stage_id" ref="stage_po_mgr_approve"/>
+            <field name="to_stage_id" ref="stage_po_finance"/>
+            <field name="trigger_type">approval_granted</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_po_04b" model="wf.transition">
+            <field name="name">Director Approved → Finance</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="from_stage_id" ref="stage_po_director_approve"/>
+            <field name="to_stage_id" ref="stage_po_finance"/>
+            <field name="trigger_type">approval_granted</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_po_05" model="wf.transition">
+            <field name="name">Finance Release → Done</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="from_stage_id" ref="stage_po_finance"/>
+            <field name="to_stage_id" ref="stage_po_end"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Released to Vendor</field>
+            <field name="button_style">btn-success</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             TRANSITIONS — Customer Complaint
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="trans_cmp_01" model="wf.transition">
+            <field name="name">Start → Triage</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="from_stage_id" ref="stage_cmp_start"/>
+            <field name="to_stage_id" ref="stage_cmp_triage"/>
+            <field name="trigger_type">auto</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_cmp_02" model="wf.transition">
+            <field name="name">Triaged → Investigation</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="from_stage_id" ref="stage_cmp_triage"/>
+            <field name="to_stage_id" ref="stage_cmp_investigation"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Classified — Start Investigation</field>
+            <field name="button_style">btn-warning</field>
+            <field name="condition_type">none</field>
+            <field name="require_comment">True</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_cmp_03" model="wf.transition">
+            <field name="name">Investigation → Resolution</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="from_stage_id" ref="stage_cmp_investigation"/>
+            <field name="to_stage_id" ref="stage_cmp_resolution"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Root Cause Found</field>
+            <field name="button_style">btn-primary</field>
+            <field name="condition_type">none</field>
+            <field name="require_comment">True</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_cmp_04" model="wf.transition">
+            <field name="name">Resolved → Customer Confirmation</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="from_stage_id" ref="stage_cmp_resolution"/>
+            <field name="to_stage_id" ref="stage_cmp_customer_confirm"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Solution Communicated</field>
+            <field name="button_style">btn-success</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_cmp_05" model="wf.transition">
+            <field name="name">Confirmed → Closed</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="from_stage_id" ref="stage_cmp_customer_confirm"/>
+            <field name="to_stage_id" ref="stage_cmp_end"/>
+            <field name="trigger_type">auto</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             TRANSITIONS — IT Change Request
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="trans_itcr_01" model="wf.transition">
+            <field name="name">RFC → Impact Assessment</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="from_stage_id" ref="stage_itcr_start"/>
+            <field name="to_stage_id" ref="stage_itcr_impact"/>
+            <field name="trigger_type">auto</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_itcr_02" model="wf.transition">
+            <field name="name">Impact Assessed → CAB</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="from_stage_id" ref="stage_itcr_impact"/>
+            <field name="to_stage_id" ref="stage_itcr_cab"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Submit to CAB</field>
+            <field name="button_style">btn-primary</field>
+            <field name="condition_type">none</field>
+            <field name="require_comment">True</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_itcr_03" model="wf.transition">
+            <field name="name">CAB Approved → Schedule</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="from_stage_id" ref="stage_itcr_cab"/>
+            <field name="to_stage_id" ref="stage_itcr_scheduled"/>
+            <field name="trigger_type">approval_granted</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_itcr_04" model="wf.transition">
+            <field name="name">Scheduled → Implement</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="from_stage_id" ref="stage_itcr_scheduled"/>
+            <field name="to_stage_id" ref="stage_itcr_implementation"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Begin Implementation</field>
+            <field name="button_style">btn-warning</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_itcr_05" model="wf.transition">
+            <field name="name">Implemented → PIR</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="from_stage_id" ref="stage_itcr_implementation"/>
+            <field name="to_stage_id" ref="stage_itcr_pir"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Implementation Complete</field>
+            <field name="button_style">btn-success</field>
+            <field name="condition_type">none</field>
+            <field name="require_comment">True</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_itcr_06" model="wf.transition">
+            <field name="name">PIR → Change Closed</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="from_stage_id" ref="stage_itcr_pir"/>
+            <field name="to_stage_id" ref="stage_itcr_end"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">Close RFC</field>
+            <field name="button_style">btn-success</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             TRANSITIONS — Product Launch
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="trans_pl_01a" model="wf.transition">
+            <field name="name">Start → Marketing Review</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="from_stage_id" ref="stage_pl_start"/>
+            <field name="to_stage_id" ref="stage_pl_marketing"/>
+            <field name="trigger_type">auto</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_pl_01b" model="wf.transition">
+            <field name="name">Start → Legal Review</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="from_stage_id" ref="stage_pl_start"/>
+            <field name="to_stage_id" ref="stage_pl_legal"/>
+            <field name="trigger_type">auto</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="trans_pl_02a" model="wf.transition">
+            <field name="name">Marketing Approved → Exec</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="from_stage_id" ref="stage_pl_marketing"/>
+            <field name="to_stage_id" ref="stage_pl_exec"/>
+            <field name="trigger_type">approval_granted</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_pl_02b" model="wf.transition">
+            <field name="name">Legal Approved → Exec</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="from_stage_id" ref="stage_pl_legal"/>
+            <field name="to_stage_id" ref="stage_pl_exec"/>
+            <field name="trigger_type">approval_granted</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_pl_03" model="wf.transition">
+            <field name="name">Exec Approved → Go-Live Prep</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="from_stage_id" ref="stage_pl_exec"/>
+            <field name="to_stage_id" ref="stage_pl_prep"/>
+            <field name="trigger_type">approval_granted</field>
+            <field name="condition_type">none</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_pl_04" model="wf.transition">
+            <field name="name">Prep Complete → Launched</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="from_stage_id" ref="stage_pl_prep"/>
+            <field name="to_stage_id" ref="stage_pl_end"/>
+            <field name="trigger_type">button</field>
+            <field name="button_label">🚀 Launch Product</field>
+            <field name="button_style">btn-success</field>
+            <field name="condition_type">none</field>
+            <field name="confirm_message">Confirm product launch? This action cannot be undone.</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             SLA RULES
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="sla_onb_total" model="wf.sla">
+            <field name="name">Onboarding Total Duration</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="sla_type">total</field>
+            <field name="warning_hours">120</field>
+            <field name="breach_hours">168</field>
+            <field name="on_warning_action">notify_owner</field>
+            <field name="on_breach_action">notify_manager</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="sla_onb_approval" model="wf.sla">
+            <field name="name">Manager Approval Response</field>
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="sla_type">approval</field>
+            <field name="stage_id" ref="stage_onb_mgr_approval"/>
+            <field name="warning_hours">4</field>
+            <field name="breach_hours">8</field>
+            <field name="on_warning_action">notify_owner</field>
+            <field name="on_breach_action">escalate</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="sla_po_total" model="wf.sla">
+            <field name="name">PO Approval — Total TAT</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="sla_type">total</field>
+            <field name="warning_hours">24</field>
+            <field name="breach_hours">48</field>
+            <field name="on_warning_action">notify_owner</field>
+            <field name="on_breach_action">escalate</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="sla_po_director" model="wf.sla">
+            <field name="name">Director Approval Turnaround</field>
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="sla_type">approval</field>
+            <field name="stage_id" ref="stage_po_director_approve"/>
+            <field name="warning_hours">12</field>
+            <field name="breach_hours">24</field>
+            <field name="on_warning_action">notify_owner</field>
+            <field name="on_breach_action">escalate</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="sla_cmp_p1" model="wf.sla">
+            <field name="name">P1 Complaint Resolution SLA</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="sla_type">total</field>
+            <field name="warning_hours">4</field>
+            <field name="breach_hours">8</field>
+            <field name="on_warning_action">notify_manager</field>
+            <field name="on_breach_action">escalate</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="sla_cmp_total" model="wf.sla">
+            <field name="name">Standard Complaint Closure</field>
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="sla_type">total</field>
+            <field name="warning_hours">72</field>
+            <field name="breach_hours">120</field>
+            <field name="on_warning_action">notify_owner</field>
+            <field name="on_breach_action">notify_manager</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="sla_itcr_cab" model="wf.sla">
+            <field name="name">CAB Review Window</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="sla_type">stage</field>
+            <field name="stage_id" ref="stage_itcr_cab"/>
+            <field name="warning_hours">36</field>
+            <field name="breach_hours">48</field>
+            <field name="on_warning_action">notify_owner</field>
+            <field name="on_breach_action">escalate</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="sla_itcr_total" model="wf.sla">
+            <field name="name">RFC Total Lifecycle</field>
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="sla_type">total</field>
+            <field name="warning_hours">168</field>
+            <field name="breach_hours">336</field>
+            <field name="on_warning_action">notify_owner</field>
+            <field name="on_breach_action">notify_manager</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="sla_pl_exec" model="wf.sla">
+            <field name="name">Executive Decision Deadline</field>
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="sla_type">approval</field>
+            <field name="stage_id" ref="stage_pl_exec"/>
+            <field name="warning_hours">12</field>
+            <field name="breach_hours">24</field>
+            <field name="on_warning_action">notify_manager</field>
+            <field name="on_breach_action">escalate</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             WORKFLOW INSTANCES (15 demo running instances)
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <!-- Onboarding instances -->
+        <record id="inst_onb_001" model="wf.instance">
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">1</field>
+            <field name="res_name">Alice Johnson (New Hire)</field>
+            <field name="current_stage_id" ref="stage_onb_it_setup"/>
+            <field name="state">running</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_onb_002" model="wf.instance">
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">2</field>
+            <field name="res_name">Bob Martinez (New Hire)</field>
+            <field name="current_stage_id" ref="stage_onb_mgr_approval"/>
+            <field name="state">pending_approval</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=4)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_onb_003" model="wf.instance">
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">3</field>
+            <field name="res_name">Carol White (New Hire)</field>
+            <field name="current_stage_id" ref="stage_onb_end"/>
+            <field name="state">completed</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=14)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="completed_at" eval="(datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_onb_004" model="wf.instance">
+            <field name="definition_id" ref="wf_def_onboarding"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">4</field>
+            <field name="res_name">David Chen (New Hire)</field>
+            <field name="current_stage_id" ref="stage_onb_orientation"/>
+            <field name="state">running</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <!-- PO Approval instances -->
+        <record id="inst_po_001" model="wf.instance">
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">5</field>
+            <field name="res_name">PO/2025/00142 — Office Supplies</field>
+            <field name="current_stage_id" ref="stage_po_mgr_approve"/>
+            <field name="state">pending_approval</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(hours=6)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_po_002" model="wf.instance">
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">6</field>
+            <field name="res_name">PO/2025/00143 — Server Hardware €45,000</field>
+            <field name="current_stage_id" ref="stage_po_director_approve"/>
+            <field name="state">pending_approval</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="sla_deadline" eval="(datetime.now() + timedelta(hours=4)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_po_003" model="wf.instance">
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">7</field>
+            <field name="res_name">PO/2025/00138 — Marketing Materials</field>
+            <field name="current_stage_id" ref="stage_po_end"/>
+            <field name="state">completed</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="completed_at" eval="(datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_po_004" model="wf.instance">
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">8</field>
+            <field name="res_name">PO/2025/00150 — Catering Annual Contract</field>
+            <field name="current_stage_id" ref="stage_po_review"/>
+            <field name="state">running</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_po_005" model="wf.instance">
+            <field name="definition_id" ref="wf_def_po_approval"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">9</field>
+            <field name="res_name">PO/2025/00155 — Cloud Subscription Renewal</field>
+            <field name="current_stage_id" ref="stage_po_finance"/>
+            <field name="state">running</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <!-- Complaint instances -->
+        <record id="inst_cmp_001" model="wf.instance">
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">10</field>
+            <field name="res_name">CMP-2025-0041 — Defective Product Delivered</field>
+            <field name="current_stage_id" ref="stage_cmp_investigation"/>
+            <field name="state">running</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="sla_deadline" eval="(datetime.now() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_cmp_002" model="wf.instance">
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">11</field>
+            <field name="res_name">CMP-2025-0042 — Invoice Dispute</field>
+            <field name="current_stage_id" ref="stage_cmp_triage"/>
+            <field name="state">running</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(hours=3)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_cmp_003" model="wf.instance">
+            <field name="definition_id" ref="wf_def_complaint"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">12</field>
+            <field name="res_name">CMP-2025-0039 — Late Delivery P2</field>
+            <field name="current_stage_id" ref="stage_cmp_end"/>
+            <field name="state">completed</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=10)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="completed_at" eval="(datetime.now() - timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <!-- IT Change instances -->
+        <record id="inst_itcr_001" model="wf.instance">
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">13</field>
+            <field name="res_name">RFC-2025-088 — Firewall Rule Update</field>
+            <field name="current_stage_id" ref="stage_itcr_cab"/>
+            <field name="state">pending_approval</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_itcr_002" model="wf.instance">
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">14</field>
+            <field name="res_name">RFC-2025-091 — ERP Database Migration</field>
+            <field name="current_stage_id" ref="stage_itcr_scheduled"/>
+            <field name="state">running</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=6)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_itcr_003" model="wf.instance">
+            <field name="definition_id" ref="wf_def_it_change"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">15</field>
+            <field name="res_name">RFC-2025-079 — VPN Client Upgrade</field>
+            <field name="current_stage_id" ref="stage_itcr_end"/>
+            <field name="state">completed</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=21)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="completed_at" eval="(datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <!-- Product Launch instances -->
+        <record id="inst_pl_001" model="wf.instance">
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">16</field>
+            <field name="res_name">LAUNCH — AnalyticsPro v3.0</field>
+            <field name="current_stage_id" ref="stage_pl_exec"/>
+            <field name="state">pending_approval</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <record id="inst_pl_002" model="wf.instance">
+            <field name="definition_id" ref="wf_def_product_launch"/>
+            <field name="res_model">res.partner</field>
+            <field name="res_id">17</field>
+            <field name="res_name">LAUNCH — Mobile App iOS Update</field>
+            <field name="current_stage_id" ref="stage_pl_prep"/>
+            <field name="state">running</field>
+            <field name="started_at" eval="(datetime.now() - timedelta(days=12)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             INSTANCE LOGS (audit trail entries)
+        ══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="log_onb_001_01" model="wf.instance.log">
+            <field name="instance_id" ref="inst_onb_001"/>
+            <field name="log_type">stage_entry</field>
+            <field name="message">Entered stage: New Hire Initiated</field>
+            <field name="stage_id" ref="stage_onb_start"/>
+        </record>
+
+        <record id="log_onb_001_02" model="wf.instance.log">
+            <field name="instance_id" ref="inst_onb_001"/>
+            <field name="log_type">transition</field>
+            <field name="message">New Hire Initiated → HR Documentation via "Initiate HR Documentation"</field>
+            <field name="from_stage_id" ref="stage_onb_start"/>
+            <field name="to_stage_id" ref="stage_onb_hr_docs"/>
+            <field name="transition_id" ref="trans_onb_01"/>
+        </record>
+
+        <record id="log_onb_001_03" model="wf.instance.log">
+            <field name="instance_id" ref="inst_onb_001"/>
+            <field name="log_type">stage_entry</field>
+            <field name="message">Entered stage: HR Documentation</field>
+            <field name="stage_id" ref="stage_onb_hr_docs"/>
+        </record>
+
+        <record id="log_onb_001_04" model="wf.instance.log">
+            <field name="instance_id" ref="inst_onb_001"/>
+            <field name="log_type">transition</field>
+            <field name="message">HR Documentation → IT Equipment &amp; Access via "Docs Complete → IT Setup"</field>
+            <field name="comment">All signed documents received and verified in HR system.</field>
+            <field name="from_stage_id" ref="stage_onb_hr_docs"/>
+            <field name="to_stage_id" ref="stage_onb_it_setup"/>
+            <field name="transition_id" ref="trans_onb_02"/>
+        </record>
+
+        <record id="log_onb_001_05" model="wf.instance.log">
+            <field name="instance_id" ref="inst_onb_001"/>
+            <field name="log_type">stage_entry</field>
+            <field name="message">Entered stage: IT Equipment &amp; Access</field>
+            <field name="stage_id" ref="stage_onb_it_setup"/>
+        </record>
+
+        <record id="log_po_002_01" model="wf.instance.log">
+            <field name="instance_id" ref="inst_po_002"/>
+            <field name="log_type">stage_entry</field>
+            <field name="message">Entered stage: PO Created</field>
+            <field name="stage_id" ref="stage_po_start"/>
+        </record>
+
+        <record id="log_po_002_02" model="wf.instance.log">
+            <field name="instance_id" ref="inst_po_002"/>
+            <field name="log_type">transition</field>
+            <field name="message">PO Created → Procurement Review via "Auto → Procurement Review"</field>
+            <field name="from_stage_id" ref="stage_po_start"/>
+            <field name="to_stage_id" ref="stage_po_review"/>
+            <field name="transition_id" ref="trans_po_01"/>
+        </record>
+
+        <record id="log_po_002_03" model="wf.instance.log">
+            <field name="instance_id" ref="inst_po_002"/>
+            <field name="log_type">transition</field>
+            <field name="message">Procurement Review → Amount Threshold Check via "Reviewed — Proceed"</field>
+            <field name="comment">Vendor pre-approved, pricing matches framework agreement.</field>
+            <field name="from_stage_id" ref="stage_po_review"/>
+            <field name="to_stage_id" ref="stage_po_amount_check"/>
+            <field name="transition_id" ref="trans_po_02"/>
+        </record>
+
+        <record id="log_po_002_04" model="wf.instance.log">
+            <field name="instance_id" ref="inst_po_002"/>
+            <field name="log_type">transition</field>
+            <field name="message">Amount Threshold Check → Director Approval via "Amount ≥ 5,000 → Director"</field>
+            <field name="from_stage_id" ref="stage_po_amount_check"/>
+            <field name="to_stage_id" ref="stage_po_director_approve"/>
+            <field name="transition_id" ref="trans_po_03_high"/>
+        </record>
+
+        <record id="log_cmp_001_01" model="wf.instance.log">
+            <field name="instance_id" ref="inst_cmp_001"/>
+            <field name="log_type">stage_entry</field>
+            <field name="message">Entered stage: Complaint Received</field>
+            <field name="stage_id" ref="stage_cmp_start"/>
+        </record>
+
+        <record id="log_cmp_001_02" model="wf.instance.log">
+            <field name="instance_id" ref="inst_cmp_001"/>
+            <field name="log_type">transition</field>
+            <field name="message">Complaint Received → Triage &amp; Classification via "Start → Triage"</field>
+            <field name="from_stage_id" ref="stage_cmp_start"/>
+            <field name="to_stage_id" ref="stage_cmp_triage"/>
+            <field name="transition_id" ref="trans_cmp_01"/>
+        </record>
+
+        <record id="log_cmp_001_03" model="wf.instance.log">
+            <field name="instance_id" ref="inst_cmp_001"/>
+            <field name="log_type">transition</field>
+            <field name="message">Triage → Investigation via "Classified — Start Investigation"</field>
+            <field name="comment">Classified as P2 — defective unit, customer needs replacement within 24h.</field>
+            <field name="from_stage_id" ref="stage_cmp_triage"/>
+            <field name="to_stage_id" ref="stage_cmp_investigation"/>
+            <field name="transition_id" ref="trans_cmp_02"/>
+        </record>
+
+        <record id="log_itcr_001_01" model="wf.instance.log">
+            <field name="instance_id" ref="inst_itcr_001"/>
+            <field name="log_type">stage_entry</field>
+            <field name="message">Entered stage: RFC Submitted</field>
+            <field name="stage_id" ref="stage_itcr_start"/>
+        </record>
+
+        <record id="log_itcr_001_02" model="wf.instance.log">
+            <field name="instance_id" ref="inst_itcr_001"/>
+            <field name="log_type">transition</field>
+            <field name="message">RFC Submitted → Impact Assessment via auto-trigger</field>
+            <field name="from_stage_id" ref="stage_itcr_start"/>
+            <field name="to_stage_id" ref="stage_itcr_impact"/>
+            <field name="transition_id" ref="trans_itcr_01"/>
+        </record>
+
+        <record id="log_itcr_001_03" model="wf.instance.log">
+            <field name="instance_id" ref="inst_itcr_001"/>
+            <field name="log_type">transition</field>
+            <field name="message">Impact Assessment → CAB Approval via "Submit to CAB"</field>
+            <field name="comment">Risk: LOW. Rollback plan documented. Maintenance window: Saturday 02:00–04:00. No user impact expected.</field>
+            <field name="from_stage_id" ref="stage_itcr_impact"/>
+            <field name="to_stage_id" ref="stage_itcr_cab"/>
+            <field name="transition_id" ref="trans_itcr_02"/>
+        </record>
+
+        <record id="log_pl_001_01" model="wf.instance.log">
+            <field name="instance_id" ref="inst_pl_001"/>
+            <field name="log_type">stage_entry</field>
+            <field name="message">Entered stage: Launch Request Created</field>
+            <field name="stage_id" ref="stage_pl_start"/>
+        </record>
+
+        <record id="log_pl_001_02" model="wf.instance.log">
+            <field name="instance_id" ref="inst_pl_001"/>
+            <field name="log_type">transition</field>
+            <field name="message">Launch Request Created → Marketing Review</field>
+            <field name="from_stage_id" ref="stage_pl_start"/>
+            <field name="to_stage_id" ref="stage_pl_marketing"/>
+            <field name="transition_id" ref="trans_pl_01a"/>
+        </record>
+
+        <record id="log_pl_001_03" model="wf.instance.log">
+            <field name="instance_id" ref="inst_pl_001"/>
+            <field name="log_type">transition</field>
+            <field name="message">Marketing Review → Executive Sign-Off (approved)</field>
+            <field name="comment">Marketing review APPROVED. Brand guidelines met, messaging aligned with Q3 campaign.</field>
+            <field name="from_stage_id" ref="stage_pl_marketing"/>
+            <field name="to_stage_id" ref="stage_pl_exec"/>
+            <field name="transition_id" ref="trans_pl_02a"/>
+        </record>
+
+    </data>
+</odoo>

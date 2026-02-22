@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="group_negative_stock_override" model="res.groups">
+            <field name="name">Negative Stock: Override Permission</field>
+            <field name="implied_ids" eval="[(4, ref('stock.group_stock_manager'))]"/>
+            <field name="comment">Users in this group can override negative stock blocks.</field>
+        </record>
+
+        <record id="group_negative_stock_analyst" model="res.groups">
+            <field name="name">Negative Stock: View Dashboard &amp; Analytics</field>
+            <field name="comment">Users can view the negative stock dashboard and analytics.</field>
+        </record>
+    </data>
+</odoo>

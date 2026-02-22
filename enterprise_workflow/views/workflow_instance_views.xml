@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ── List ─────────────────────────────────────────────────────────────── -->
+  <record id="view_wf_instance_list" model="ir.ui.view">
+    <field name="name">wf.instance.list</field>
+    <field name="model">wf.instance</field>
+    <field name="arch" type="xml">
+      <list string="Instances"
+            decoration-danger="state in ('error','sla_breached')"
+            decoration-success="state == 'completed'"
+            decoration-muted="state == 'cancelled'"
+            decoration-warning="state == 'pending_approval'">
+        <field name="name"/>
+        <field name="definition_id"/>
+        <field name="res_name"            string="Record"/>
+        <field name="current_stage_id"/>
+        <field name="owner_id"            optional="show"/>
+        <field name="assigned_user_id"    optional="show"/>
+        <field name="started_at"/>
+        <field name="duration_hours"      string="Hrs" widget="float_time" optional="show"/>
+        <field name="sla_deadline"        optional="show"/>
+        <field name="pending_approval_count" string="Approvals" optional="show"/>
+        <field name="state" widget="badge"
+               decoration-success="state == 'completed'"
+               decoration-danger="state in ('error','sla_breached')"
+               decoration-warning="state == 'pending_approval'"
+               decoration-info="state in ('running','waiting')"/>
+        <button name="action_open_record" type="object"
+                icon="fa-external-link" string="Open"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- ── Form ─────────────────────────────────────────────────────────────── -->
+  <record id="view_wf_instance_form" model="ir.ui.view">
+    <field name="name">wf.instance.form</field>
+    <field name="model">wf.instance</field>
+    <field name="arch" type="xml">
+      <form string="Workflow Instance">
+        <header>
+          <button name="action_cancel" type="object" string="Cancel"
+                  class="btn-danger"
+                  confirm="Cancel this workflow instance?"
+                  invisible="state in ('completed','cancelled')"
+                  groups="enterprise_workflow.group_wf_manager"/>
+          <button name="action_restart" type="object" string="Restart"
+                  invisible="state not in ('error','cancelled')"
+                  groups="enterprise_workflow.group_wf_manager"/>
+          <button name="action_open_record" type="object"
+                  string="Open Record" class="btn-secondary"/>
+          <field name="state" widget="statusbar"
+                 statusbar_visible="running,pending_approval,completed"/>
+        </header>
+        <sheet>
+          <widget name="web_ribbon" title="Error"       bg_color="bg-danger"
+                  invisible="state != 'error'"/>
+          <widget name="web_ribbon" title="SLA Breached" bg_color="bg-warning"
+                  invisible="state != 'sla_breached'"/>
+          <widget name="web_ribbon" title="Completed"   bg_color="bg-success"
+                  invisible="state != 'completed'"/>
+          <div class="oe_title">
+            <h1><field name="name" readonly="1"/></h1>
+          </div>
+          <group>
+            <group string="Workflow">
+              <field name="definition_id"    readonly="1"/>
+              <field name="current_stage_id"/>
+              <field name="state" widget="badge"/>
+            </group>
+            <group string="Target Record">
+              <field name="res_model" readonly="1"/>
+              <field name="res_id"    readonly="1"/>
+              <field name="res_name"  readonly="1"/>
+            </group>
+            <group string="Timing">
+              <field name="started_at"       readonly="1"/>
+              <field name="stage_entered_at" readonly="1"/>
+              <field name="completed_at"     readonly="1"/>
+              <field name="duration_hours"   readonly="1" widget="float_time"/>
+              <field name="sla_deadline"/>
+            </group>
+            <group string="People">
+              <field name="owner_id"/>
+              <field name="assigned_user_id"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Approvals" name="approvals">
+              <field name="approval_ids" readonly="1">
+                <list>
+                  <field name="approver_id"/>
+                  <field name="stage_id"/>
+                  <field name="state" widget="badge"
+                         decoration-success="state == 'approved'"
+                         decoration-danger="state == 'rejected'"
+                         decoration-warning="state == 'pending'"/>
+                  <field name="responded_at"/>
+                  <field name="comment" optional="show"/>
+                  <button name="action_approve" type="object"
+                          string="Approve" class="btn-sm btn-success"
+                          invisible="state != 'pending'"/>
+                  <button name="action_reject" type="object"
+                          string="Reject" class="btn-sm btn-danger"
+                          invisible="state != 'pending'"/>
+                </list>
+              </field>
+            </page>
+            <page string="Execution Log" name="log">
+              <field name="log_ids" readonly="1">
+                <list>
+                  <field name="create_date" string="Timestamp"/>
+                  <field name="log_type" widget="badge"
+                         decoration-danger="log_type == 'error'"
+                         decoration-warning="log_type == 'sla_breach'"
+                         decoration-success="log_type == 'completed'"
+                         decoration-info="log_type in ('stage_entry','transition')"/>
+                  <field name="user_id"/>
+                  <field name="message"/>
+                  <field name="comment"      optional="show"/>
+                  <field name="from_stage_id" optional="show"/>
+                  <field name="to_stage_id"   optional="show"/>
+                </list>
+              </field>
+            </page>
+            <page string="Variables"
+                  groups="enterprise_workflow.group_wf_manager">
+              <field name="variables_json" widget="ace" options="{'mode':'json'}"/>
+            </page>
+          </notebook>
+        </sheet>
+        <chatter/>
+      </form>
+    </field>
+  </record>
+
+  <!-- ── Graph / Pivot ─────────────────────────────────────────────────────── -->
+  <record id="view_wf_instance_graph" model="ir.ui.view">
+    <field name="name">wf.instance.graph</field>
+    <field name="model">wf.instance</field>
+    <field name="arch" type="xml">
+      <graph string="Workflow Analytics" type="bar">
+        <field name="definition_id"/>
+        <field name="state" type="col"/>
+      </graph>
+    </field>
+  </record>
+
+  <record id="view_wf_instance_pivot" model="ir.ui.view">
+    <field name="name">wf.instance.pivot</field>
+    <field name="model">wf.instance</field>
+    <field name="arch" type="xml">
+      <pivot string="Workflow Analytics">
+        <field name="definition_id" type="row"/>
+        <field name="state"         type="col"/>
+        <field name="duration_hours" type="measure"/>
+      </pivot>
+    </field>
+  </record>
+
+  <!-- ── Search ────────────────────────────────────────────────────────────── -->
+  <record id="view_wf_instance_search" model="ir.ui.view">
+    <field name="name">wf.instance.search</field>
+    <field name="model">wf.instance</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/><field name="definition_id"/>
+        <field name="res_name"/><field name="owner_id"/>
+<!--        <filter string="Running"          domain="[('state','=','running')]"/>-->
+<!--        <filter string="Pending Approval" domain="[('state','=','pending_approval')]"/>-->
+<!--        <filter string="SLA Breached"     domain="[('state','=','sla_breached')]"/>-->
+<!--        <filter string="Error"            domain="[('state','=','error')]"/>-->
+<!--        <filter string="Completed"        domain="[('state','=','completed')]"/>-->
+<!--        <separator/>-->
+<!--        <filter string="Assigned to Me"   domain="[('assigned_user_id','=',user.id)]"/>-->
+<!--        <filter string="My Instances"     domain="[('owner_id','=',uid)]"/>-->
+<!--        <group expand="0" string="Group By">-->
+<!--          <filter string="Workflow" context="{'group_by':'definition_id'}"/>-->
+<!--          <filter string="Status"   context="{'group_by':'state'}"/>-->
+<!--          <filter string="Stage"    context="{'group_by':'current_stage_id'}"/>-->
+<!--        </group>-->
+      </search>
+    </field>
+  </record>
+
+  <!-- ── Actions ───────────────────────────────────────────────────────────── -->
+  <record id="action_wf_instance" model="ir.actions.act_window">
+    <field name="name">Workflow Instances</field>
+    <field name="res_model">wf.instance</field>
+    <field name="view_mode">list,form,graph,pivot</field>
+    <field name="search_view_id" ref="view_wf_instance_search"/>
+<!--    <field name="context">{'search_default_Running': 1}</field>-->
+  </record>
+
+  <record id="action_wf_instance_analytics" model="ir.actions.act_window">
+    <field name="name">Workflow Analytics</field>
+    <field name="res_model">wf.instance</field>
+    <field name="view_mode">graph,pivot,list</field>
+    <field name="search_view_id" ref="view_wf_instance_search"/>
+  </record>
+
+</odoo>

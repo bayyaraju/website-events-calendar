@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ── List ─────────────────────────────────────────────────────────────── -->
+  <record id="view_wf_def_list" model="ir.ui.view">
+    <field name="name">wf.definition.list</field>
+    <field name="model">wf.definition</field>
+    <field name="arch" type="xml">
+      <list string="Workflow Definitions"
+            decoration-muted="state == 'deprecated'"
+            decoration-info="state == 'draft'">
+        <field name="sequence" widget="handle"/>
+        <field name="name"/>
+        <field name="code" optional="hide"/>
+        <field name="model_id"/>
+        <field name="trigger_type"/>
+        <field name="version" optional="show"/>
+        <field name="stage_count"           string="Stages"/>
+        <field name="active_instance_count" string="Running"/>
+        <field name="instance_count"        string="Total" optional="show"/>
+        <field name="state" widget="badge"
+               decoration-success="state == 'active'"
+               decoration-warning="state == 'draft'"
+               decoration-muted="state == 'deprecated'"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- ── Form ─────────────────────────────────────────────────────────────── -->
+  <record id="view_wf_def_form" model="ir.ui.view">
+    <field name="name">wf.definition.form</field>
+    <field name="model">wf.definition</field>
+    <field name="arch" type="xml">
+      <form string="Workflow Definition">
+        <header>
+          <button name="action_activate" type="object" string="Activate"
+                  class="btn-primary" invisible="state != 'draft'"
+                  confirm="Activate this workflow? Matching records will start triggering it."/>
+          <button name="action_set_draft" type="object" string="Back to Draft"
+                  invisible="state != 'active'"/>
+          <button name="action_deprecate" type="object" string="Deprecate"
+                  invisible="state == 'deprecated'"/>
+          <button name="action_new_version" type="object" string="New Version"
+                  class="btn-secondary"
+                  invisible="state not in ('active','deprecated')"
+                  groups="enterprise_workflow.group_wf_manager"/>
+          <field name="state" widget="statusbar"
+                 statusbar_visible="draft,active,deprecated"/>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button name="action_view_instances" type="object"
+                    class="oe_stat_button" icon="fa-play-circle">
+              <field name="active_instance_count" widget="statinfo" string="Running"/>
+            </button>
+            <button name="action_view_instances" type="object"
+                    class="oe_stat_button" icon="fa-history">
+              <field name="instance_count" widget="statinfo" string="Total"/>
+            </button>
+            <button class="oe_stat_button" icon="fa-sitemap"
+                    type="object" name="action_view_instances">
+              <field name="stage_count" widget="statinfo" string="Stages"/>
+            </button>
+          </div>
+          <widget name="web_ribbon" title="Deprecated" bg_color="bg-warning"
+                  invisible="state != 'deprecated'"/>
+          <widget name="web_ribbon" title="Draft"      bg_color="bg-info"
+                  invisible="state != 'draft'"/>
+          <div class="oe_title">
+            <h1><field name="name" placeholder="Workflow name…"/></h1>
+            <div class="text-muted small">
+              <field name="code" placeholder="technical_code"/>
+              &amp;nbsp;·&amp;nbsp; v<field name="version" readonly="1"/>
+            </div>
+          </div>
+          <group>
+            <group string="Configuration">
+              <field name="model_id" options="{'no_create': True}"/>
+              <field name="model_name" invisible="1"/>
+              <field name="color" widget="color_picker"/>
+            </group>
+            <group string="Trigger">
+              <field name="trigger_type"/>
+              <field name="trigger_domain"
+                     invisible="trigger_type in ('manual','scheduled','webhook')"
+                     placeholder="[('state','=','draft')]"/>
+              <field name="trigger_field_ids"
+                     invisible="trigger_type != 'on_write'"
+                     widget="many2many_tags"
+                     domain="[('model_id','=',model_id)]"/>
+              <field name="cron_expression"
+                     invisible="trigger_type != 'scheduled'"
+                     placeholder="0 9 * * 1-5"/>
+            </group>
+            <group string="Settings">
+              <field name="allow_parallel"/>
+              <field name="auto_close"/>
+              <field name="notify_on_complete"/>
+              <field name="notify_template_id"
+                     invisible="not notify_on_complete"/>
+            </group>
+            <group string="Version">
+              <field name="parent_id" readonly="1"/>
+              <field name="version_notes"/>
+            </group>
+          </group>
+          <field name="description" placeholder="Describe this workflow…"/>
+          <notebook>
+            <page string="Stages" name="stages">
+              <field name="stage_ids"
+                     context="{'default_definition_id': id}">
+                <list editable="bottom">
+                  <field name="sequence" widget="handle"/>
+                  <field name="name"/>
+                  <field name="code"/>
+                  <field name="stage_type" widget="badge"
+                         decoration-success="stage_type == 'start'"
+                         decoration-danger="stage_type == 'end'"
+                         decoration-warning="stage_type == 'approval'"
+                         decoration-info="stage_type == 'condition'"/>
+                  <field name="is_blocking"/>
+                  <field name="sla_hours"  string="SLA (h)" optional="show"/>
+                  <field name="auto_advance" optional="show"/>
+                </list>
+              </field>
+            </page>
+            <page string="Transitions" name="transitions">
+              <field name="transition_ids"
+                     context="{'default_definition_id': id}">
+                <list editable="bottom">
+                  <field name="sequence" widget="handle"/>
+                  <field name="name"/>
+                  <field name="from_stage_id"/>
+                  <field name="to_stage_id"/>
+                  <field name="trigger_type"/>
+                  <field name="condition_type" optional="show"/>
+                  <field name="button_label"   optional="show"/>
+                  <field name="require_comment" optional="show"/>
+                </list>
+              </field>
+            </page>
+            <page string="SLA Rules" name="sla">
+              <field name="sla_ids"
+                     context="{'default_definition_id': id}">
+                <list editable="bottom">
+                  <field name="sequence" widget="handle"/>
+                  <field name="name"/>
+                  <field name="sla_type"/>
+                  <field name="stage_id"       optional="show"/>
+                  <field name="warning_hours"/>
+                  <field name="breach_hours"/>
+                  <field name="on_breach_action"/>
+                </list>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+        <chatter/>
+      </form>
+    </field>
+  </record>
+
+  <!-- ── Kanban ────────────────────────────────────────────────────────────── -->
+  <record id="view_wf_def_kanban" model="ir.ui.view">
+    <field name="name">wf.definition.kanban</field>
+    <field name="model">wf.definition</field>
+    <field name="arch" type="xml">
+      <kanban>
+        <field name="name"/><field name="model_id"/>
+        <field name="state"/><field name="stage_count"/>
+        <field name="active_instance_count"/><field name="color"/>
+<!--        <templates>-->
+<!--          <t t-name="kanban-box">-->
+<!--            <div t-attf-class="oe_kanban_card oe_kanban_global_click"-->
+<!--                 t-attf-style="border-top:4px solid #{kanban_color(record.color.raw_value)}">-->
+<!--              <div class="o_kanban_record_top">-->
+<!--                <div class="o_kanban_record_headings">-->
+<!--                  <strong class="o_kanban_record_title"><field name="name"/></strong>-->
+<!--                  <small class="text-muted d-block"><field name="model_id"/></small>-->
+<!--                </div>-->
+<!--                <field name="state" widget="badge"-->
+<!--                       decoration-success="state == 'active'"-->
+<!--                       decoration-warning="state == 'draft'"/>-->
+<!--              </div>-->
+<!--              <div class="mt-2">-->
+<!--                <span class="badge bg-light text-dark me-1">-->
+<!--                  <i class="fa fa-sitemap"/> <t t-out="record.stage_count.value"/> stages-->
+<!--                </span>-->
+<!--                <span class="badge bg-light text-dark">-->
+<!--                  <i class="fa fa-spinner"/> <t t-out="record.active_instance_count.value"/> running-->
+<!--                </span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </t>-->
+<!--        </templates>-->
+      </kanban>
+    </field>
+  </record>
+
+  <!-- ── Search ────────────────────────────────────────────────────────────── -->
+  <record id="view_wf_def_search" model="ir.ui.view">
+    <field name="name">wf.definition.search</field>
+    <field name="model">wf.definition</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/><field name="code"/><field name="model_id"/>
+        <filter string="Active"     name="f_active"     domain="[('state','=','active')]"/>
+        <filter string="Draft"      name="f_draft"      domain="[('state','=','draft')]"/>
+        <filter string="Deprecated" name="f_deprecated" domain="[('state','=','deprecated')]"/>
+<!--        <group expand="0" string="Group By">-->
+<!--          <filter string="Model"   context="{'group_by':'model_id'}"/>-->
+<!--          <filter string="Status"  context="{'group_by':'state'}"/>-->
+<!--          <filter string="Trigger" context="{'group_by':'trigger_type'}"/>-->
+<!--        </group>-->
+      </search>
+    </field>
+  </record>
+
+  <!-- ── Action ────────────────────────────────────────────────────────────── -->
+  <record id="action_wf_definition" model="ir.actions.act_window">
+    <field name="name">Workflow Definitions</field>
+    <field name="res_model">wf.definition</field>
+    <field name="view_mode">kanban,list,form</field>
+    <field name="search_view_id" ref="view_wf_def_search"/>
+<!--    <field name="context">{'search_default_f_active': 1}</field>-->
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">Create your first workflow</p>
+      <p>Design visual processes with stages, approvals, SLAs and automated actions.</p>
+    </field>
+  </record>
+
+</odoo>

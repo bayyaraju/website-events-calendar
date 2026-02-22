@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+<t t-name="enterprise_workflow.WfDesigner" owl="1">
+  <div class="o_wf_designer_wrap">
+
+    <!-- ── Toolbar ─────────────────────────────────────────────── -->
+    <div class="o_wf_toolbar">
+      <h5><i class="fa fa-sitemap me-2 text-primary"/>Workflow Designer</h5>
+
+      <button class="btn btn-sm btn-outline-secondary"
+              t-on-click="() => this.addStage('normal')">
+        <i class="fa fa-plus"/> Stage
+      </button>
+      <button class="btn btn-sm btn-outline-warning"
+              t-on-click="() => this.addStage('approval')">
+        <i class="fa fa-check-square-o"/> Approval
+      </button>
+      <button class="btn btn-sm btn-outline-info"
+              t-on-click="() => this.addStage('condition')">
+        <i class="fa fa-code-fork"/> Decision
+      </button>
+      <button class="btn btn-sm btn-outline-danger"
+              t-on-click="() => this.addStage('end')">
+        <i class="fa fa-stop-circle"/> End
+      </button>
+
+      <div class="ms-auto d-flex gap-2">
+        <button class="btn btn-sm btn-outline-secondary"
+                t-on-click="autoLayout"
+                title="Auto-layout nodes">
+          <i class="fa fa-magic"/> Layout
+        </button>
+        <button class="btn btn-sm btn-outline-secondary"
+                t-on-click="fitScreen"
+                title="Fit to screen">
+          <i class="fa fa-expand"/>
+        </button>
+        <button class="btn btn-sm btn-primary"
+                t-on-click="saveLayout">
+          <i class="fa fa-save"/> Save
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Canvas area ─────────────────────────────────────────── -->
+    <div class="o_wf_canvas_outer"
+         t-ref="canvasOuter"
+         t-on-mousedown="onCanvasDown"
+         t-on-mousemove="onMouseMove"
+         t-on-mouseup="onMouseUp"
+         t-on-wheel.prevent="onWheel"
+         t-on-click="onCanvasClick"
+         t-on-contextmenu.prevent="onContextMenu">
+
+      <!-- Loading spinner -->
+      <t t-if="state.loading">
+        <div class="d-flex align-items-center justify-content-center h-100">
+          <div class="spinner-border text-primary" role="status"/>
+          <span class="ms-3 text-muted">Loading…</span>
+        </div>
+      </t>
+
+      <t t-if="!state.loading">
+
+        <!-- Empty state -->
+        <t t-if="state.stages.length === 0">
+          <div class="o_wf_empty">
+            <i class="fa fa-sitemap"/>
+            <h6 class="mt-3">No stages yet</h6>
+            <p>Use the toolbar to add your first stage</p>
+          </div>
+        </t>
+
+        <!-- Transform group -->
+        <div class="o_wf_transform" t-att-style="transformStyle()">
+
+          <!-- SVG for edges -->
+          <svg class="o_wf_svg"
+               style="position:absolute;top:0;left:0;overflow:visible;width:6000px;height:4000px;">
+            <defs>
+              <marker id="wf_arrow"       markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#8a9bae"/>
+              </marker>
+              <marker id="wf_arrow_blue"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#5b8ef5"/>
+              </marker>
+              <marker id="wf_arrow_green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#198754"/>
+              </marker>
+              <marker id="wf_arrow_red"   markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#dc3545"/>
+              </marker>
+            </defs>
+
+            <!-- Existing edges -->
+            <t t-foreach="state.transitions" t-as="tr" t-key="tr.id">
+              <g t-on-click.stop="() => this.selectEdge(tr.id)">
+                <!-- Wider invisible hit area -->
+                <path t-att-d="edgePath(tr)"
+                      fill="none" stroke="transparent" stroke-width="12"
+                      style="cursor:pointer; pointer-events:stroke;"/>
+                <!-- Visible path -->
+                <path t-att-d="edgePath(tr)"
+                      t-att-class="'o_wf_edge ' + edgeClass(tr)"
+                      t-att-marker-end="edgeMarker(tr)"
+                      style="pointer-events:none;"/>
+                <!-- Label -->
+                <t t-set="mp" t-value="edgeMid(tr)"/>
+                <rect t-att-x="mp.x - 32" t-att-y="mp.y - 9"
+                      width="64" height="18" rx="4" fill="white" opacity="0.9"/>
+                <text t-att-x="mp.x" t-att-y="mp.y + 5"
+                      class="o_wf_edge_label" text-anchor="middle">
+                  <t t-out="tr.name.length > 12 ? tr.name.slice(0,12)+'…' : tr.name"/>
+                </text>
+              </g>
+            </t>
+
+            <!-- Temp edge while drawing -->
+            <t t-if="state.connecting and state.tempEnd">
+              <path t-att-d="tempEdgePath()"
+                    class="o_wf_temp_edge"
+                    marker-end="url(#wf_arrow_blue)"/>
+            </t>
+          </svg>
+
+          <!-- Stage nodes -->
+          <t t-foreach="state.stages" t-as="stage" t-key="stage.id">
+            <div class="o_wf_node"
+                 t-att-data-type="stage.type"
+                 t-att-data-id="stage.id"
+                 t-att-class="state.selectedNode === stage.id ? 'selected' : ''"
+                 t-att-style="nodeStyle(stage)"
+                 t-on-mousedown.stop="(e) => this.onNodeDown(stage.id, e)"
+                 t-on-dblclick.stop="() => this.openStageForm(stage.id)">
+
+              <!-- Input port -->
+              <div t-if="stage.type !== 'start'"
+                   class="o_wf_port inp"
+                   t-on-mouseup.stop="() => this.onPortUp(stage.id)"/>
+
+              <!-- Node body -->
+              <div class="o_wf_node_body">
+                <span class="o_wf_node_icon">
+                  <t t-out="stageIcon(stage.type)"/>
+                </span>
+                <div class="o_wf_node_label"><t t-out="stage.name"/></div>
+                <div class="o_wf_node_type"><t t-out="stage.type"/></div>
+                <t t-if="stage.sla_hours > 0">
+                  <div class="o_wf_sla_badge" title="SLA configured">⏱</div>
+                </t>
+              </div>
+
+              <!-- Output port -->
+              <div t-if="stage.type !== 'end'"
+                   class="o_wf_port out"
+                   t-on-mousedown.stop="(e) => this.onPortDown(stage.id, e)"
+                   t-on-mouseup.stop="() => this.onPortUp(stage.id)"/>
+            </div>
+          </t>
+        </div>
+
+        <!-- Zoom controls -->
+        <div class="o_wf_zoom">
+          <div class="o_wf_zoom_btn" t-on-click="zoomIn"  title="Zoom in">+</div>
+          <div class="o_wf_zoom_btn" t-on-click="zoomOut" title="Zoom out">−</div>
+          <div class="o_wf_zoom_btn" t-on-click="resetView" title="Reset">⊙</div>
+        </div>
+        <div class="o_wf_zoom_level">
+          <t t-out="Math.round(state.zoom * 100)"/>%
+        </div>
+
+      </t><!-- /!loading -->
+    </div><!-- /canvas_outer -->
+
+    <!-- ── Properties panel ────────────────────────────────────── -->
+    <t t-if="state.propertiesStage">
+      <div class="o_wf_props open">
+        <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+          <strong>Stage Properties</strong>
+          <button class="btn btn-sm btn-close"
+                  t-on-click="() => { this.state.propertiesStage = null; }"/>
+        </div>
+        <div class="o_wf_prop_section">
+          <div class="o_wf_prop_label">Name</div>
+          <div class="o_wf_prop_val"><t t-out="state.propertiesStage.name"/></div>
+        </div>
+        <div class="o_wf_prop_section">
+          <div class="o_wf_prop_label">Type</div>
+          <div class="o_wf_prop_val">
+            <span class="badge text-bg-secondary">
+              <t t-out="state.propertiesStage.type"/>
+            </span>
+          </div>
+        </div>
+        <t t-if="state.propertiesStage.sla_hours">
+          <div class="o_wf_prop_section">
+            <div class="o_wf_prop_label">SLA</div>
+            <div class="o_wf_prop_val">
+              <t t-out="state.propertiesStage.sla_hours"/> h
+            </div>
+          </div>
+        </t>
+        <div class="p-3">
+          <button class="btn btn-primary btn-sm w-100"
+                  t-on-click="() => this.openStageForm(state.propertiesStage.id)">
+            <i class="fa fa-pencil"/> Edit Full Config
+          </button>
+        </div>
+      </div>
+    </t>
+
+    <!-- ── Context menu ─────────────────────────────────────────── -->
+    <t t-if="state.ctxMenu">
+      <div class="o_wf_ctx_menu"
+           t-att-style="'left:'+state.ctxMenu.x+'px;top:'+state.ctxMenu.y+'px'">
+        <t t-if="!state.ctxMenu.nodeId">
+          <div class="o_wf_ctx_item" t-on-click="() => { this.addStageAt('normal',    state.ctxMenu.wx, state.ctxMenu.wy); this.state.ctxMenu=null; }">○ Add Stage</div>
+          <div class="o_wf_ctx_item" t-on-click="() => { this.addStageAt('approval',  state.ctxMenu.wx, state.ctxMenu.wy); this.state.ctxMenu=null; }">☑ Add Approval</div>
+          <div class="o_wf_ctx_item" t-on-click="() => { this.addStageAt('condition', state.ctxMenu.wx, state.ctxMenu.wy); this.state.ctxMenu=null; }">◇ Add Decision</div>
+        </t>
+        <t t-if="state.ctxMenu.nodeId">
+          <div class="o_wf_ctx_item" t-on-click="() => { this.openStageForm(state.ctxMenu.nodeId); this.state.ctxMenu=null; }">✎ Edit Stage</div>
+          <div class="o_wf_ctx_divider"/>
+          <div class="o_wf_ctx_item danger" t-on-click="() => { this.deleteNode(state.ctxMenu.nodeId); this.state.ctxMenu=null; }">🗑 Delete</div>
+        </t>
+      </div>
+      <!-- backdrop to close menu -->
+      <div style="position:fixed;inset:0;z-index:999;"
+           t-on-click="() => { this.state.ctxMenu = null; }"/>
+    </t>
+
+  </div>
+</t>
+
+</templates>

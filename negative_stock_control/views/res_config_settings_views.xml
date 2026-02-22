@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_res_config_settings_negative_stock" model="ir.ui.view">
+        <field name="name">res.config.settings.negative.stock</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <app string="📦 Negative Stock Control" name="negative_stock_control">
+                    <block title="Default Policy">
+                        <setting string="Default Negative Stock Policy"
+                                 help="Global fallback policy when no warehouse or product-level policy is set.">
+                            <field name="negative_stock_default_policy"/>
+                        </setting>
+                        <setting string="Warn on Sale Order Confirmation"
+                                 help="Show a stock warning popup when confirming sale orders with insufficient stock.">
+                            <field name="negative_stock_warn_on_sale_order"/>
+                        </setting>
+                    </block>
+                    <block title="Email Alerts">
+                        <setting string="Send Daily Alert Email"
+                                 help="Send a daily email report to the configured address when negative stock exists.">
+                            <field name="negative_stock_cron_email"/>
+                        </setting>
+                        <setting string="Alert Email Address"
+                                 help="Email address that receives daily negative stock alerts."
+                                 invisible="not negative_stock_cron_email">
+                            <field name="negative_stock_admin_email"
+                                   placeholder="admin@yourcompany.com"/>
+                        </setting>
+                    </block>
+                    <block title="Analytics">
+                        <setting string="Analytics Lookback Period (Days)"
+                                 help="Number of days to include in override analytics and reports.">
+                            <field name="negative_stock_analytics_days"/>
+                        </setting>
+                    </block>
+                </app>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_wf_sla_form" model="ir.ui.view">
+    <field name="name">wf.sla.form</field>
+    <field name="model">wf.sla</field>
+    <field name="arch" type="xml">
+      <form string="SLA Rule">
+        <sheet>
+          <group>
+            <group string="Rule">
+              <field name="definition_id"/>
+              <field name="name"/>
+              <field name="sla_type"/>
+              <field name="stage_id" invisible="sla_type != 'stage'"
+                     domain="[('definition_id','=',definition_id)]"/>
+              <field name="active"/>
+            </group>
+            <group string="Thresholds">
+              <field name="warning_hours"/>
+              <field name="breach_hours"/>
+              <field name="use_biz_hours"/>
+              <field name="biz_hours_start" invisible="not use_biz_hours"/>
+              <field name="biz_hours_end"   invisible="not use_biz_hours"/>
+            </group>
+            <group string="On Warning">
+              <field name="on_warning_action"/>
+            </group>
+            <group string="On Breach">
+              <field name="on_breach_action"/>
+              <field name="email_template_id" invisible="on_breach_action != 'send_email'"/>
+              <field name="notify_user_ids"   widget="many2many_tags"
+                     invisible="on_breach_action not in ('notify_owner','notify_manager')"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_wf_sla" model="ir.actions.act_window">
+    <field name="name">SLA Rules</field>
+    <field name="res_model">wf.sla</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>
