@@ -1,0 +1,24 @@
+// ============================================================
+//  PROX — Primary Variables  v3
+//  Loaded into web._assets_primary_variables (prepend)
+//  Earliest point in Odoo 19 SCSS compilation.
+//  All overrides use !default — non-destructive.
+//  NO @import — variables only.
+// ============================================================
+
+// ── Brand colours ─────────────────────────────────────────
+$o-community-color: #1A3A5C !default;   // Deep navy primary
+$o-brand-primary:   #2563eb !default;   // Blue accent
+$o-brand-secondary: #c9a84c !default;   // Gold accent
+
+// ── Backend primary palette ───────────────────────────────
+$o-main-text-color:         #141210 !default;   // Near-black ink
+$o-main-color-muted:        #857F76 !default;   // Warm muted
+$o-main-primary-color:      #2563eb !default;
+
+// ── Navbar ────────────────────────────────────────────────
+$o-navbar-color:            #ffffff !default;
+$o-navbar-padding:          0 16px !default;
+
+// ── Font families ─────────────────────────────────────────
+$o-font-family-sans-serif:  'Syne', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !default;

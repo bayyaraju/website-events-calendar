@@ -1,0 +1,123 @@
+// ============================================================
+//  PROX — Bootstrap Overrides  v3
+//  Loaded into web._assets_backend_helpers (prepend)
+//  Runs AFTER primary variables, BEFORE Bootstrap compilation.
+//
+//  CRITICAL RULES for Odoo 19:
+//  - NEVER override $spacer or $grid-gutter-width (breaks $spacers map)
+//  - NEVER override $font-size-base or $line-height-base (breaks rem)
+//  - NEVER override $font-weight-medium/semibold (not Bootstrap standard)
+//  - NEVER use $border-radius-* as VALUES for other vars (forward ref)
+//  - ONLY safe: colors, literal px radii, shadows, visual properties
+// ============================================================
+
+// ── Colours ───────────────────────────────────────────────
+$primary:                   #2563eb;
+$secondary:                 #857F76;
+$success:                   #15803D;
+$info:                      #0891b2;
+$warning:                   #D97706;
+$danger:                    #B91C1C;
+$light:                     #F4F3EF;
+$dark:                      #141210;
+
+$body-bg:                   #F4F3EF;     // Warm parchment
+$body-color:                #141210;     // Near-black ink
+
+// ── Borders ───────────────────────────────────────────────
+$border-color:              #E2DFD8;
+$border-radius:             6px;
+$border-radius-sm:          4px;
+$border-radius-lg:          8px;
+$border-radius-xl:          12px;
+$border-radius-pill:        50rem;
+
+// ── Shadows ───────────────────────────────────────────────
+$box-shadow-sm:             0 1px 3px rgba(20,18,16,.06), 0 4px 16px rgba(20,18,16,.04);
+$box-shadow:                0 4px 16px rgba(20,18,16,.08), 0 1px 4px rgba(20,18,16,.05);
+$box-shadow-lg:             0 8px 32px rgba(20,18,16,.10), 0 2px 8px rgba(20,18,16,.06);
+
+// ── Links ─────────────────────────────────────────────────
+$link-color:                #2563eb;
+$link-decoration:           none;
+$link-hover-color:          #1d4ed8;
+
+// ── Inputs ────────────────────────────────────────────────
+$input-bg:                  #FAFAF8;
+$input-border-color:        #E2DFD8;
+$input-border-radius:       6px;
+$input-border-radius-sm:    4px;
+$input-border-radius-lg:    8px;
+$input-focus-border-color:  #2563eb;
+$input-focus-box-shadow:    0 0 0 3px rgba(37,99,235,.12);
+$input-placeholder-color:   #C9C4BB;
+$input-color:               #141210;
+$input-transition:          border-color .15s ease, box-shadow .15s ease;
+
+// ── Buttons ───────────────────────────────────────────────
+$btn-font-weight:           600;
+$btn-border-radius:         6px;
+$btn-border-radius-sm:      4px;
+$btn-border-radius-lg:      8px;
+$btn-transition:            all .15s cubic-bezier(.4,0,.2,1);
+$btn-box-shadow:            none;
+$btn-focus-box-shadow:      0 0 0 3px rgba(37,99,235,.2);
+
+// ── Cards ─────────────────────────────────────────────────
+$card-bg:                   #FFFFFF;
+$card-border-color:         #E2DFD8;
+$card-border-radius:        8px;
+$card-box-shadow:           0 1px 3px rgba(20,18,16,.06), 0 4px 16px rgba(20,18,16,.04);
+$card-cap-bg:               #FAFAF8;
+
+// ── Tables ────────────────────────────────────────────────
+$table-border-color:        #E2DFD8;
+$table-hover-bg:            #F8F7F5;
+$table-striped-bg:          rgba(20,18,16,.018);
+$table-bg:                  transparent;
+
+// ── Modals ────────────────────────────────────────────────
+$modal-content-border-radius: 8px;
+$modal-content-box-shadow-xs: 0 24px 64px rgba(0,0,0,.15);
+$modal-backdrop-bg:           #141210;
+$modal-backdrop-opacity:      .45;
+$modal-header-bg:             #FAFAF8;
+$modal-header-border-color:   #E2DFD8;
+$modal-footer-border-color:   #E2DFD8;
+
+// ── Dropdowns ─────────────────────────────────────────────
+$dropdown-bg:               #FFFFFF;
+$dropdown-border-color:     #E2DFD8;
+$dropdown-border-radius:    8px;
+$dropdown-box-shadow:       0 8px 32px rgba(20,18,16,.10), 0 2px 8px rgba(20,18,16,.06);
+$dropdown-link-color:       #141210;
+$dropdown-link-hover-color: #2563eb;
+$dropdown-link-hover-bg:    #EFF6FF;
+$dropdown-divider-bg:       #E2DFD8;
+
+// ── Badges ────────────────────────────────────────────────
+$badge-border-radius:       3px;
+
+// ── Alerts ────────────────────────────────────────────────
+$alert-border-radius:       6px;
+
+// ── Nav / tabs ─────────────────────────────────────────────
+$nav-tabs-border-color:         #E2DFD8;
+$nav-tabs-link-active-color:    #2563eb;
+$nav-tabs-link-active-bg:       transparent;
+$nav-tabs-link-active-border-color: transparent transparent #2563eb;
+$nav-pills-border-radius:       6px;
+
+// ── Pagination ────────────────────────────────────────────
+$pagination-border-color:       #E2DFD8;
+$pagination-border-radius:      5px;
+$pagination-color:              #4A453E;
+$pagination-hover-bg:           #EFF6FF;
+$pagination-hover-color:        #2563eb;
+$pagination-active-bg:          #2563eb;
+$pagination-active-border-color: #2563eb;
+
+// ── Progress ──────────────────────────────────────────────
+$progress-border-radius:    50rem;
+$progress-bg:               #E2DFD8;
+$progress-bar-bg:           #2563eb;

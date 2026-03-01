@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Prox Professional Theme v3 — Head injection
+        Injects Google Fonts BEFORE the asset bundle loads.
+        Fonts: Instrument Serif (display/italic) + Syne (UI labels) + DM Mono (numbers)
+    -->
+    <record id="prox_webclient_head" model="ir.ui.view">
+        <field name="name">prox.webclient.head</field>
+        <field name="inherit_id" ref="web.layout"/>
+        <field name="arch" type="xml">
+            <xpath expr="//head" position="inside">
+                <!-- Preconnect for Google Fonts performance -->
+                <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+
+                <!--
+                    Instrument Serif — Italic display titles (breadcrumbs, modal headers)
+                    Syne             — UI labels, nav, headings, buttons
+                    DM Mono          — Numeric data, amounts, references, code
+                    display=swap ensures text visible before fonts load
+                -->
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Mono:wght@300;400;500&amp;display=swap"/>
+
+                <!-- PWA theme colour — matches dark navbar -->
+                <meta name="theme-color" content="#0f1117"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

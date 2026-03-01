@@ -1,0 +1,2410 @@
+// ╔══════════════════════════════════════════════════════════════╗
+//  PROX PROFESSIONAL  v7
+//  Odoo 19 backend — appended after all framework CSS
+//  Fixes: inputs/dropdowns, FA icons, checkboxes/stars,
+//         statusbar, inline tables, navbar entries, child tables
+// ╚══════════════════════════════════════════════════════════════╝
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 1 — DESIGN TOKENS (10 themes)
+// ═══════════════════════════════════════════════════════════════
+
+// 1. PARCHMENT — warm ivory editorial (default)
+:root,
+html[data-prox-theme="parchment"] {
+  --c-bg:    #F5F3EE;
+  --c-card:  #FFFFFF;
+  --c-surf:  #FAFAF7;
+  --c-hover: #ECEAE3;
+  --c-inp:   #FFFFFF;
+  --c-t1:    #141210;
+  --c-t2:    #4A453E;
+  --c-t3:    #6B6460;
+  --c-t4:    #ABA5A0;
+  --c-b1:    #D8D4CD;
+  --c-b2:    #B8B2AA;
+  --c-a:     #2563EB;
+  --c-a2:    #1D4ED8;
+  --c-ap:    #EFF6FF;
+  --c-at:    #1E40AF;
+  --c-nav:        #111827;
+  --c-navb:       rgba(255,255,255,.07);
+  --c-navt:       #9CA3AF;
+  --c-nava:       #FFFFFF;
+  --c-navh:       rgba(255,255,255,.09);
+  --c-gold:  #C9A84C;
+  --c-red:   #DC2626;
+  --c-grn:   #16A34A;
+  --c-amb:   #D97706;
+  --c-pill:  #1A3A5C;
+  --c-chk:   #2563EB;
+  --c-star:  #F59E0B;
+  --s1: 0 1px 3px rgba(20,18,16,.08), 0 2px 8px rgba(20,18,16,.05);
+  --s2: 0 4px 16px rgba(20,18,16,.10), 0 1px 4px rgba(20,18,16,.06);
+  --s3: 0 8px 32px rgba(20,18,16,.14), 0 2px 8px rgba(20,18,16,.08);
+  --tf: 130ms cubic-bezier(.4,0,.2,1);
+  --tb: 210ms cubic-bezier(.4,0,.2,1);
+}
+
+// 2. SLATE — cool navy blue corporate
+html[data-prox-theme="slate"] {
+  --c-bg:    #ECF3FB;
+  --c-card:  #FFFFFF;
+  --c-surf:  #F3F9FF;
+  --c-hover: #DCE9F7;
+  --c-inp:   #FFFFFF;
+  --c-t1:    #0A1929;
+  --c-t2:    #1E3A5F;
+  --c-t3:    #4A6E92;
+  --c-t4:    #88AECA;
+  --c-b1:    #BAD0E6;
+  --c-b2:    #88AECA;
+  --c-a:     #0369A1;
+  --c-a2:    #075985;
+  --c-ap:    #E0F2FE;
+  --c-at:    #0C4A6E;
+  --c-nav:        #0A1929;
+  --c-navb:       rgba(255,255,255,.07);
+  --c-navt:       #60849E;
+  --c-nava:       #FFFFFF;
+  --c-navh:       rgba(255,255,255,.09);
+  --c-gold:  #F59E0B;
+  --c-red:   #DC2626;
+  --c-grn:   #059669;
+  --c-amb:   #D97706;
+  --c-pill:  #0A3D62;
+  --c-chk:   #0369A1;
+  --c-star:  #F59E0B;
+  --s1: 0 1px 3px rgba(10,25,41,.08), 0 2px 8px rgba(10,25,41,.05);
+  --s2: 0 4px 16px rgba(10,25,41,.10), 0 1px 4px rgba(10,25,41,.06);
+  --s3: 0 8px 32px rgba(10,25,41,.14), 0 2px 8px rgba(10,25,41,.08);
+  --tf: 130ms cubic-bezier(.4,0,.2,1);
+  --tb: 210ms cubic-bezier(.4,0,.2,1);
+}
+
+// 3. FOREST — deep green earth
+html[data-prox-theme="forest"] {
+  --c-bg:    #EAF4EB;
+  --c-card:  #FFFFFF;
+  --c-surf:  #F1FAF2;
+  --c-hover: #D8EDD9;
+  --c-inp:   #FFFFFF;
+  --c-t1:    #0D1F0F;
+  --c-t2:    #1C3B20;
+  --c-t3:    #3C6B43;
+  --c-t4:    #78AC80;
+  --c-b1:    #B3D8B8;
+  --c-b2:    #78AC80;
+  --c-a:     #15803D;
+  --c-a2:    #166534;
+  --c-ap:    #DCFCE7;
+  --c-at:    #14532D;
+  --c-nav:        #0D1F0F;
+  --c-navb:       rgba(255,255,255,.07);
+  --c-navt:       #3C6B43;
+  --c-nava:       #FFFFFF;
+  --c-navh:       rgba(255,255,255,.09);
+  --c-gold:  #CA8A04;
+  --c-red:   #B91C1C;
+  --c-grn:   #15803D;
+  --c-amb:   #D97706;
+  --c-pill:  #14532D;
+  --c-chk:   #15803D;
+  --c-star:  #CA8A04;
+  --s1: 0 1px 3px rgba(13,31,15,.08), 0 2px 8px rgba(13,31,15,.05);
+  --s2: 0 4px 16px rgba(13,31,15,.10), 0 1px 4px rgba(13,31,15,.06);
+  --s3: 0 8px 32px rgba(13,31,15,.14), 0 2px 8px rgba(13,31,15,.08);
+  --tf: 130ms cubic-bezier(.4,0,.2,1);
+  --tb: 210ms cubic-bezier(.4,0,.2,1);
+}
+
+// 4. MIDNIGHT — deep dark electric indigo
+html[data-prox-theme="midnight"] {
+  --c-bg:    #090C1A;
+  --c-card:  #111428;
+  --c-surf:  #181C35;
+  --c-hover: #1E2440;
+  --c-inp:   #181C35;
+  --c-t1:    #DDE4FF;
+  --c-t2:    #8A96C8;
+  --c-t3:    #5562A0;
+  --c-t4:    #303A60;
+  --c-b1:    #252D52;
+  --c-b2:    #343E6E;
+  --c-a:     #818CF8;
+  --c-a2:    #6366F1;
+  --c-ap:    rgba(99,102,241,.20);
+  --c-at:    #C7D2FE;
+  --c-nav:        #060810;
+  --c-navb:       rgba(255,255,255,.05);
+  --c-navt:       #5562A0;
+  --c-nava:       #DDE4FF;
+  --c-navh:       rgba(255,255,255,.07);
+  --c-gold:  #FCD34D;
+  --c-red:   #F87171;
+  --c-grn:   #34D399;
+  --c-amb:   #FBBF24;
+  --c-pill:  #6366F1;
+  --c-chk:   #818CF8;
+  --c-star:  #FCD34D;
+  --s1: 0 1px 3px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.25);
+  --s2: 0 4px 16px rgba(0,0,0,.50), 0 1px 4px rgba(0,0,0,.30);
+  --s3: 0 8px 32px rgba(0,0,0,.65), 0 2px 8px rgba(0,0,0,.40);
+  --tf: 130ms cubic-bezier(.4,0,.2,1);
+  --tb: 210ms cubic-bezier(.4,0,.2,1);
+}
+
+// 5. ROSE — crimson & blush
+html[data-prox-theme="rose"] {
+  --c-bg:    #FEF5F6;
+  --c-card:  #FFFFFF;
+  --c-surf:  #FFF0F1;
+  --c-hover: #FDE0E2;
+  --c-inp:   #FFFFFF;
+  --c-t1:    #1F0A0D;
+  --c-t2:    #4A1520;
+  --c-t3:    #883545;
+  --c-t4:    #C4788A;
+  --c-b1:    #EABFC6;
+  --c-b2:    #C4788A;
+  --c-a:     #BE123C;
+  --c-a2:    #9F1239;
+  --c-ap:    #FFE4E6;
+  --c-at:    #881337;
+  --c-nav:        #1F0A0D;
+  --c-navb:       rgba(255,255,255,.07);
+  --c-navt:       #883545;
+  --c-nava:       #FFFFFF;
+  --c-navh:       rgba(255,255,255,.09);
+  --c-gold:  #D97706;
+  --c-red:   #DC2626;
+  --c-grn:   #059669;
+  --c-amb:   #D97706;
+  --c-pill:  #881337;
+  --c-chk:   #BE123C;
+  --c-star:  #D97706;
+  --s1: 0 1px 3px rgba(31,10,13,.08), 0 2px 8px rgba(31,10,13,.05);
+  --s2: 0 4px 16px rgba(31,10,13,.10), 0 1px 4px rgba(31,10,13,.06);
+  --s3: 0 8px 32px rgba(31,10,13,.14), 0 2px 8px rgba(31,10,13,.08);
+  --tf: 130ms cubic-bezier(.4,0,.2,1);
+  --tb: 210ms cubic-bezier(.4,0,.2,1);
+}
+
+// 6. OBSIDIAN — charcoal with gold
+html[data-prox-theme="obsidian"] {
+  --c-bg:    #0E1012;
+  --c-card:  #191C20;
+  --c-surf:  #20242A;
+  --c-hover: #272C34;
+  --c-inp:   #20242A;
+  --c-t1:    #F0F0EE;
+  --c-t2:    #A8ACA6;
+  --c-t3:    #686E78;
+  --c-t4:    #404850;
+  --c-b1:    #2E3440;
+  --c-b2:    #404850;
+  --c-a:     #D4A84C;
+  --c-a2:    #B8912A;
+  --c-ap:    rgba(212,168,76,.16);
+  --c-at:    #EAC97E;
+  --c-nav:        #08090B;
+  --c-navb:       rgba(255,255,255,.05);
+  --c-navt:       #686E78;
+  --c-nava:       #F0F0EE;
+  --c-navh:       rgba(255,255,255,.07);
+  --c-gold:  #D4A84C;
+  --c-red:   #F87171;
+  --c-grn:   #4ADE80;
+  --c-amb:   #FB923C;
+  --c-pill:  #B8912A;
+  --c-chk:   #D4A84C;
+  --c-star:  #D4A84C;
+  --s1: 0 1px 3px rgba(0,0,0,.45), 0 2px 8px rgba(0,0,0,.30);
+  --s2: 0 4px 16px rgba(0,0,0,.60), 0 1px 4px rgba(0,0,0,.35);
+  --s3: 0 8px 32px rgba(0,0,0,.75), 0 2px 8px rgba(0,0,0,.45);
+  --tf: 130ms cubic-bezier(.4,0,.2,1);
+  --tb: 210ms cubic-bezier(.4,0,.2,1);
+}
+
+// 7. ARCTIC — ice white + cobalt
+html[data-prox-theme="arctic"] {
+  --c-bg:    #EDF5FF;
+  --c-card:  #FFFFFF;
+  --c-surf:  #F5FAFF;
+  --c-hover: #DCEEFF;
+  --c-inp:   #FFFFFF;
+  --c-t1:    #071830;
+  --c-t2:    #103060;
+  --c-t3:    #3A70A8;
+  --c-t4:    #78A8D8;
+  --c-b1:    #ACCCE8;
+  --c-b2:    #78A8D8;
+  --c-a:     #0050B3;
+  --c-a2:    #003A8C;
+  --c-ap:    #D6E8FF;
+  --c-at:    #002766;
+  --c-nav:        #071830;
+  --c-navb:       rgba(255,255,255,.07);
+  --c-navt:       #3A70A8;
+  --c-nava:       #FFFFFF;
+  --c-navh:       rgba(255,255,255,.09);
+  --c-gold:  #FA8C16;
+  --c-red:   #CF1322;
+  --c-grn:   #389E0D;
+  --c-amb:   #D46B08;
+  --c-pill:  #002766;
+  --c-chk:   #0050B3;
+  --c-star:  #FA8C16;
+  --s1: 0 1px 3px rgba(7,24,48,.08), 0 2px 8px rgba(7,24,48,.05);
+  --s2: 0 4px 16px rgba(7,24,48,.10), 0 1px 4px rgba(7,24,48,.06);
+  --s3: 0 8px 32px rgba(7,24,48,.14), 0 2px 8px rgba(7,24,48,.08);
+  --tf: 130ms cubic-bezier(.4,0,.2,1);
+  --tb: 210ms cubic-bezier(.4,0,.2,1);
+}
+
+// 8. AMBER — honey & espresso
+html[data-prox-theme="amber"] {
+  --c-bg:    #FDFAF0;
+  --c-card:  #FFFFFF;
+  --c-surf:  #FEF9E8;
+  --c-hover: #F9EFCA;
+  --c-inp:   #FFFFFF;
+  --c-t1:    #1A1000;
+  --c-t2:    #3D2800;
+  --c-t3:    #7A5818;
+  --c-t4:    #C09848;
+  --c-b1:    #E2CC90;
+  --c-b2:    #C09848;
+  --c-a:     #B45309;
+  --c-a2:    #92400E;
+  --c-ap:    #FEF3C7;
+  --c-at:    #78350F;
+  --c-nav:        #1A1000;
+  --c-navb:       rgba(255,255,255,.07);
+  --c-navt:       #7A5818;
+  --c-nava:       #FFFFFF;
+  --c-navh:       rgba(255,255,255,.09);
+  --c-gold:  #D97706;
+  --c-red:   #B91C1C;
+  --c-grn:   #15803D;
+  --c-amb:   #D97706;
+  --c-pill:  #78350F;
+  --c-chk:   #B45309;
+  --c-star:  #D97706;
+  --s1: 0 1px 3px rgba(26,16,0,.08), 0 2px 8px rgba(26,16,0,.05);
+  --s2: 0 4px 16px rgba(26,16,0,.10), 0 1px 4px rgba(26,16,0,.06);
+  --s3: 0 8px 32px rgba(26,16,0,.14), 0 2px 8px rgba(26,16,0,.08);
+  --tf: 130ms cubic-bezier(.4,0,.2,1);
+  --tb: 210ms cubic-bezier(.4,0,.2,1);
+}
+
+// 9. AURORA — teal & dark ocean
+html[data-prox-theme="aurora"] {
+  --c-bg:    #080F14;
+  --c-card:  #0E1A22;
+  --c-surf:  #142030;
+  --c-hover: #1A2A3C;
+  --c-inp:   #142030;
+  --c-t1:    #D8F0F0;
+  --c-t2:    #88C0C8;
+  --c-t3:    #407A82;
+  --c-t4:    #224E58;
+  --c-b1:    #1C3545;
+  --c-b2:    #224E58;
+  --c-a:     #26C6DA;
+  --c-a2:    #00ACC1;
+  --c-ap:    rgba(38,198,218,.18);
+  --c-at:    #80DEEA;
+  --c-nav:        #040A10;
+  --c-navb:       rgba(255,255,255,.05);
+  --c-navt:       #407A82;
+  --c-nava:       #D8F0F0;
+  --c-navh:       rgba(255,255,255,.07);
+  --c-gold:  #FF8A65;
+  --c-red:   #EF5350;
+  --c-grn:   #4CAF50;
+  --c-amb:   #FFA726;
+  --c-pill:  #00ACC1;
+  --c-chk:   #26C6DA;
+  --c-star:  #FF8A65;
+  --s1: 0 1px 3px rgba(0,0,0,.40), 0 2px 8px rgba(0,0,0,.28);
+  --s2: 0 4px 16px rgba(0,0,0,.55), 0 1px 4px rgba(0,0,0,.32);
+  --s3: 0 8px 32px rgba(0,0,0,.70), 0 2px 8px rgba(0,0,0,.42);
+  --tf: 130ms cubic-bezier(.4,0,.2,1);
+  --tb: 210ms cubic-bezier(.4,0,.2,1);
+}
+
+// 10. LAVENDER — soft purple luxury
+html[data-prox-theme="lavender"] {
+  --c-bg:    #F4F2FA;
+  --c-card:  #FFFFFF;
+  --c-surf:  #F9F8FD;
+  --c-hover: #EAE5F8;
+  --c-inp:   #FFFFFF;
+  --c-t1:    #1A1030;
+  --c-t2:    #3D2B6B;
+  --c-t3:    #7060A8;
+  --c-t4:    #B0A4D8;
+  --c-b1:    #D4CCEE;
+  --c-b2:    #B0A4D8;
+  --c-a:     #6D28D9;
+  --c-a2:    #5B21B6;
+  --c-ap:    #EDE9FE;
+  --c-at:    #4C1D95;
+  --c-nav:        #1A1030;
+  --c-navb:       rgba(255,255,255,.07);
+  --c-navt:       #7060A8;
+  --c-nava:       #FFFFFF;
+  --c-navh:       rgba(255,255,255,.09);
+  --c-gold:  #D97706;
+  --c-red:   #B91C1C;
+  --c-grn:   #059669;
+  --c-amb:   #D97706;
+  --c-pill:  #4C1D95;
+  --c-chk:   #6D28D9;
+  --c-star:  #D97706;
+  --s1: 0 1px 3px rgba(26,16,48,.08), 0 2px 8px rgba(26,16,48,.05);
+  --s2: 0 4px 16px rgba(26,16,48,.10), 0 1px 4px rgba(26,16,48,.06);
+  --s3: 0 8px 32px rgba(26,16,48,.14), 0 2px 8px rgba(26,16,48,.08);
+  --tf: 130ms cubic-bezier(.4,0,.2,1);
+  --tb: 210ms cubic-bezier(.4,0,.2,1);
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 2 — GLOBAL FOUNDATION
+// ═══════════════════════════════════════════════════════════════
+
+.o_web_client,
+.o_action_manager,
+.o_main_content,
+.o_content,
+.o_view_controller {
+  background-color: var(--c-bg) !important;
+  color: var(--c-t1) !important;
+  font-family: 'Syne', system-ui, sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+// ── CRITICAL: Restore icon fonts immediately after the broad Syne override ──
+// The rule above sets font-family:Syne !important on the entire app shell,
+// which cascades into ALL child elements — including icon font elements.
+// We must re-declare the correct font-family on every possible icon class
+// so the browser renders glyphs instead of blank boxes.
+//
+// Odoo uses multiple icon fonts across versions:
+//   - Open Iconic  → font-family: 'Icons'      (oi / .oi / [data-glyph])
+//   - Odoo UI Icons → font-family: 'odoo_ui_icons' OR 'odoo' (Odoo 16+)
+//
+.oi,
+[class^="oi-"],
+[class*=" oi-"],
+[data-glyph],
+.o_icon {
+  font-family: 'Icons', 'odoo_ui_icons', 'odoo' !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  font-weight: normal !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  speak: none !important;
+  line-height: 1 !important;
+}
+
+.oi::before,
+[class^="oi-"]::before,
+[class*=" oi-"]::before,
+[data-glyph]::before {
+  font-family: 'Icons', 'odoo_ui_icons', 'odoo' !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 3 — TOP NAVBAR
+//  FIX: Remove background/position from nav entries &
+//       dropdown-toggle items so only the correct hover fires
+// ═══════════════════════════════════════════════════════════════
+
+.o_main_navbar {
+  background-color: var(--c-nav) !important;
+  border-bottom: 1px solid var(--c-navb) !important;
+  box-shadow: 0 1px 16px rgba(0,0,0,.30) !important;
+
+  // Brand label (app name)
+  .o_menu_brand {
+    font-family: 'Syne', sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 13px !important;
+    letter-spacing: .1em !important;
+    text-transform: uppercase !important;
+    color: var(--c-gold) !important;
+    // No background — let it breathe in the dark navbar
+    background: none !important;
+  }
+
+  // ── MENU SECTION ITEMS — reset bad bg, let only hover add one ──
+  .o_menu_sections .o_nav_entry,
+  .o_menu_sections .dropdown {
+    background: none !important;
+    position: static !important;
+  }
+
+  .o_menu_sections .o_nav_entry > a,
+  .o_menu_sections .dropdown > .dropdown-toggle,
+  .o_menu_sections .dropdown > button {
+    font-family: 'Syne', sans-serif !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: .07em !important;
+    text-transform: uppercase !important;
+    color: var(--c-navt) !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 4px !important;
+    padding: 6px 10px !important;
+    transition: background var(--tf), color var(--tf) !important;
+    text-decoration: none !important;
+
+    &:hover,
+    &:focus,
+    &[aria-expanded="true"] {
+      background-color: var(--c-navh) !important;
+      color: var(--c-nava) !important;
+    }
+  }
+
+  // Active / current menu highlighted in gold
+  .o_menu_sections .active > a,
+  .o_menu_sections .active > .dropdown-toggle,
+  .o_menu_sections .active > button {
+    color: var(--c-gold) !important;
+    background-color: rgba(201,168,76,.12) !important;
+  }
+
+  // Systray icons (bell, user avatar, etc.)
+  .o_menu_systray .o_nav_entry > a,
+  .o_menu_systray .o_dropdown > button,
+  .o_menu_systray .dropdown > .dropdown-toggle {
+    color: var(--c-navt) !important;
+    background: none !important;
+    border-radius: 4px !important;
+    padding: 4px 6px !important;
+    transition: background var(--tf), color var(--tf) !important;
+
+    &:hover {
+      background-color: var(--c-navh) !important;
+      color: var(--c-nava) !important;
+    }
+
+    // FontAwesome icons inside systray — fix colour + size
+    i.fa, .fa {
+      color: inherit !important;
+      font-size: 15px !important;
+      display: inline-block !important;
+      visibility: visible !important;
+      font-style: normal !important;
+    }
+  }
+
+  // Notification badge
+  .o_notification_counter {
+    background: var(--c-gold) !important;
+    color: var(--c-nav) !important;
+    font-family: 'DM Mono', monospace !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    border-radius: 999px !important;
+    min-width: 15px !important;
+    text-align: center !important;
+  }
+
+  // Avatar border
+  img.o_avatar,
+  .o_user_menu img {
+    border: 2px solid var(--c-gold) !important;
+    border-radius: 50% !important;
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 4 — FONTAWESOME ICON FIX (global)  [v7 enhanced]
+//  FIX: Icons invisible because:
+//  (a) font-family not resolving to FA font files
+//  (b) color:inherit from near-invisible ancestors
+//  (c) display:none / visibility:hidden from parent reset
+// ═══════════════════════════════════════════════════════════════
+
+// CRITICAL FIX: Ensure FontAwesome font-family is explicitly set on all FA elements
+// Odoo 17/18/19 ships FA 6 Free under these family names — declare both to be safe
+.fa,
+.fas,
+.far,
+.fal,
+.fab,
+[class^="fa-"],
+[class*=" fa-"] {
+  font-family: "FontAwesome", "Font Awesome 6 Free", "Font Awesome 5 Free", "Font Awesome 5 Brands" !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  speak: none !important;
+  line-height: 1 !important;
+}
+
+// FIX: Some Odoo wrapper elements set font-family on the container which
+// then cascades and overrides the icon. Force the family on ::before too.
+.fa::before,
+.fas::before,
+.far::before,
+[class^="fa-"]::before,
+[class*=" fa-"]::before {
+  font-family: "FontAwesome", "Font Awesome 6 Free", "Font Awesome 5 Free" !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+// FIX: Buttons, list rows, and stat cards sometimes set color to near-white
+// or near-background value making icons vanish
+.btn .fa, .btn [class^="fa-"],
+.o_stat_button .fa,
+.o_kanban_record .fa,
+.o_list_view .fa,
+.o_form_view .fa {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+// Contextual icon colours that were getting washed out
+.o_form_view .o_field_widget .fa,
+.o_form_view .o_field_widget [class^="fa-"] {
+  color: var(--c-t3) !important;
+}
+
+.o_list_view .fa,
+.o_list_view [class^="fa-"] {
+  color: var(--c-t3) !important;
+}
+
+// Clear-field (×) button inside inputs
+.o_field_widget .o_clear_icon,
+.o_field_widget .fa-times,
+.o_field_widget .fa-close {
+  color: var(--c-t4) !important;
+  &:hover { color: var(--c-red) !important; }
+}
+
+// Dropdown caret icons in control panel / form buttons
+.o_cp_buttons .fa,
+.o_form_buttons_view .fa,
+.o_control_panel .fa {
+  color: inherit !important;
+}
+
+// Boolean toggle (checkmark icon inside checkbox replacement)
+.o_field_boolean .fa-check-square,
+.o_field_boolean .fa-square-o,
+.o_field_boolean .o_checkbox .fa {
+  color: var(--c-chk) !important;
+  font-size: 16px !important;
+}
+
+// Many2many tags remove icon
+.o_field_many2many_tags .badge .o_delete,
+.o_field_many2many_tags .badge .fa {
+  color: inherit !important;
+  opacity: .7 !important;
+  &:hover { opacity: 1 !important; }
+}
+
+// Smart button icons — keep accent colour
+.o_stat_button i.fa,
+.o_stat_button .o_button_icon {
+  color: var(--c-a) !important;
+  font-size: 16px !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 5 — CHECKBOXES & STARS
+//  They were appearing near-invisible because the theme colour
+//  vars --c-b2 / --c-t4 were too light.  We add explicit rules.
+// ═══════════════════════════════════════════════════════════════
+
+// ── Checkboxes ─────────────────────────────────────────────────
+// Odoo 19 uses a styled <div class="o_checkbox"> wrapper around
+// a hidden <input type="checkbox"> + a visible <span>.
+.o_checkbox input[type="checkbox"] {
+  // Keep visually hidden but accessible
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+// The visible checkbox box (the <span> or the wrapper itself)
+.o_checkbox span,
+.o_checkbox > span {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 16px !important;
+  height: 16px !important;
+  border: 1.5px solid var(--c-b2) !important;
+  border-radius: 3px !important;
+  background: var(--c-inp) !important;
+  transition: border-color var(--tf), background var(--tf) !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+}
+
+.o_checkbox input:checked + span,
+.o_checkbox.checked span,
+.o_checkbox span.checked {
+  background: var(--c-chk) !important;
+  border-color: var(--c-chk) !important;
+
+  &::after {
+    content: '' !important;
+    display: block !important;
+    width: 4px !important;
+    height: 8px !important;
+    border: 2px solid #fff !important;
+    border-top: none !important;
+    border-left: none !important;
+    transform: rotate(45deg) translateY(-1px) !important;
+  }
+}
+
+.o_checkbox:hover span {
+  border-color: var(--c-a) !important;
+}
+
+// Also handle the native BS-style form-check checkboxes
+.form-check-input[type="checkbox"] {
+  width: 15px !important;
+  height: 15px !important;
+  border: 1.5px solid var(--c-b2) !important;
+  background-color: var(--c-inp) !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+  transition: border-color var(--tf), background var(--tf) !important;
+
+  &:checked {
+    background-color: var(--c-chk) !important;
+    border-color: var(--c-chk) !important;
+  }
+
+  &:focus {
+    border-color: var(--c-a) !important;
+    box-shadow: 0 0 0 3px var(--c-ap) !important;
+    outline: none !important;
+  }
+}
+
+// List view header checkbox
+.o_list_view thead .o_checkbox span,
+.o_list_view thead .form-check-input {
+  border-color: var(--c-t3) !important;
+}
+
+// ── Priority Stars ──────────────────────────────────────────────
+// Odoo renders stars as FA icons wrapped in .o_priority
+.o_priority .o_priority_star.fa,
+.o_priority .o_priority_star {
+  font-family: 'FontAwesome', 'Font Awesome 5 Free' !important;
+  font-style: normal !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: var(--c-b2) !important;    // unfilled = visible border colour
+  font-size: 16px !important;
+  cursor: pointer !important;
+  transition: color var(--tf) !important;
+
+  &:hover { color: var(--c-star) !important; }
+}
+
+// Filled star
+.o_priority .o_priority_star.fa-star {
+  color: var(--c-star) !important;
+}
+
+// Empty/outline star
+.o_priority .o_priority_star.fa-star-o {
+  color: var(--c-b2) !important;
+  &:hover { color: var(--c-star) !important; }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 5b — ODOO ICONS (oi) FIX
+//  Odoo 16+ ships its own icon font (class="oi oi-*").
+//  The theme's font/color overrides can clobber oi visibility.
+//  This block ensures all oi icons are always visible.
+//  NOTE: The primary reset is in Section 2 immediately after the
+//  .o_web_client font-family rule. This section adds contextual color fixes.
+// ═══════════════════════════════════════════════════════════════
+
+// Contextual oi icon colours — mirrors the FA fixes above
+.btn .oi,
+.o_stat_button .oi,
+.o_kanban_record .oi,
+.o_list_view .oi,
+.o_form_view .oi {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.o_form_view .o_field_widget .oi,
+.o_form_view .o_field_widget [class^="oi-"] {
+  color: var(--c-t3) !important;
+}
+
+.o_list_view .oi,
+.o_list_view [class^="oi-"] {
+  color: var(--c-t3) !important;
+}
+
+.o_cp_buttons .oi,
+.o_form_buttons_view .oi,
+.o_control_panel .oi {
+  color: inherit !important;
+}
+
+// Search bar oi icons (magnifier, caret, etc.)
+.o_searchview .oi,
+.o_searchview [class^="oi-"],
+.o_searchview_icon.oi {
+  color: var(--c-t4) !important;
+  font-size: 13px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin: 0 8px !important;
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+// Dropdown / filter toggle oi icons
+.o_dropdown_button .oi,
+.o_searchview_dropdown_button .oi {
+  color: inherit !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  font-size: 12px !important;
+}
+
+// Navbar / systray oi icons
+.o_main_navbar .oi,
+.o_menu_sections .oi,
+.o_menu_systray .oi {
+  color: inherit !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+// Sidebar / menu oi icons
+.o_action_manager .oi,
+.o_menu_entry .oi,
+.o_app .oi {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+// Clear-field oi icon inside inputs
+.o_field_widget .oi-close,
+.o_field_widget .oi-times {
+  color: var(--c-t4) !important;
+  &:hover { color: var(--c-red) !important; }
+}
+
+// Priority / star oi icons
+.o_priority .o_priority_star.oi {
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: var(--c-b2) !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  transition: color var(--tf) !important;
+  &:hover { color: var(--c-star) !important; }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 6 — INPUTS, SELECTS & DROPDOWNS
+//  FIX: inputs weren't visible (border too light, bg blending).
+//  We set a proper white background + clear border + focus ring.
+// ═══════════════════════════════════════════════════════════════
+
+// ── All text inputs ─────────────────────────────────────────────
+.o_field_widget input:not([type="checkbox"]):not([type="radio"]),
+.o_field_widget textarea,
+.o_field_char input,
+.o_field_text textarea,
+.o_field_integer input,
+.o_field_float input,
+.o_field_monetary input,
+.o_field_date input,
+.o_field_datetime input,
+.o_searchview .o_searchview_input {
+  background-color: var(--c-inp) !important;
+  border: 1.5px solid var(--c-b1) !important;
+  border-radius: 5px !important;
+  color: var(--c-t1) !important;
+  font-family: 'Syne', sans-serif !important;
+  font-size: 13px !important;
+  transition: border-color var(--tf), box-shadow var(--tf) !important;
+  box-shadow: none !important;
+
+  &::placeholder { color: var(--c-t4) !important; }
+
+  &:focus,
+  &:focus-visible {
+    border-color: var(--c-a) !important;
+    box-shadow: 0 0 0 3px var(--c-ap) !important;
+    background-color: var(--c-card) !important;
+    outline: none !important;
+  }
+}
+
+// Monospace for numeric fields
+.o_field_monetary input,
+.o_field_integer input,
+.o_field_float input {
+  font-family: 'DM Mono', monospace !important;
+  letter-spacing: .1px !important;
+}
+
+// ── Select dropdowns ────────────────────────────────────────────
+.o_field_widget select,
+.o_field_selection select {
+  background-color: var(--c-inp) !important;
+  border: 1.5px solid var(--c-b1) !important;
+  border-radius: 5px !important;
+  color: var(--c-t1) !important;
+  font-family: 'Syne', sans-serif !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  transition: border-color var(--tf), box-shadow var(--tf) !important;
+
+  &:focus {
+    border-color: var(--c-a) !important;
+    box-shadow: 0 0 0 3px var(--c-ap) !important;
+    outline: none !important;
+  }
+}
+
+// ── Many2one / Many2many autocomplete ───────────────────────────
+.o_field_many2one .o_field_widget,
+.o_field_many2one_avatar,
+.o-autocomplete {
+  .o-autocomplete--input,
+  input.o_input {
+    background-color: var(--c-inp) !important;
+    border: 1.5px solid var(--c-b1) !important;
+    border-radius: 5px !important;
+    color: var(--c-t1) !important;
+    font-family: 'Syne', sans-serif !important;
+    transition: border-color var(--tf), box-shadow var(--tf) !important;
+
+    &:focus {
+      border-color: var(--c-a) !important;
+      box-shadow: 0 0 0 3px var(--c-ap) !important;
+      outline: none !important;
+    }
+  }
+}
+
+// ── Autocomplete dropdown list ───────────────────────────────────
+.o-autocomplete--dropdown-menu,
+.o_field_many2one .dropdown-menu,
+.o_field_many2many .dropdown-menu {
+  background: var(--c-card) !important;
+  border: 1px solid var(--c-b1) !important;
+  box-shadow: var(--s3) !important;
+  border-radius: 6px !important;
+  padding: 4px !important;
+
+  .o-autocomplete--dropdown-item,
+  .dropdown-item {
+    font-family: 'Syne', sans-serif !important;
+    font-size: 12.5px !important;
+//     color: var(--c-t2) !important;
+    border-radius: 4px !important;
+    padding: 6px 10px !important;
+    transition: background var(--tf), color var(--tf) !important;
+
+    &:hover,
+    &:focus,
+    &.active,
+    &.focused {
+      background: var(--c-ap) !important;
+      color: var(--c-at) !important;
+    }
+
+    // "Create and edit" / "Create" options
+    &.o_m2o_dropdown_option {
+      color: var(--c-a) !important;
+      font-weight: 700 !important;
+      border-top: 1px solid var(--c-b1) !important;
+      margin-top: 2px !important;
+    }
+  }
+}
+
+// ── Searchview ──────────────────────────────────────────────────
+// FIX v7: Full search bar layout — icon, input, facets, filter toggle button
+.o_searchview {
+  border-radius: 6px !important;
+  border: 1.5px solid var(--c-b1) !important;
+  background: var(--c-inp) !important;
+  transition: border-color var(--tf), box-shadow var(--tf) !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  min-height: 34px !important;
+  padding: 2px 0 !important;
+  overflow: visible !important;
+
+  &:focus-within {
+    border-color: var(--c-a) !important;
+    box-shadow: 0 0 0 3px var(--c-ap) !important;
+    background: var(--c-card) !important;
+  }
+
+  // Search icon (magnifier on left) — fa and oi variants
+  .o_searchview_icon,
+  > .fa-search,
+  > .oi-search,
+  .o_searchview_input_container > .fa,
+  .o_searchview_input_container > .oi {
+    color: var(--c-t4) !important;
+    font-size: 13px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin: 0 8px !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  .o_searchview_input_container {
+    display: flex !important;
+    align-items: center !important;
+    flex: 1 !important;
+    min-width: 60px !important;
+  }
+
+  .o_searchview_input {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--c-t1) !important;
+    font-family: 'Syne', sans-serif !important;
+    font-size: 13px !important;
+    flex: 1 !important;
+    min-width: 60px !important;
+    padding: 4px 8px !important;
+
+    &::placeholder { color: var(--c-t4) !important; }
+    &:focus { box-shadow: none !important; outline: none !important; }
+  }
+
+  // FIX: Filter dropdown toggle button (funnel/caret icon on right)
+  .o_dropdown_button,
+  .o_searchview_dropdown_button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--c-t3) !important;
+    background: transparent !important;
+    border: none !important;
+    border-left: 1px solid var(--c-b1) !important;
+    padding: 0 10px !important;
+    align-self: stretch !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    transition: color var(--tf), background var(--tf) !important;
+
+    .fa, .oi, i {
+      color: inherit !important;
+      display: inline-block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      font-size: 12px !important;
+    }
+
+    &:hover {
+      color: var(--c-a) !important;
+      background: var(--c-ap) !important;
+    }
+  }
+
+  // Search facets / tokens
+  .o_searchview_facet {
+    background: var(--c-ap) !important;
+    border: 1px solid var(--c-a) !important;
+    border-radius: 3px !important;
+    color: var(--c-at) !important;
+    font-family: 'Syne', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    margin: 2px !important;
+    padding: 2px 6px !important;
+
+    .o_searchview_facet_label { color: var(--c-at) !important; }
+    .o_facet_remove {
+      color: var(--c-at) !important;
+      opacity: .7 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      .fa { color: inherit !important; font-size: 10px !important; visibility: visible !important; opacity: 1 !important; }
+      &:hover { opacity: 1 !important; }
+    }
+  }
+}
+
+// Control panel search layout
+.o_control_panel .o_cp_searchview,
+.o_control_panel .o_searchview_container {
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+// Search dropdown panel
+.o_search_panel,
+.o_searchview .dropdown-menu {
+  background: var(--c-card) !important;
+  border: 1px solid var(--c-b1) !important;
+  box-shadow: var(--s3) !important;
+
+  .dropdown-item {
+    color: var(--c-t2) !important;
+    font-family: 'Syne', sans-serif !important;
+    font-size: 12.5px !important;
+//     &:hover { background: var(--c-ap) !important; color: var(--c-at) !important; }
+  }
+
+  .dropdown-header {
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    letter-spacing: .14em !important;
+    text-transform: uppercase !important;
+    color: var(--c-t3) !important;
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 7 — CONTROL PANEL
+// ═══════════════════════════════════════════════════════════════
+
+.o_control_panel {
+  background-color: var(--c-card) !important;
+  border-bottom: 1px solid var(--c-b1) !important;
+  box-shadow: 0 1px 6px rgba(0,0,0,.05) !important;
+
+  .breadcrumb-item,
+  .breadcrumb-item a {
+    font-family: 'Syne', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: .04em !important;
+    color: var(--c-t3) !important;
+    text-decoration: none !important;
+    transition: color var(--tf) !important;
+    &:hover { color: var(--c-a) !important; }
+  }
+
+  .breadcrumb-item.active {
+    font-family: 'Instrument Serif', Georgia, serif !important;
+    font-style: italic !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: var(--c-t1) !important;
+  }
+}
+
+// View switcher icons (list / kanban / graph / pivot)
+.o_cp_switch_buttons .btn {
+  border-radius: 5px !important;
+  border: 1px solid var(--c-b1) !important;
+  background: var(--c-card) !important;
+  color: var(--c-t3) !important;
+  transition: all var(--tf) !important;
+
+  .fa, i { color: inherit !important; }
+
+  &:hover { background: var(--c-hover) !important; color: var(--c-t2) !important; }
+  &.active, &.selected {
+    color: var(--c-a) !important;
+    background: var(--c-ap) !important;
+    border-color: var(--c-a) !important;
+  }
+}
+
+// Filter / GroupBy / Favourites
+.o_control_panel .o_filter_menu > .btn,
+.o_control_panel .o_group_by_menu > .btn,
+.o_control_panel .o_favorites_menu > .btn,
+.o_control_panel_actions .btn {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: .07em !important;
+  text-transform: uppercase !important;
+  color: var(--c-t2) !important;
+  border: 1px solid var(--c-b1) !important;
+  border-radius: 5px !important;
+  background: var(--c-card) !important;
+  transition: all var(--tf) !important;
+
+  .fa, i { color: inherit !important; }
+
+  &:hover {
+    background: var(--c-hover) !important;
+    border-color: var(--c-b2) !important;
+    color: var(--c-t1) !important;
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 8 — SMART BUTTONS (oe_button_box)
+// ═══════════════════════════════════════════════════════════════
+
+.oe_button_box {
+  background: var(--c-surf) !important;
+  border-bottom: 1px solid var(--c-b1) !important;
+  padding: 8px 16px !important;
+  gap: 6px !important;
+}
+
+.o_stat_button {
+  background: var(--c-card) !important;
+  border: 1px solid var(--c-b1) !important;
+  border-radius: 7px !important;
+  box-shadow: var(--s1) !important;
+  color: var(--c-t2) !important;
+  position: relative !important;
+  overflow: visible !important;
+  transition: border-color var(--tf), box-shadow var(--tb), background var(--tf) !important;
+
+  &::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 0;
+    top: 20%;
+    bottom: 20% !important;
+    width: 3px !important;
+    border-radius: 0 2px 2px 0 !important;
+    background: transparent !important;
+    transition: background var(--tf) !important;
+    pointer-events: none !important;
+  }
+
+  &:hover {
+    border-color: var(--c-a) !important;
+    background: var(--c-ap) !important;
+    box-shadow: var(--s2) !important;
+    color: var(--c-at) !important;
+    text-decoration: none !important;
+    &::before { background: var(--c-a) !important; }
+  }
+
+  i.fa, .o_button_icon {
+    color: var(--c-a) !important;
+    font-size: 16px !important;
+    display: inline-block !important;
+    visibility: visible !important;
+  }
+  &:hover i.fa,
+  &:hover .o_button_icon { color: var(--c-a2) !important; }
+
+  .o_stat_value {
+    font-family: 'DM Mono', monospace !important;
+    font-size: 17px !important;
+    font-weight: 500 !important;
+    letter-spacing: -.3px !important;
+    color: var(--c-t1) !important;
+    line-height: 1.3 !important;
+    display: block !important;
+  }
+  &:hover .o_stat_value { color: var(--c-at) !important; }
+
+  .o_stat_text {
+    font-family: 'Syne', sans-serif !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    letter-spacing: .1em !important;
+    text-transform: uppercase !important;
+    color: var(--c-t3) !important;
+    line-height: 1.4 !important;
+    display: block !important;
+  }
+  &:hover .o_stat_text { color: var(--c-at) !important; }
+}
+
+.o_stat_info { color: inherit !important; }
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 9 — FORM VIEW
+//  FIX: Remove background + position from .o_form_statusbar
+//       Inline/child tables fixed for proper layout
+// ═══════════════════════════════════════════════════════════════
+
+.o_form_sheet_bg {
+  background-color: var(--c-bg) !important;
+//   padding: 20px !important;
+}
+
+// .o_form_sheet {
+//   background: var(--c-card) !important;
+//   border-radius: 8px !important;
+//   border: 1px solid var(--c-b1) !important;
+//   box-shadow: var(--s2) !important;
+//   padding: 28px 32px !important;
+//   margin: 0 auto !important;
+//   max-width: 1100px !important;
+//   color: var(--c-t1) !important;
+// }
+
+.o_form_sheet {
+  background: var(--c-card) !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--c-b1) !important;
+  box-shadow: var(--s2) !important;
+  padding: 28px 32px !important;
+  margin: 0 auto !important;
+  color: var(--c-t1) !important;
+
+  /* Responsive width — fluid between 320px and 1175px */
+  width: clamp(320px, 90%, 1175px) !important;
+  min-width: unset !important;
+  max-width: 1175px !important;
+}
+
+/* Large screens — give more breathing room */
+@media (min-width: 1400px) {
+  .o_form_sheet {
+    max-width: 1300px !important;
+  }
+}
+
+/* Medium screens — tablets */
+@media (max-width: 1200px) {
+  .o_form_sheet {
+    width: 95% !important;
+    padding: 20px 24px !important;
+  }
+}
+
+/* Small screens — mobile */
+@media (max-width: 768px) {
+  .o_form_sheet {
+    width: 100% !important;
+    border-radius: 0 !important;
+    padding: 16px !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+}
+
+// ── STATUS BAR FIX ──────────────────────────────────────────────
+// Remove background-color and position override that was
+// conflicting with Odoo's sticky header positioning
+.o_form_view .o_form_statusbar,
+.o_FormStatusBar,
+[class*="o_form_statusbar"] {
+  // Only style cosmetically — no position or bg override
+//   border-bottom: 1px solid var(--c-b1) !important;
+  // Keep Odoo's own position:sticky working — don't set position here
+//   background-color: var(--c-card) !important; // same as card so it blends
+}
+@media (min-width: 768px) {
+    .o_form_view .o_form_statusbar {
+        position: none !important;
+        top: 0;
+        z-index: 1020;
+        background-color: transparent !important;
+    }
+}
+
+.o_statusbar_status {
+  gap: 3px !important;
+  padding: 0 12px !important;
+}
+
+.o_statusbar_status button,
+.o_statusbar_status .o_arrow_button {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: .1em !important;
+  text-transform: uppercase !important;
+  border-radius: 3px !important;
+  border: 1px solid var(--c-b1) !important;
+  background: var(--c-surf) !important;
+  color: var(--c-t3) !important;
+  padding: 4px 11px !important;
+  transition: all var(--tf) !important;
+
+  &:hover {
+    background: var(--c-hover) !important;
+    color: var(--c-t2) !important;
+    border-color: var(--c-b2) !important;
+  }
+}
+
+.o_statusbar_status .o_arrow_button_current {
+  background: var(--c-pill) !important;
+  color: #FFFFFF !important;
+  border-color: var(--c-pill) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.22) !important;
+}
+
+// Field labels
+.o_form_label {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: .1em !important;
+  text-transform: uppercase !important;
+  color: var(--c-t3) !important;
+}
+
+// Section headings
+.o_horizontal_separator {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+  color: var(--c-t3) !important;
+  border-bottom: 1px solid var(--c-b1) !important;
+  padding-bottom: 6px !important;
+  margin: 22px 0 14px !important;
+}
+
+// Notebook tabs
+.o_notebook .nav-tabs {
+  border-bottom: 1px solid var(--c-b1) !important;
+  background: var(--c-surf) !important;
+
+  .nav-link {
+    font-family: 'Syne', sans-serif !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: .07em !important;
+    text-transform: uppercase !important;
+    color: var(--c-t3) !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+    padding: 10px 18px !important;
+    background: transparent !important;
+    transition: color var(--tf), border-color var(--tf) !important;
+
+    &:hover { color: var(--c-a) !important; }
+    &.active {
+      color: var(--c-a) !important;
+      border-bottom-color: var(--c-a) !important;
+      background: transparent !important;
+    }
+  }
+}
+
+// Form title
+.o_form_view .o_form_sheet .oe_title h1,
+.o_form_view .o_form_sheet h1 {
+  font-family: 'Instrument Serif', serif !important;
+  font-style: italic !important;
+  font-size: 26px !important;
+  font-weight: 400 !important;
+  color: var(--c-t1) !important;
+  letter-spacing: -.01em !important;
+  line-height: 1.25 !important;
+}
+
+// Action buttons
+.o_form_view .o_form_buttons_view .btn,
+.o_control_panel .o_cp_buttons .btn {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: .07em !important;
+  text-transform: uppercase !important;
+  padding: 6px 15px !important;
+  border-radius: 5px !important;
+  transition: all var(--tf) !important;
+}
+
+.o_form_view .o_form_buttons_view .btn-primary,
+.o_control_panel .o_cp_buttons .btn-primary {
+  background: var(--c-a) !important;
+  border-color: var(--c-a) !important;
+  color: #fff !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2) !important;
+
+  &:hover {
+    background: var(--c-a2) !important;
+    border-color: var(--c-a2) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,.25) !important;
+  }
+}
+
+.o_form_view .o_form_buttons_view .btn-secondary,
+.o_control_panel .o_cp_buttons .btn-secondary {
+  background: var(--c-card) !important;
+  border: 1px solid var(--c-b2) !important;
+  color: var(--c-t2) !important;
+//   &:hover { background: var(--c-hover) !important; color: var(--c-t1) !important; }
+}
+
+.o_form_view .o_form_buttons_view .btn-danger,
+.o_control_panel .o_cp_buttons .btn-danger {
+  background: var(--c-red) !important;
+  border-color: var(--c-red) !important;
+  color: #fff !important;
+}
+
+// "Add a product / line" links
+.o_list_view .o_list_record_add td a,
+.o_field_one2many .o_list_record_add td a {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: var(--c-a) !important;
+  text-decoration: none !important;
+  &:hover { opacity: .75; }
+}
+
+// Totals footer
+.o_form_view .oe_subtotal_footer_separator {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: .1em !important;
+  text-transform: uppercase !important;
+  color: var(--c-t3) !important;
+}
+
+.o_form_view .oe_subtotal_footer .oe_total td,
+.o_form_view tfoot td {
+  font-family: 'DM Mono', monospace !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: var(--c-t1) !important;
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 10 — INLINE / CHILD TABLES (one2many / editable lists)
+//  FIX v7: Proper layout — table, headers, cells, numeric totals
+//  Key fixes: table-layout, overflow-x (not hidden), column widths
+// ═══════════════════════════════════════════════════════════════
+
+// Wrapper for inline tables inside forms
+.o_field_one2many,
+.o_field_many2many {
+  // FIX: Don't clip the table — use overflow-x: auto so wide tables scroll
+  // instead of hiding content. overflow: hidden was cutting off rightmost columns.
+  overflow: visible !important;
+  width: 100% !important;
+
+  .o_list_view {
+    box-shadow: none !important;
+    border: 1px solid var(--c-b1) !important;
+    border-radius: 6px !important;
+    // FIX: overflow-x: auto allows horizontal scroll; overflow-y: visible
+    // prevents clipping of dropdown menus opened from within the table
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    margin: 0 !important;
+    width: 100% !important;
+
+    // FIX: Table must use fixed layout to honour column widths set by Odoo
+    table {
+      table-layout: fixed !important;
+      width: 100% !important;
+      border-collapse: collapse !important;
+    }
+
+    // Column headers
+    thead th {
+      font-family: 'Syne', sans-serif !important;
+      font-size: 9px !important;
+      font-weight: 700 !important;
+      letter-spacing: .1em !important;
+      text-transform: uppercase !important;
+      color: var(--c-t3) !important;
+      background: var(--c-surf) !important;
+      border-bottom: 1px solid var(--c-b1) !important;
+      padding: 8px 10px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      vertical-align: middle !important;
+    }
+
+    // Data cells
+    tbody td {
+      font-family: 'Syne', sans-serif !important;
+      font-size: 12px !important;
+      color: var(--c-t2) !important;
+      padding: 7px 10px !important;
+      vertical-align: middle !important;
+      background: var(--c-card) !important;
+      // FIX: Allow text to wrap or truncate within cell — don't overflow
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--c-b1) !important;
+      transition: background-color var(--tf) !important;
+      &:last-child { border-bottom: none !important; }
+      &:hover td { background-color: var(--c-hover) !important; }
+    }
+
+    // Numeric cells — right align and monospace
+    td .o_field_monetary,
+    td .o_field_integer,
+    td .o_field_float {
+      font-family: 'DM Mono', monospace !important;
+      font-size: 12.5px !important;
+      color: var(--c-t1) !important;
+    }
+
+    // FIX: Monetary/numeric columns — right-align the content
+    td:has(.o_field_monetary),
+    td:has(.o_field_integer),
+    td:has(.o_field_float),
+    .o_list_number {
+      text-align: right !important;
+    }
+
+    // Footer / totals row in inline table
+    tfoot td {
+      font-family: 'DM Mono', monospace !important;
+      font-size: 12.5px !important;
+      font-weight: 700 !important;
+      color: var(--c-t1) !important;
+      background: var(--c-surf) !important;
+      border-top: 2px solid var(--c-b2) !important;
+      padding: 8px 10px !important;
+      text-align: right !important;
+    }
+
+    // Inline edit inputs inside the table
+    td input:not([type="checkbox"]):not([type="radio"]),
+    td select,
+    td textarea {
+      background-color: var(--c-inp) !important;
+      border: 1.5px solid var(--c-b1) !important;
+      border-radius: 4px !important;
+      color: var(--c-t1) !important;
+      font-family: 'Syne', sans-serif !important;
+      font-size: 12px !important;
+      padding: 3px 6px !important;
+      min-width: 60px !important;
+      transition: border-color var(--tf), box-shadow var(--tf) !important;
+
+      &:focus {
+        border-color: var(--c-a) !important;
+        box-shadow: 0 0 0 2px var(--c-ap) !important;
+        outline: none !important;
+      }
+    }
+
+    // Row actions (delete, drag handle)
+    .o_handle_cell { color: var(--c-t4) !important; cursor: grab !important; }
+    .o_list_record_remove button {
+      color: var(--c-t4) !important;
+      background: none !important;
+      border: none !important;
+      &:hover { color: var(--c-red) !important; }
+    }
+
+    // Optional columns toggle
+    .o_optional_columns_dropdown .btn {
+      color: var(--c-t3) !important;
+      background: none !important;
+      &:hover { color: var(--c-a) !important; }
+    }
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 11 — MAIN LIST VIEW
+// ═══════════════════════════════════════════════════════════════
+
+.o_view_controller > .o_list_view,
+.o_list_view:not(.o_field_one2many .o_list_view):not(.o_field_many2many .o_list_view) {
+  background: var(--c-card) !important;
+  color: var(--c-t1) !important;
+  border-radius: 0 0 8px 8px !important;
+  border: 1px solid var(--c-b1) !important;
+  box-shadow: var(--s1) !important;
+  overflow: hidden !important;
+
+  thead th {
+    font-family: 'Syne', sans-serif !important;
+    font-size: 9.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: .1em !important;
+    text-transform: uppercase !important;
+    color: var(--c-t3) !important;
+    background: var(--c-surf) !important;
+    border-bottom: 1px solid var(--c-b1) !important;
+    padding: 10px 14px !important;
+    white-space: nowrap !important;
+  }
+
+  thead th.o-sort-up,
+  thead th.o-sort-down { color: var(--c-a) !important; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--c-b1) !important;
+    transition: background-color var(--tf) !important;
+
+    &:last-child { border-bottom: none !important; }
+    &:hover { background-color: var(--c-hover) !important; }
+    &:hover td:first-child { border-left: 2.5px solid var(--c-a) !important; }
+  }
+
+  tbody td {
+    font-family: 'Syne', sans-serif !important;
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    color: var(--c-t2) !important;
+    padding: 10px 14px !important;
+    vertical-align: middle !important;
+  }
+
+  .o_field_monetary,
+  .o_field_integer,
+  .o_field_float {
+    font-family: 'DM Mono', monospace !important;
+    font-size: 12.5px !important;
+    color: var(--c-t1) !important;
+  }
+
+  tfoot td {
+    font-family: 'DM Mono', monospace !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: var(--c-t1) !important;
+    background: var(--c-surf) !important;
+    border-top: 2px solid var(--c-b2) !important;
+    padding: 11px 14px !important;
+  }
+}
+
+.o_pager {
+  font-family: 'DM Mono', monospace !important;
+  font-size: 11px !important;
+  color: var(--c-t3) !important;
+}
+
+.o_pager_previous, .o_pager_next {
+  border-radius: 5px !important;
+  border: 1px solid var(--c-b1) !important;
+  background: var(--c-card) !important;
+  color: var(--c-t3) !important;
+  transition: all var(--tf) !important;
+
+  &:hover {
+    border-color: var(--c-a) !important;
+    color: var(--c-a) !important;
+    background: var(--c-ap) !important;
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 12 — TOOLBAR BUTTON GROUPS (graph/pivot)
+// ═══════════════════════════════════════════════════════════════
+
+.o_graph_buttons,
+.o_pivot_buttons {
+  .btn-group {
+    border: 1px solid var(--c-b1) !important;
+    border-radius: 6px !important;
+    overflow: hidden !important;
+    box-shadow: var(--s1) !important;
+
+    .btn {
+      font-family: 'Syne', sans-serif !important;
+      font-size: 10.5px !important;
+      font-weight: 700 !important;
+      color: var(--c-t3) !important;
+      background: var(--c-card) !important;
+      border: none !important;
+      border-right: 1px solid var(--c-b1) !important;
+      border-radius: 0 !important;
+      padding: 5px 10px !important;
+      transition: all var(--tf) !important;
+
+      .fa, i { color: inherit !important; }
+
+      &:last-child { border-right: none !important; }
+      &:hover { background: var(--c-hover) !important; color: var(--c-t1) !important; }
+      &.active, &[aria-pressed="true"], &.o_active {
+        background: var(--c-ap) !important;
+        color: var(--c-a) !important;
+      }
+    }
+  }
+
+  > .btn, .o_dropdown > .btn {
+    font-family: 'Syne', sans-serif !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: .06em !important;
+    text-transform: uppercase !important;
+    color: var(--c-t2) !important;
+    background: var(--c-card) !important;
+    border: 1px solid var(--c-b1) !important;
+    border-radius: 6px !important;
+    padding: 5px 12px !important;
+    box-shadow: var(--s1) !important;
+    transition: all var(--tf) !important;
+
+    &:hover { background: var(--c-hover) !important; border-color: var(--c-b2) !important; }
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 13 — BADGES & TAGS
+// ═══════════════════════════════════════════════════════════════
+
+.o_tag, .badge {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: .07em !important;
+  text-transform: uppercase !important;
+  border-radius: 3px !important;
+  padding: 2px 7px !important;
+}
+
+// Status badge colours — keep contrast with any theme
+.badge.text-bg-info    { background: #EEF2FF !important; color: #3730A3 !important; border: 1px solid #C7D2FE !important; }
+.badge.text-bg-warning { background: #FFF7ED !important; color: #C2410C !important; border: 1px solid #FED7AA !important; }
+.badge.text-bg-success,
+.badge.text-bg-primary { background: #F0FDF4 !important; color: #15803D !important; border: 1px solid #BBF7D0 !important; }
+.badge.text-bg-danger  { background: #FEF2F2 !important; color: #B91C1C !important; border: 1px solid #FECACA !important; }
+.badge.text-bg-secondary { background: #F8FAFC !important; color: #475569 !important; border: 1px solid #CBD5E1 !important; }
+
+// Priority / state tags in list/kanban — use theme colour
+.o_tag {
+  background: var(--c-ap) !important;
+  color: var(--c-at) !important;
+  border: 1px solid var(--c-a) !important;
+
+  .o_delete { color: var(--c-at) !important; opacity: .7 !important;
+    &:hover { opacity: 1 !important; } }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 14 — KANBAN
+// ═══════════════════════════════════════════════════════════════
+
+.o_kanban_view.o_view_controller { background: var(--c-bg) !important; }
+
+.o_kanban_view .o_kanban_group {
+  background: var(--c-card) !important;
+  border: 1px solid var(--c-b1) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--s1) !important;
+}
+
+.o_kanban_view .o_column_title {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: .1em !important;
+  text-transform: uppercase !important;
+  color: var(--c-t3) !important;
+}
+
+.o_kanban_view .o_kanban_record:not(.o_app) {
+  background: var(--c-card) !important;
+  border: 1px solid var(--c-b1) !important;
+  border-radius: 6px !important;
+  box-shadow: var(--s1) !important;
+  color: var(--c-t2) !important;
+  transition: transform var(--tb), box-shadow var(--tb), border-color var(--tf) !important;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 0; top: 0; bottom: 0 !important;
+    width: 3px !important;
+    background: transparent !important;
+    transition: background var(--tf) !important;
+  }
+
+  &:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--s2) !important;
+    border-color: var(--c-a) !important;
+    &::before { background: var(--c-a) !important; }
+  }
+
+  .o_kanban_record_title, strong {
+    font-family: 'Syne', sans-serif !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    color: var(--c-t1) !important;
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 15 — GLOBAL BUTTONS
+// ═══════════════════════════════════════════════════════════════
+
+.btn {
+  font-family: 'Syne', sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: .05em !important;
+  font-size: 11px !important;
+  border-radius: 5px !important;
+  transition: all var(--tf) !important;
+}
+
+.btn-primary {
+  background: var(--c-a) !important;
+  border-color: var(--c-a) !important;
+  color: #fff !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,.16) !important;
+
+  &:hover, &:focus {
+    background: var(--c-a2) !important;
+    border-color: var(--c-a2) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,.22) !important;
+    transform: translateY(-1px) !important;
+  }
+  &:active { transform: none !important; }
+}
+
+.btn-secondary {
+  color: var(--c-t2) !important;
+  border-color: var(--c-b2) !important;
+  background: var(--c-card) !important;
+  &:hover { background: var(--c-hover) !important; color: var(--c-t1) !important; }
+}
+
+// Icon-only buttons — ensure FA inside shows
+.btn .fa,
+.btn i {
+  color: inherit !important;
+  display: inline-block !important;
+  visibility: visible !important;
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 16 — MODALS
+// ═══════════════════════════════════════════════════════════════
+
+.modal-backdrop {
+  backdrop-filter: blur(4px) !important;
+  background-color: rgba(0,0,0,.45) !important;
+}
+
+.modal-content {
+  background: var(--c-card) !important;
+  border: 1px solid var(--c-b1) !important;
+  box-shadow: var(--s3) !important;
+  color: var(--c-t1) !important;
+}
+
+.modal-header {
+  background: var(--c-surf) !important;
+  border-bottom: 1px solid var(--c-b1) !important;
+}
+
+.modal-header .modal-title {
+  font-family: 'Instrument Serif', serif !important;
+  font-style: italic !important;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  color: var(--c-t1) !important;
+}
+
+.modal-body {
+  color: var(--c-t1) !important;
+  background: var(--c-card) !important;
+}
+
+.modal-footer {
+  background: var(--c-surf) !important;
+  border-top: 1px solid var(--c-b1) !important;
+}
+
+.btn-close {
+  transition: transform var(--tf) !important;
+  &:hover { transform: rotate(90deg) !important; }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 17 — DROPDOWNS
+// ═══════════════════════════════════════════════════════════════
+
+.dropdown-menu {
+  background: var(--c-card) !important;
+  border: 1px solid var(--c-b1) !important;
+  box-shadow: var(--s3) !important;
+  color: var(--c-t1) !important;
+  animation: pdrop 140ms cubic-bezier(.4,0,.2,1) both !important;
+}
+
+.dropdown-item {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+//   color: var(--c-t2) !important;
+  border-radius: 4px !important;
+  transition: background var(--tf), color var(--tf) !important;
+
+  .fa, i { color: inherit !important; }
+
+  &:hover, &:focus {
+    background: var(--c-ap) !important;
+    color: var(--c-at) !important;
+  }
+
+  &.active {
+    background: var(--c-a) !important;
+    color: #fff !important;
+  }
+}
+
+.dropdown-header {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  color: var(--c-t3) !important;
+}
+
+.dropdown-divider { border-color: var(--c-b1) !important; }
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 18 — CHATTER / MAIL
+// ═══════════════════════════════════════════════════════════════
+
+.o-mail-Thread, .o_chatter {
+  background: var(--c-card) !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--c-b1) !important;
+  box-shadow: var(--s1) !important;
+}
+
+.o-mail-Chatter-topbar .btn,
+.o_chatter .o_chatter_topbar .btn {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: .07em !important;
+  text-transform: uppercase !important;
+  border-radius: 5px !important;
+  padding: 5px 12px !important;
+//   border: 1px solid var(--c-b1) !important;
+//   background: var(--c-card) !important;
+//   color: var(--c-t2) !important;
+  transition: all var(--tf) !important;
+
+  .fa, i { color: inherit !important; }
+
+  &:hover {
+//     background: var(--c-ap) !important;
+//     border-color: 5px 12px !important;
+//     color: var(--c-a) !important;
+  }
+}
+
+.o-mail-Message {
+  border-radius: 6px !important;
+  border: 1px solid var(--c-b1) !important;
+  background: var(--c-surf) !important;
+}
+
+.o-mail-Message-author {
+  font-family: 'Syne', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 11.5px !important;
+  color: var(--c-t1) !important;
+}
+
+.o-mail-Message-date {
+  font-family: 'DM Mono', monospace !important;
+  font-size: 10px !important;
+  color: var(--c-t3) !important;
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 19 — NOTIFICATIONS
+// ═══════════════════════════════════════════════════════════════
+
+.o_notification {
+  background: var(--c-card) !important;
+  border: 1px solid var(--c-b1) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--s3) !important;
+  color: var(--c-t1) !important;
+  animation: pslide 200ms cubic-bezier(.4,0,.2,1) both !important;
+
+  .fa, i { color: inherit !important; }
+}
+
+.o_notification_title {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: var(--c-t1) !important;
+}
+
+.o_notification_content {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 12px !important;
+  color: var(--c-t2) !important;
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 20 — GRAPH / PIVOT VIEWS  [v7 fixed]
+// ═══════════════════════════════════════════════════════════════
+
+// FIX: Ensure graph/pivot view containers don't block interactions.
+// pointer-events must remain 'auto' on the view controller itself —
+// any 'none' from a stacked overlay will block button clicks.
+.o_view_controller.o_graph_view,
+.o_view_controller.o_pivot_view {
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: auto !important;
+}
+
+// FIX: Analytical view button areas must be fully interactive
+.o_graph_buttons,
+.o_pivot_buttons,
+.o_control_panel_actions {
+  position: relative !important;
+  z-index: 10 !important;
+  pointer-events: auto !important;
+
+  .btn, button, a {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+}
+
+// FIX: Measures / Group By / Filter dropdowns in pivot/graph
+.o_pivot_measures_list,
+.o_pivot .dropdown-menu,
+.o_graph .dropdown-menu {
+  z-index: 1060 !important;
+  pointer-events: auto !important;
+}
+
+.o_graph_view,
+.o_graph_view .o_graph_renderer,
+.o_view_controller.o_graph_view,
+.o_pivot_view,
+.o_pivot_view .o_pivot,
+.o_view_controller.o_pivot_view {
+  background: var(--c-bg) !important;
+  color: var(--c-t1) !important;
+}
+
+.o_graph_view canvas {
+  background: var(--c-card) !important;
+  border-radius: 6px !important;
+}
+
+.o_pivot_view table {
+  background: var(--c-card) !important;
+  border: 1px solid var(--c-b1) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--s1) !important;
+}
+
+.o_pivot_view thead th {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: .1em !important;
+  text-transform: uppercase !important;
+  color: var(--c-t3) !important;
+  background: var(--c-surf) !important;
+  border-color: var(--c-b1) !important;
+  padding: 9px 14px !important;
+}
+
+.o_pivot_view .o_pivot_header_cell_opened,
+.o_pivot_view .o_pivot_header_cell_closed { color: var(--c-a) !important; }
+
+.o_pivot_view tbody tr {
+  border-bottom: 1px solid var(--c-b1) !important;
+  &:hover td { background: var(--c-hover) !important; }
+}
+
+.o_pivot_view tbody td {
+  font-family: 'DM Mono', monospace !important;
+  font-size: 12.5px !important;
+  color: var(--c-t1) !important;
+  background: var(--c-card) !important;
+  border-color: var(--c-b1) !important;
+  padding: 9px 14px !important;
+}
+
+.o_pivot_view tbody th {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--c-t2) !important;
+  background: var(--c-surf) !important;
+  border-color: var(--c-b1) !important;
+  padding: 9px 14px !important;
+}
+
+.o_pivot_view tr.o_pivot_total td {
+  font-weight: 700 !important;
+  background: var(--c-surf) !important;
+  border-top: 2px solid var(--c-b2) !important;
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 21 — HOME MENU
+// ═══════════════════════════════════════════════════════════════
+
+.o_home_menu_container, .o_home_menu {
+  background-color: var(--c-nav) !important;
+
+  .o_app {
+    border-radius: 12px !important;
+    transition: transform var(--tb), box-shadow var(--tb) !important;
+    &:hover {
+      transform: translateY(-5px) !important;
+      box-shadow: 0 20px 48px rgba(0,0,0,.5) !important;
+    }
+
+    .o_caption {
+      font-family: 'Syne', sans-serif !important;
+      font-size: 10.5px !important;
+      font-weight: 600 !important;
+      letter-spacing: .05em !important;
+      color: var(--c-navt) !important;
+    }
+  }
+
+  .o_home_menu_searchbar input {
+    background: rgba(255,255,255,.07) !important;
+    border: 1.5px solid rgba(255,255,255,.12) !important;
+    border-radius: 6px !important;
+    color: #fff !important;
+    font-family: 'Syne', sans-serif !important;
+
+    &::placeholder { color: var(--c-navt) !important; }
+    &:focus {
+      border-color: var(--c-gold) !important;
+      box-shadow: 0 0 0 3px rgba(201,168,76,.22) !important;
+      outline: none !important;
+    }
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 22 — SCROLLBARS
+// ═══════════════════════════════════════════════════════════════
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--c-b2);
+  border-radius: 3px;
+  &:hover { background: var(--c-t3); }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 23 — THEME SWITCHER PANEL
+// ═══════════════════════════════════════════════════════════════
+
+#prox-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--c-nav);
+  border: 1.5px solid var(--c-gold);
+  color: var(--c-gold);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--s3);
+  transition: transform 200ms cubic-bezier(.34,1.56,.64,1);
+  outline: none;
+
+  svg { width: 18px; height: 18px; }
+  &:hover { transform: scale(1.12) rotate(18deg); }
+}
+
+#prox-panel {
+  position: fixed;
+  bottom: 72px;
+  right: 20px;
+  z-index: 9998;
+  width: 248px;
+  background: var(--c-card);
+  border: 1px solid var(--c-b1);
+  border-radius: 10px;
+  box-shadow: var(--s3);
+  padding: 12px;
+  display: none;
+  animation: pfadeup 180ms cubic-bezier(.4,0,.2,1) both;
+
+  &.open { display: block; }
+}
+
+#prox-panel-hdr {
+  font-family: 'Syne', sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--c-t3);
+  padding: 0 4px 8px;
+  border-bottom: 1px solid var(--c-b1);
+  margin-bottom: 8px;
+}
+
+.prox-opt {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  margin-bottom: 2px;
+  transition: background 110ms ease, border-color 110ms ease;
+
+  &:hover { background: var(--c-hover); }
+  &.on { border-color: var(--c-a); background: var(--c-ap); }
+}
+
+.prox-sw {
+  width: 28px; height: 28px;
+  border-radius: 5px; flex-shrink: 0;
+  overflow: hidden; display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  border: 1px solid rgba(0,0,0,.1);
+}
+.prox-sw s { display: block; width: 100%; height: 100%; text-decoration: none; }
+.prox-lbl { flex: 1; min-width: 0; }
+.prox-name { display: block; font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700; color: var(--c-t1); }
+.prox-desc { display: block; font-family: 'Syne', sans-serif; font-size: 9.5px; color: var(--c-t3); }
+.prox-chk { font-size: 12px; font-weight: 700; color: var(--c-a); opacity: 0; flex-shrink: 0; }
+.prox-opt.on .prox-chk { opacity: 1; }
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 24 — KEYFRAMES & ANIMATIONS
+// ═══════════════════════════════════════════════════════════════
+
+@keyframes pdrop   { from { opacity:0; transform:translateY(-5px) scale(.98); } to { opacity:1; transform:none; } }
+@keyframes pslide  { from { opacity:0; transform:translateX(12px); }            to { opacity:1; transform:none; } }
+@keyframes pfadeup { from { opacity:0; transform:translateY(6px); }             to { opacity:1; transform:none; } }
+
+.o_form_view.o_view_controller,
+.o_list_view.o_view_controller,
+.o_kanban_view.o_view_controller,
+.o_graph_view.o_view_controller,
+.o_pivot_view.o_view_controller {
+  animation: pfadeup 240ms cubic-bezier(.4,0,.2,1) both;
+}
+
+.o_kanban_view .o_kanban_group {
+  animation: pfadeup 260ms cubic-bezier(.4,0,.2,1) both;
+  @for $i from 1 through 8 {
+    &:nth-child(#{$i}) { animation-delay: #{($i - 1) * 30}ms; }
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 25 — REDUCED MOTION
+// ═══════════════════════════════════════════════════════════════
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.o_form_view .o_notebook > .tab-content > .tab-pane > :first-child:not(.o_group) .o_field_x2many.o_field_x2many_list .o_list_renderer, .o_form_view .o_notebook > .tab-content > .tab-pane > :first-child.o_invisible_modifier .o_field_x2many.o_field_x2many_list .o_list_renderer{
+    --ListRenderer-margin-x: 0px !important;
+    --ListRenderer-table-padding-x: var(--Notebook-padding-x);
+    margin-top: 0px !important;
+}
+
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback){
+    margin-left: -30px;
+}
+
+.o_control_panel .o_filter_menu > .btn, .o_control_panel .o_group_by_menu > .btn, .o_control_panel .o_favorites_menu > .btn, .o_control_panel_actions .btn{
+    border-radius: 20px !important;
+}
+
+sub, sup {
+    position: relative;
+    font-size: 1.15em;
+    line-height: 0;
+    vertical-align: baseline;
+}
