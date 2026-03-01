@@ -1,141 +1,41 @@
-<section class="oe_container" style="padding:0;max-width:100%">
+<!-- ============================================================
+  PROX PROFESSIONAL THEME — Odoo App Store Description
+  Strategy: All dark/styled sections = PNG images (unsanitizable)
+  Text sections = oe_row/oe_span + background-color (not background)
+  No <h1>, no var(), no CSS classes, no <style> blocks
+  Tables used for multi-col where flex may be stripped
+============================================================ -->
 
-  <!-- ═══════════════════════════════════════════════════
-       HERO BANNER
-  ═══════════════════════════════════════════════════ -->
-  <div style="background:#0f1117;padding:48px 40px 0;position:relative;overflow:hidden;">
+<!-- ▌ 1. FULL HERO IMAGE (dark bg + headline + screenshot baked in) -->
+<div style="line-height:0;font-size:0;">
+  <img src="hero-full.png"
+       alt="Prox Professional Theme — Make Odoo Look Seriously Professional. Premium Odoo 19 Backend Theme."
+       style="width:100%;max-width:100%;display:block;border:0;"/>
+</div>
 
-    <!-- Grid texture -->
-    <div style="position:absolute;top:0;left:0;right:0;bottom:0;
-      background-image:linear-gradient(rgba(201,168,76,.05) 1px,transparent 1px),
-                       linear-gradient(90deg,rgba(201,168,76,.05) 1px,transparent 1px);
-      background-size:48px 48px;pointer-events:none;"></div>
+<!-- ▌ 2. STATS BAR IMAGE -->
+<div style="line-height:0;font-size:0;">
+  <img src="stats-bar.png"
+       alt="6 Views Transformed · 10+ Theme Variants · 3 Font Families · v19 · 24h Support"
+       style="width:100%;max-width:100%;display:block;border:0;"/>
+</div>
 
-    <!-- Glow -->
-    <div style="position:absolute;top:-100px;left:50%;transform:translateX(-50%);
-      width:800px;height:400px;border-radius:50%;
-      background:radial-gradient(ellipse,rgba(201,168,76,.15) 0%,transparent 65%);
-      pointer-events:none;"></div>
-
-    <div style="position:relative;z-index:2;max-width:960px;margin:0 auto;">
-
-      <!-- Eyebrow badge -->
-      <div style="display:inline-block;background:rgba(201,168,76,.12);
-        border:1px solid rgba(201,168,76,.35);color:#c9a84c;
-        font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-        padding:5px 14px;border-radius:100px;margin-bottom:20px;">
-        &#9679; &nbsp;Premium Odoo 19 Backend Theme
-      </div>
-
-      <!-- Main headline -->
-      <h1 style="font-size:42px;font-weight:800;color:#ffffff;
-        line-height:1.08;letter-spacing:-1px;margin:0 0 16px;font-family:inherit;">
-        Make Odoo Look<br/>
-        <span style="color:#c9a84c;">Seriously</span>
-        <span style="color:transparent;-webkit-text-stroke:1.5px #c9a84c;"> Professional.</span>
-      </h1>
-
-      <p style="font-size:15px;color:rgba(255,255,255,.55);line-height:1.75;
-        margin:0 0 28px;max-width:520px;">
-        A framework-level UI overhaul for Odoo 19 — Swiss financial precision meets
-        modern fintech polish. Dark navbar, gold accents, refined typography.
-        Every view transformed.
-      </p>
-
-      <!-- Badges row -->
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px;">
-        <span style="background:rgba(201,168,76,.15);color:#c9a84c;
-          border:1px solid rgba(201,168,76,.4);
-          font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-          padding:4px 12px;border-radius:100px;">&#9733; Odoo 19.0</span>
-        <span style="background:rgba(100,160,255,.12);color:#7ab0f5;
-          border:1px solid rgba(100,160,255,.3);
-          font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-          padding:4px 12px;border-radius:100px;">Backend Theme</span>
-        <span style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.5);
-          border:1px solid rgba(255,255,255,.14);
-          font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-          padding:4px 12px;border-radius:100px;">LGPL-3</span>
-        <span style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.5);
-          border:1px solid rgba(255,255,255,.14);
-          font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-          padding:4px 12px;border-radius:100px;">by Rajashekar B</span>
-      </div>
-
-      <!-- Hero screenshot -->
-      <div style="border-radius:12px 12px 0 0;overflow:hidden;
-        border:1px solid rgba(201,168,76,.3);border-bottom:none;
-        box-shadow:0 -10px 60px rgba(201,168,76,.15);">
-        <div style="background:#050608;padding:9px 14px;
-          border-bottom:1px solid rgba(201,168,76,.1);
-          display:flex;align-items:center;gap:6px;">
-          <span style="width:10px;height:10px;border-radius:50%;background:#ff5f56;display:inline-block;"></span>
-          <span style="width:10px;height:10px;border-radius:50%;background:#ffbd2e;display:inline-block;"></span>
-          <span style="width:10px;height:10px;border-radius:50%;background:#27c93f;display:inline-block;"></span>
-          <span style="margin-left:10px;font-size:11px;color:rgba(255,255,255,.2);font-family:monospace;">
-            purchase &middot; requests for quotation &middot; list view
-          </span>
-        </div>
-        <img src="prox-thm-list.png" alt="Prox Professional — RFQ List View"
-             style="width:100%;display:block;height: 850px;"/>
-      </div>
-
-    </div>
-  </div><!-- /hero -->
-
-  <!-- ═══════════════════════════════════════════════════
-       GOLD STATS BAR
-  ═══════════════════════════════════════════════════ -->
-  <div style="background:linear-gradient(90deg,#b8942e,#c9a84c,#e8c96a,#c9a84c);
-    display:flex;flex-wrap:wrap;justify-content:center;">
-    <div style="padding:20px 44px;text-align:center;border-right:1px solid rgba(0,0,0,.1);">
-      <div style="font-size:28px;font-weight:800;color:#0f1117;line-height:1;">6</div>
-      <div style="font-size:10px;font-weight:700;color:rgba(0,0,0,.5);margin-top:4px;
-        text-transform:uppercase;letter-spacing:1.5px;">Views Transformed</div>
-    </div>
-    <div style="padding:20px 44px;text-align:center;border-right:1px solid rgba(0,0,0,.1);">
-      <div style="font-size:28px;font-weight:800;color:#0f1117;line-height:1;">10+</div>
-      <div style="font-size:10px;font-weight:700;color:rgba(0,0,0,.5);margin-top:4px;
-        text-transform:uppercase;letter-spacing:1.5px;">Theme Variants</div>
-    </div>
-    <div style="padding:20px 44px;text-align:center;border-right:1px solid rgba(0,0,0,.1);">
-      <div style="font-size:28px;font-weight:800;color:#0f1117;line-height:1;">3</div>
-      <div style="font-size:10px;font-weight:700;color:rgba(0,0,0,.5);margin-top:4px;
-        text-transform:uppercase;letter-spacing:1.5px;">Font Families</div>
-    </div>
-    <div style="padding:20px 44px;text-align:center;border-right:1px solid rgba(0,0,0,.1);">
-      <div style="font-size:28px;font-weight:800;color:#0f1117;line-height:1;">v19</div>
-      <div style="font-size:10px;font-weight:700;color:rgba(0,0,0,.5);margin-top:4px;
-        text-transform:uppercase;letter-spacing:1.5px;">Odoo Version</div>
-    </div>
-    <div style="padding:20px 44px;text-align:center;">
-      <div style="font-size:28px;font-weight:800;color:#0f1117;line-height:1;">24h</div>
-      <div style="font-size:10px;font-weight:700;color:rgba(0,0,0,.5);margin-top:4px;
-        text-transform:uppercase;letter-spacing:1.5px;">Support Response</div>
-    </div>
-  </div>
-
-</section>
-
-<!-- ═══════════════════════════════════════════════════
-     INTRO — 2 COL
-═══════════════════════════════════════════════════ -->
+<!-- ▌ 3. INTRO — 2 col text + apps page screenshot -->
 <section class="oe_container">
   <div class="oe_row oe_spaced" style="align-items:center;">
 
     <div class="oe_span6">
-      <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-        color:#c9a84c;margin:0 0 8px;">About This Theme</p>
-      <h2 class="oe_slogan" style="font-size:26px;font-weight:800;color:#0f1117;
-        letter-spacing:-.5px;margin:0 0 14px;line-height:1.2;">
+      <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#c9a84c;
+        text-transform:uppercase;margin:0 0 10px;">About This Theme</p>
+      <h2 class="oe_slogan"
+          style="font-size:24px;font-weight:800;color:#0f1117;margin:0 0 14px;
+                 line-height:1.25;letter-spacing:-0.5px;text-align:left;">
         Not just a color swap.<br/>A complete UI rethink.
       </h2>
       <p style="font-size:14px;color:#555;line-height:1.8;margin:0 0 12px;">
-        Prox Professional hooks into Odoo 19's three-layer SCSS bundle hierarchy — overriding
-        <code style="font-family:monospace;font-size:12px;background:#f0ede8;padding:2px 6px;
-          border-radius:4px;color:#8b4513;">$o-*</code>
-        variables first, Bootstrap variables second, then appending visual CSS last.
-        Stable across upgrades.
+        Prox Professional hooks into Odoo 19&rsquo;s three-layer SCSS bundle hierarchy
+        &mdash; overriding <code>$o-*</code> variables first, Bootstrap variables second,
+        then appending visual CSS last. Works <em>with</em> the framework, not against it.
       </p>
       <p style="font-size:14px;color:#555;line-height:1.8;margin:0;">
         Built for finance teams, procurement managers, and operations leads who spend
@@ -144,314 +44,350 @@
     </div>
 
     <div class="oe_span6">
-      <img src="prox-thm-apps-page.png" alt="Prox Professional — Apps Page"
-           style="width:100%;border-radius:10px;
-             border:2px solid #c9a84c;
-             box-shadow:0 10px 40px rgba(201,168,76,.2);display:block;"/>
+      <img src="prox-thm-apps-page.png"
+           alt="Prox Professional — Apps Page"
+           style="width:100%;border-radius:10px;border:2px solid #c9a84c;display:block;"/>
     </div>
 
   </div>
 </section>
 
-<!-- gold divider -->
-<div style="height:3px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);"></div>
+<!-- ▌ 4. GOLD DIVIDER -->
+<div style="line-height:0;font-size:0;">
+  <img src="gold-divider.png" alt="" style="width:100%;display:block;border:0;"/>
+</div>
 
-<!-- ═══════════════════════════════════════════════════
-     SIDE-BY-SIDE COMPARISONS
-═══════════════════════════════════════════════════ -->
-<section class="oe_container" style="background:#f6f3ef;max-width:100%;padding:52px 40px;">
+<!-- ▌ 5. COMPARISON SECTION -->
+<div style="background-color:#f6f3ef;padding:52px 40px;">
 <div style="max-width:960px;margin:0 auto;">
 
   <div style="text-align:center;margin-bottom:44px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Visual Transformation</p>
-    <h2 style="font-size:28px;font-weight:800;color:#0f1117;
-      letter-spacing:-.5px;margin:0 0 10px;">Side-by-Side Comparison</h2>
+    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#c9a84c;
+      text-transform:uppercase;margin:0 0 8px;">Visual Transformation</p>
+    <h2 style="font-size:26px;font-weight:800;color:#0f1117;
+      letter-spacing:-0.5px;margin:0 0 10px;">Side-by-Side Comparison</h2>
     <p style="font-size:14px;color:#777;max-width:460px;margin:0 auto;line-height:1.7;">
       Default Odoo on the left &mdash; <strong>Prox Professional on the right</strong>.
-      See every transformation.
+      See every view transformed.
     </p>
   </div>
 
-  <!-- ── COMPARE MACRO ── used for each pair ── -->
+  <!-- Apps Page -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:44px;">
+    <tr>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#e8e4de;color:#888;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#9632; Odoo Default — Apps Page
+        </div>
+        <div style="border:2px solid #ddd;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="odoo-default-apps-page.png" alt="Default apps page"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+      <td width="6%" style="text-align:center;vertical-align:middle;">
+        <span style="display:inline-block;width:36px;height:36px;border-radius:50%;
+          background-color:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
+          text-align:center;line-height:36px;">VS</span>
+      </td>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#10022; Prox Professional — Apps Page
+        </div>
+        <div style="border:2px solid #c9a84c;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="prox-thm-apps-page.png" alt="Prox apps page"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" style="text-align:center;padding-top:8px;
+        font-size:12px;color:#999;font-style:italic;">
+        <strong style="color:#c9a84c;font-style:normal;">
+          Gold highlights, cleaner card borders, refined spacing
+        </strong> &mdash; immediately more premium
+      </td>
+    </tr>
+  </table>
 
-  <!-- APPS PAGE -->
-  <div style="margin-bottom:52px;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; Apps Page
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);align-self:center;">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; Apps Page
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-apps-page.png" alt="Odoo default apps page"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-apps-page.png" alt="Prox theme apps page"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Gold highlights, cleaner card borders, refined spacing</strong>
-      &mdash; immediately more premium
-    </p>
-  </div>
+  <!-- List View -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:44px;">
+    <tr>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#e8e4de;color:#888;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#9632; Odoo Default — List View
+        </div>
+        <div style="border:2px solid #ddd;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="odoo-default-tree-view.png" alt="Default list view"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+      <td width="6%" style="text-align:center;vertical-align:middle;">
+        <span style="display:inline-block;width:36px;height:36px;border-radius:50%;
+          background-color:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
+          text-align:center;line-height:36px;">VS</span>
+      </td>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#10022; Prox Professional — List View
+        </div>
+        <div style="border:2px solid #c9a84c;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="prox-thm-tree-view.png" alt="Prox list view"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" style="text-align:center;padding-top:8px;
+        font-size:12px;color:#999;font-style:italic;">
+        <strong style="color:#c9a84c;font-style:normal;">
+          Dark navbar, monospace amounts, warm parchment background
+        </strong> &mdash; built for data-heavy work
+      </td>
+    </tr>
+  </table>
 
-  <!-- TREE / LIST VIEW -->
-  <div style="margin-bottom:52px;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; List View
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; List View
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-tree-view.png" alt="Odoo default list view"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-tree-view.png" alt="Prox theme list view"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Dark navbar, monospace amounts, warm parchment</strong>
-      &mdash; built for data-heavy work
-    </p>
-  </div>
+  <!-- Kanban View -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:44px;">
+    <tr>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#e8e4de;color:#888;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#9632; Odoo Default — Kanban View
+        </div>
+        <div style="border:2px solid #ddd;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="odoo-default-kanban-view.png" alt="Default kanban"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+      <td width="6%" style="text-align:center;vertical-align:middle;">
+        <span style="display:inline-block;width:36px;height:36px;border-radius:50%;
+          background-color:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
+          text-align:center;line-height:36px;">VS</span>
+      </td>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#10022; Prox Professional — Kanban View
+        </div>
+        <div style="border:2px solid #c9a84c;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="prox-thm-kanban-view.png" alt="Prox kanban"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" style="text-align:center;padding-top:8px;
+        font-size:12px;color:#999;font-style:italic;">
+        <strong style="color:#c9a84c;font-style:normal;">
+          Left-accent hover bars, elevated card shadows
+        </strong> &mdash; your pipeline finally looks the part
+      </td>
+    </tr>
+  </table>
 
-  <!-- KANBAN VIEW -->
-  <div style="margin-bottom:52px;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; Kanban View
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; Kanban View
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-kanban-view.png" alt="Odoo default kanban"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-kanban-view.png" alt="Prox theme kanban"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Left-accent hover bars, elevated card shadows</strong>
-      &mdash; your pipeline finally looks the part
-    </p>
-  </div>
+  <!-- Form View -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:44px;">
+    <tr>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#e8e4de;color:#888;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#9632; Odoo Default — Form View
+        </div>
+        <div style="border:2px solid #ddd;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="odoo-default-form-view.png" alt="Default form"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+      <td width="6%" style="text-align:center;vertical-align:middle;">
+        <span style="display:inline-block;width:36px;height:36px;border-radius:50%;
+          background-color:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
+          text-align:center;line-height:36px;">VS</span>
+      </td>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#10022; Prox Professional — Form View
+        </div>
+        <div style="border:2px solid #c9a84c;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="prox-thm-form-view.png" alt="Prox form"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" style="text-align:center;padding-top:8px;
+        font-size:12px;color:#999;font-style:italic;">
+        <strong style="color:#c9a84c;font-style:normal;">
+          Instrument Serif headings, refined field layout, navy breadcrumb
+        </strong>
+      </td>
+    </tr>
+  </table>
 
-  <!-- FORM VIEW -->
-  <div style="margin-bottom:52px;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; Form View
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; Form View
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-form-view.png" alt="Odoo default form"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-form-view.png" alt="Prox theme form"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Instrument Serif headings, refined field layout, navy breadcrumb</strong>
-    </p>
-  </div>
+  <!-- Search Bar -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:44px;">
+    <tr>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#e8e4de;color:#888;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#9632; Odoo Default — Search Bar
+        </div>
+        <div style="border:2px solid #ddd;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="odoo-default-search-bar.png" alt="Default search"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+      <td width="6%" style="text-align:center;vertical-align:middle;">
+        <span style="display:inline-block;width:36px;height:36px;border-radius:50%;
+          background-color:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
+          text-align:center;line-height:36px;">VS</span>
+      </td>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#10022; Prox Professional — Search Bar
+        </div>
+        <div style="border:2px solid #c9a84c;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="prox-thm-search-bar.png" alt="Prox search"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" style="text-align:center;padding-top:8px;
+        font-size:12px;color:#999;font-style:italic;">
+        <strong style="color:#c9a84c;font-style:normal;">
+          Gold focus ring, polished filter chips, Ctrl+/ shortcut
+        </strong>
+      </td>
+    </tr>
+  </table>
 
-  <!-- SEARCH BAR -->
-  <div style="margin-bottom:52px;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; Search Bar
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; Search Bar
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-search-bar.png" alt="Odoo default search"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-search-bar.png" alt="Prox theme search"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Gold focus ring, polished filter chips, Ctrl+/ shortcut</strong>
-    </p>
-  </div>
-
-  <!-- SMART BUTTONS -->
-  <div style="margin-bottom:0;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; Smart Buttons
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; Smart Buttons
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-smart-btns.png" alt="Odoo default smart buttons"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-smart-btns.png" alt="Prox theme smart buttons"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Elevated pill style, DM Mono numbers, gold hover accent</strong>
-    </p>
-  </div>
+  <!-- Smart Buttons -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#e8e4de;color:#888;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#9632; Odoo Default — Smart Buttons
+        </div>
+        <div style="border:2px solid #ddd;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="odoo-default-smart-btns.png" alt="Default smart buttons"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+      <td width="6%" style="text-align:center;vertical-align:middle;">
+        <span style="display:inline-block;width:36px;height:36px;border-radius:50%;
+          background-color:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
+          text-align:center;line-height:36px;">VS</span>
+      </td>
+      <td width="47%" style="vertical-align:top;">
+        <div style="background-color:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;text-align:center;
+          padding:7px;border-radius:6px 6px 0 0;">
+          &#10022; Prox Professional — Smart Buttons
+        </div>
+        <div style="border:2px solid #c9a84c;border-top:none;
+          border-radius:0 0 8px 8px;overflow:hidden;">
+          <img src="prox-thm-smart-btns.png" alt="Prox smart buttons"
+               style="width:100%;display:block;"/>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" style="text-align:center;padding-top:8px;
+        font-size:12px;color:#999;font-style:italic;">
+        <strong style="color:#c9a84c;font-style:normal;">
+          Elevated pill style, DM Mono numbers, gold hover accent
+        </strong>
+      </td>
+    </tr>
+  </table>
 
 </div>
-</section>
+</div>
 
-<!-- gold divider -->
-<div style="height:3px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);"></div>
+<!-- ▌ 6. GOLD DIVIDER -->
+<div style="line-height:0;font-size:0;">
+  <img src="gold-divider.png" alt="" style="width:100%;display:block;border:0;"/>
+</div>
 
-<!-- ═══════════════════════════════════════════════════
-     FEATURE CARDS — 3 COL
-═══════════════════════════════════════════════════ -->
+<!-- ▌ 7. FEATURE CARDS -->
 <section class="oe_container">
-
   <div style="text-align:center;margin-bottom:36px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Core Features</p>
+    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#c9a84c;
+      text-transform:uppercase;margin:0 0 8px;">Core Features</p>
     <h2 style="font-size:26px;font-weight:800;color:#0f1117;
-      letter-spacing:-.5px;margin:0;">Everything that makes it different</h2>
+      letter-spacing:-0.5px;margin:0;">Everything that makes it different</h2>
   </div>
-
   <div class="oe_row">
-
     <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#128292;</div>
+      <div style="background-color:#ffffff;border:1px solid #e5dfd6;
+        border-top:3px solid #c9a84c;border-radius:10px;
+        padding:22px 18px;margin-bottom:16px;">
+        <div style="font-size:26px;margin-bottom:10px;">&#128292;</div>
         <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
           Premium Typography Stack</h3>
         <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
           <strong>Instrument Serif</strong> for display, <strong>Syne</strong> for UI,
-          <strong>DM Mono</strong> for financial data. Every context gets exactly the right typeface.</p>
+          <strong>DM Mono</strong> for financial data. Every context, the right typeface.</p>
       </div>
     </div>
-
     <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#9644;</div>
+      <div style="background-color:#ffffff;border:1px solid #e5dfd6;
+        border-top:3px solid #c9a84c;border-radius:10px;
+        padding:22px 18px;margin-bottom:16px;">
+        <div style="font-size:26px;margin-bottom:10px;">&#9644;</div>
         <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
           Dark Navbar + Gold Brand</h3>
         <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
-          Deep <strong>#0f1117</strong> navbar with <strong>#c9a84c</strong> gold accent.
-          Warm parchment background. No eye-straining pure-white surfaces.</p>
+          Deep <strong>#0f1117</strong> navbar, warm <strong>#c9a84c</strong> gold accent,
+          parchment body. No white-screen fatigue on long sessions.</p>
       </div>
     </div>
-
     <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#128203;</div>
+      <div style="background-color:#ffffff;border:1px solid #e5dfd6;
+        border-top:3px solid #c9a84c;border-radius:10px;
+        padding:22px 18px;margin-bottom:16px;">
+        <div style="font-size:26px;margin-bottom:10px;">&#128203;</div>
         <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
           Professional List Views</h3>
         <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
-          Monospace amounts, tighter row density, alternating tints, and hover highlights.
-          Built for data-heavy procurement and finance tables.</p>
+          Monospace amounts, tighter row density, alternating tints.
+          Built for procurement and finance tables.</p>
       </div>
     </div>
-
     <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#128193;</div>
+      <div style="background-color:#ffffff;border:1px solid #e5dfd6;
+        border-top:3px solid #c9a84c;border-radius:10px;
+        padding:22px 18px;margin-bottom:16px;">
+        <div style="font-size:26px;margin-bottom:10px;">&#128193;</div>
         <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
           Kanban Card Makeover</h3>
         <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
@@ -459,446 +395,381 @@
           Your pipeline looks as good as it performs.</p>
       </div>
     </div>
-
     <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#127991;</div>
+      <div style="background-color:#ffffff;border:1px solid #e5dfd6;
+        border-top:3px solid #c9a84c;border-radius:10px;
+        padding:22px 18px;margin-bottom:16px;">
+        <div style="font-size:26px;margin-bottom:10px;">&#127991;</div>
         <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
           Purchase &amp; RFQ Badges</h3>
         <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
           Status-aware badge system across Purchase and RFQ views.
-          Row animations and colour-coded triage for procurement teams.</p>
+          Instant colour-coded triage for procurement teams.</p>
       </div>
     </div>
-
     <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#9889;</div>
+      <div style="background-color:#ffffff;border:1px solid #e5dfd6;
+        border-top:3px solid #c9a84c;border-radius:10px;
+        padding:22px 18px;margin-bottom:16px;">
+        <div style="font-size:26px;margin-bottom:10px;">&#9889;</div>
         <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
           Smart Interactions</h3>
         <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
-          Gold AJAX progress bar, smooth view transitions, <strong>Ctrl+/</strong> search shortcut.
-          Fully respects <code style="font-family:monospace;font-size:11px;background:#f0ede8;padding:1px 5px;border-radius:3px;">prefers-reduced-motion</code>.</p>
+          Gold AJAX progress bar, smooth transitions,
+          <strong>Ctrl+/</strong> search shortcut.
+          Respects <code>prefers-reduced-motion</code>.</p>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     COMPLETE CHECKLIST
-═══════════════════════════════════════════════════ -->
-<section class="oe_container" style="background:#f6f3ef;max-width:100%;padding:52px 40px;">
+<!-- ▌ 8. CHECKLIST -->
+<div style="background-color:#f6f3ef;padding:48px 40px;">
 <div style="max-width:960px;margin:0 auto;">
-
   <div style="text-align:center;margin-bottom:32px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Complete Feature List</p>
-    <h2 style="font-size:26px;font-weight:800;color:#0f1117;letter-spacing:-.5px;margin:0;">
-      Everything included, nothing hidden</h2>
+    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#c9a84c;
+      text-transform:uppercase;margin:0 0 8px;">Complete Feature List</p>
+    <h2 style="font-size:26px;font-weight:800;color:#0f1117;
+      letter-spacing:-0.5px;margin:0;">Everything included, nothing hidden</h2>
   </div>
-
   <div class="oe_row">
     <div class="oe_span6">
-      <table style="width:100%;border-collapse:collapse;">
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;flex-shrink:0;">&#10003;</span>
-          <strong>Correct Odoo 19 SCSS asset pipeline</strong> — three-layer bundle integration
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
+          <strong>Correct Odoo 19 SCSS asset pipeline</strong> — three-layer integration
         </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>$o-* primary variable overrides</strong> at the earliest bundle layer
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
+          <strong>$o-* primary variable overrides</strong> at earliest bundle layer
         </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
           <strong>Bootstrap variable overrides</strong> prepended before compilation
         </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Dark navbar</strong> #0f1117 with gold brand accent #c9a84c
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
+          <strong>Dark navbar</strong> #0f1117 + gold accent #c9a84c
         </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Warm parchment background</strong> #F4F3EF across all backend views
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
+          <strong>Warm parchment</strong> #F4F3EF body background
         </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Deep navy</strong> #1A3A5C for body text and headings
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
+          <strong>Deep navy</strong> #1A3A5C for headings and body text
         </td></tr>
-        <tr><td style="padding:10px 0;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
           <strong>Instrument Serif</strong> for display and form headings
         </td></tr>
       </table>
     </div>
     <div class="oe_span6">
-      <table style="width:100%;border-collapse:collapse;">
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
           <strong>Syne font</strong> for menus, labels, and UI buttons
         </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
           <strong>DM Mono</strong> for all numeric and financial data
         </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
           <strong>Refined stat cards</strong> with elevated shadows and warm fill
         </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
           <strong>Kanban left-accent hover bars</strong> with CSS transitions
         </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Purchase/RFQ badge system</strong> — status-aware row styling
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
+          <strong>Purchase/RFQ badge system</strong> — status-aware rows
         </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
           <strong>Gold AJAX progress bar</strong> loading indicator
         </td></tr>
-        <tr><td style="padding:10px 0;font-size:13px;color:#333;vertical-align:top;">
+        <tr><td style="padding:9px 0;font-size:13px;color:#333;">
           <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Ctrl+/</strong> global search shortcut + smooth view animations
+            background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:900;
+            text-align:center;line-height:20px;margin-right:10px;vertical-align:middle;">&#10003;</span>
+          <strong>Ctrl+/</strong> global search + smooth view animations
         </td></tr>
       </table>
     </div>
   </div>
-
 </div>
-</section>
+</div>
 
-<!-- ═══════════════════════════════════════════════════
-     COLOUR PALETTE
-═══════════════════════════════════════════════════ -->
+<!-- ▌ 9. COLOUR PALETTE -->
 <section class="oe_container">
-
   <div style="text-align:center;margin-bottom:24px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Design System</p>
-    <h2 style="font-size:26px;font-weight:800;color:#0f1117;letter-spacing:-.5px;margin:0 0 8px;">
-      Colour Palette</h2>
+    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#c9a84c;
+      text-transform:uppercase;margin:0 0 8px;">Design System</p>
+    <h2 style="font-size:26px;font-weight:800;color:#0f1117;
+      letter-spacing:-0.5px;margin:0 0 8px;">Colour Palette</h2>
     <p style="font-size:14px;color:#777;max-width:440px;margin:0 auto;">
-      Swiss financial design — every colour chosen for hierarchy, contrast, and professionalism.</p>
+      Every colour chosen for hierarchy, contrast, and professionalism.</p>
   </div>
-
-  <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:20px;">
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#0f1117;
-        margin-bottom:7px;border:1px solid rgba(0,0,0,.1);"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#0f1117</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Navbar</span>
-    </div>
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#c9a84c;
-        margin-bottom:7px;border:1px solid rgba(0,0,0,.1);"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#c9a84c</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Gold</span>
-    </div>
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#1A3A5C;
-        margin-bottom:7px;border:1px solid rgba(0,0,0,.1);"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#1A3A5C</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Navy</span>
-    </div>
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#F4F3EF;
-        margin-bottom:7px;border:1px solid #ddd;"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#F4F3EF</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Parchment</span>
-    </div>
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#2563eb;
-        margin-bottom:7px;border:1px solid rgba(0,0,0,.1);"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#2563eb</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Action</span>
-    </div>
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#12151e;
-        margin-bottom:7px;border:1px solid rgba(0,0,0,.1);"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#12151e</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Card BG</span>
-    </div>
-  </div>
-
+  <table width="100%" cellpadding="0" cellspacing="0" border="0"
+         style="max-width:580px;margin:0 auto;">
+    <tr>
+      <td style="text-align:center;padding:8px;">
+        <div style="width:60px;height:60px;border-radius:10px;
+          background-color:#0f1117;margin:0 auto 6px;border:1px solid #333;"></div>
+        <code style="font-size:10px;color:#888;">#0f1117</code><br/>
+        <span style="font-size:11px;color:#bbb;">Navbar</span>
+      </td>
+      <td style="text-align:center;padding:8px;">
+        <div style="width:60px;height:60px;border-radius:10px;
+          background-color:#c9a84c;margin:0 auto 6px;border:1px solid #b8942e;"></div>
+        <code style="font-size:10px;color:#888;">#c9a84c</code><br/>
+        <span style="font-size:11px;color:#bbb;">Gold</span>
+      </td>
+      <td style="text-align:center;padding:8px;">
+        <div style="width:60px;height:60px;border-radius:10px;
+          background-color:#1A3A5C;margin:0 auto 6px;border:1px solid #0e2236;"></div>
+        <code style="font-size:10px;color:#888;">#1A3A5C</code><br/>
+        <span style="font-size:11px;color:#bbb;">Navy</span>
+      </td>
+      <td style="text-align:center;padding:8px;">
+        <div style="width:60px;height:60px;border-radius:10px;
+          background-color:#F4F3EF;margin:0 auto 6px;border:1px solid #ddd;"></div>
+        <code style="font-size:10px;color:#888;">#F4F3EF</code><br/>
+        <span style="font-size:11px;color:#bbb;">Parchment</span>
+      </td>
+      <td style="text-align:center;padding:8px;">
+        <div style="width:60px;height:60px;border-radius:10px;
+          background-color:#2563eb;margin:0 auto 6px;border:1px solid #1d4ed8;"></div>
+        <code style="font-size:10px;color:#888;">#2563eb</code><br/>
+        <span style="font-size:11px;color:#bbb;">Action</span>
+      </td>
+      <td style="text-align:center;padding:8px;">
+        <div style="width:60px;height:60px;border-radius:10px;
+          background-color:#12151e;margin:0 auto 6px;border:1px solid #333;"></div>
+        <code style="font-size:10px;color:#888;">#12151e</code><br/>
+        <span style="font-size:11px;color:#bbb;">Card BG</span>
+      </td>
+    </tr>
+  </table>
 </section>
 
-<!-- gold divider -->
-<div style="height:3px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);"></div>
+<!-- ▌ 10. GOLD DIVIDER -->
+<div style="line-height:0;font-size:0;">
+  <img src="gold-divider.png" alt="" style="width:100%;display:block;border:0;"/>
+</div>
 
-<!-- ═══════════════════════════════════════════════════
-     TECH SPECS
-═══════════════════════════════════════════════════ -->
-<section class="oe_container" style="background:#f6f3ef;max-width:100%;padding:52px 40px;">
+<!-- ▌ 11. TECH SPECS -->
+<div style="background-color:#f6f3ef;padding:48px 40px;">
 <div style="max-width:960px;margin:0 auto;">
-
-  <div style="text-align:center;margin-bottom:30px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Technical Details</p>
-    <h2 style="font-size:26px;font-weight:800;color:#0f1117;letter-spacing:-.5px;margin:0;">
-      Module Specifications</h2>
+  <div style="text-align:center;margin-bottom:28px;">
+    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#c9a84c;
+      text-transform:uppercase;margin:0 0 8px;">Technical Details</p>
+    <h2 style="font-size:26px;font-weight:800;color:#0f1117;
+      letter-spacing:-0.5px;margin:0;">Module Specifications</h2>
   </div>
-
   <div class="oe_row">
     <div class="oe_span3">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:22px;font-weight:800;color:#c9a84c;line-height:1.2;">19.0</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
+      <div style="background-color:#0f1117;border-radius:10px;padding:18px 10px;
+        text-align:center;margin-bottom:12px;">
+        <div style="font-size:22px;font-weight:800;color:#c9a84c;">19.0</div>
+        <div style="font-size:10px;color:#888;margin-top:4px;
           text-transform:uppercase;letter-spacing:1.5px;">Odoo Version</div>
       </div>
     </div>
     <div class="oe_span3">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:22px;font-weight:800;color:#c9a84c;line-height:1.2;">1.0.0</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
+      <div style="background-color:#0f1117;border-radius:10px;padding:18px 10px;
+        text-align:center;margin-bottom:12px;">
+        <div style="font-size:22px;font-weight:800;color:#c9a84c;">1.0.0</div>
+        <div style="font-size:10px;color:#888;margin-top:4px;
           text-transform:uppercase;letter-spacing:1.5px;">Module Version</div>
       </div>
     </div>
     <div class="oe_span3">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:22px;font-weight:800;color:#c9a84c;line-height:1.2;">OPL-1</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
+      <div style="background-color:#0f1117;border-radius:10px;padding:18px 10px;
+        text-align:center;margin-bottom:12px;">
+        <div style="font-size:22px;font-weight:800;color:#c9a84c;">LGPL-3</div>
+        <div style="font-size:10px;color:#888;margin-top:4px;
           text-transform:uppercase;letter-spacing:1.5px;">License</div>
       </div>
     </div>
     <div class="oe_span3">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:18px;font-weight:800;color:#c9a84c;line-height:1.2;">base, web</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
+      <div style="background-color:#0f1117;border-radius:10px;padding:18px 10px;
+        text-align:center;margin-bottom:12px;">
+        <div style="font-size:17px;font-weight:800;color:#c9a84c;">base, web</div>
+        <div style="font-size:10px;color:#888;margin-top:4px;
           text-transform:uppercase;letter-spacing:1.5px;">Dependencies</div>
       </div>
     </div>
   </div>
-
   <div class="oe_row">
     <div class="oe_span4">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:16px;font-weight:800;color:#c9a84c;line-height:1.2;">Themes / Backend</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
+      <div style="background-color:#0f1117;border-radius:10px;padding:18px 10px;text-align:center;">
+        <div style="font-size:15px;font-weight:800;color:#c9a84c;">Themes / Backend</div>
+        <div style="font-size:10px;color:#888;margin-top:4px;
           text-transform:uppercase;letter-spacing:1.5px;">Category</div>
       </div>
     </div>
     <div class="oe_span4">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:16px;font-weight:800;color:#c9a84c;line-height:1.2;">3 SCSS Bundles</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
+      <div style="background-color:#0f1117;border-radius:10px;padding:18px 10px;text-align:center;">
+        <div style="font-size:15px;font-weight:800;color:#c9a84c;">3 SCSS Bundles</div>
+        <div style="font-size:10px;color:#888;margin-top:4px;
           text-transform:uppercase;letter-spacing:1.5px;">Asset Layers</div>
       </div>
     </div>
     <div class="oe_span4">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:16px;font-weight:800;color:#c9a84c;line-height:1.2;">1 JS File</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
+      <div style="background-color:#0f1117;border-radius:10px;padding:18px 10px;text-align:center;">
+        <div style="font-size:15px;font-weight:800;color:#c9a84c;">1 JS File</div>
+        <div style="font-size:10px;color:#888;margin-top:4px;
           text-transform:uppercase;letter-spacing:1.5px;">Backend Enhancements</div>
       </div>
     </div>
   </div>
-
 </div>
-</section>
+</div>
 
-<!-- ═══════════════════════════════════════════════════
-     INSTALLATION
-═══════════════════════════════════════════════════ -->
+<!-- ▌ 12. INSTALLATION -->
 <section class="oe_container">
-
   <div style="text-align:center;margin-bottom:28px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Get Started</p>
-    <h2 style="font-size:26px;font-weight:800;color:#0f1117;letter-spacing:-.5px;margin:0;">
-      Installation</h2>
+    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#c9a84c;
+      text-transform:uppercase;margin:0 0 8px;">Get Started</p>
+    <h2 style="font-size:26px;font-weight:800;color:#0f1117;
+      letter-spacing:-0.5px;margin:0;">Installation</h2>
   </div>
-
   <div style="max-width:620px;margin:0 auto;">
-
-    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #ede8e2;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">1</span>
-      <span>Copy the <code style="font-family:monospace;font-size:12px;background:#f0ede8;
-        padding:2px 6px;border-radius:4px;color:#8b4513;">theme_prox_professional</code>
-        folder into your Odoo <strong>custom addons path</strong>.</span>
-    </div>
-
-    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #ede8e2;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">2</span>
-      <span>Restart the Odoo server:
-        <code style="font-family:monospace;font-size:12px;background:#f0ede8;
-          padding:2px 6px;border-radius:4px;color:#8b4513;">sudo systemctl restart odoo</code>
-      </span>
-    </div>
-
-    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #ede8e2;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">3</span>
-      <span>Go to <strong>Settings &rarr; Apps</strong> and click <strong>Update App List</strong>.</span>
-    </div>
-
-    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #ede8e2;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">4</span>
-      <span>Search for <strong>"Prox Professional"</strong> and click <strong>Install</strong>.</span>
-    </div>
-
-    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #ede8e2;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">5</span>
-      <span>Hard-refresh your browser with
-        <kbd style="background:#e8e4de;border:1px solid #c8c0b8;border-radius:4px;
-          padding:1px 6px;font-size:11px;">Ctrl+Shift+R</kbd>
-        to flush cached assets.</span>
-    </div>
-
-    <div style="display:flex;gap:14px;padding:14px 0;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">6</span>
-      <span>Done &mdash; the theme is now active globally across all backend views. No further configuration needed.</span>
-    </div>
-
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr><td style="padding:12px 0;border-bottom:1px solid #ede8e2;
+        font-size:13px;color:#444;vertical-align:top;">
+        <span style="display:inline-block;width:26px;height:26px;border-radius:50%;
+          background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
+          text-align:center;line-height:26px;margin-right:12px;vertical-align:middle;">1</span>
+        Copy <code>theme_prox_professional</code> to your Odoo <strong>custom addons path</strong>.
+      </td></tr>
+      <tr><td style="padding:12px 0;border-bottom:1px solid #ede8e2;
+        font-size:13px;color:#444;vertical-align:top;">
+        <span style="display:inline-block;width:26px;height:26px;border-radius:50%;
+          background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
+          text-align:center;line-height:26px;margin-right:12px;vertical-align:middle;">2</span>
+        Restart: <code>sudo systemctl restart odoo</code>
+      </td></tr>
+      <tr><td style="padding:12px 0;border-bottom:1px solid #ede8e2;
+        font-size:13px;color:#444;vertical-align:top;">
+        <span style="display:inline-block;width:26px;height:26px;border-radius:50%;
+          background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
+          text-align:center;line-height:26px;margin-right:12px;vertical-align:middle;">3</span>
+        <strong>Settings &rarr; Apps &rarr; Update App List</strong>
+      </td></tr>
+      <tr><td style="padding:12px 0;border-bottom:1px solid #ede8e2;
+        font-size:13px;color:#444;vertical-align:top;">
+        <span style="display:inline-block;width:26px;height:26px;border-radius:50%;
+          background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
+          text-align:center;line-height:26px;margin-right:12px;vertical-align:middle;">4</span>
+        Search <strong>"Prox Professional"</strong> and click <strong>Install</strong>.
+      </td></tr>
+      <tr><td style="padding:12px 0;border-bottom:1px solid #ede8e2;
+        font-size:13px;color:#444;vertical-align:top;">
+        <span style="display:inline-block;width:26px;height:26px;border-radius:50%;
+          background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
+          text-align:center;line-height:26px;margin-right:12px;vertical-align:middle;">5</span>
+        Hard-refresh: <kbd>Ctrl+Shift+R</kbd> to flush cached assets.
+      </td></tr>
+      <tr><td style="padding:12px 0;font-size:13px;color:#444;vertical-align:top;">
+        <span style="display:inline-block;width:26px;height:26px;border-radius:50%;
+          background-color:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
+          text-align:center;line-height:26px;margin-right:12px;vertical-align:middle;">6</span>
+        Done &mdash; theme is active globally, no further configuration needed.
+      </td></tr>
+    </table>
   </div>
 </section>
 
-<!-- gold divider -->
-<div style="height:3px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);"></div>
+<!-- ▌ 13. GOLD DIVIDER -->
+<div style="line-height:0;font-size:0;">
+  <img src="gold-divider.png" alt="" style="width:100%;display:block;border:0;"/>
+</div>
 
-<!-- ═══════════════════════════════════════════════════
-     SUPPORT
-═══════════════════════════════════════════════════ -->
-<section class="oe_container" style="background:#f6f3ef;max-width:100%;padding:52px 40px;">
-<div style="max-width:960px;margin:0 auto;">
-
-  <div style="text-align:center;margin-bottom:32px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Need Help?</p>
-    <h2 style="font-size:26px;font-weight:800;color:#0f1117;letter-spacing:-.5px;margin:0;">
-      Support</h2>
+<!-- ▌ 14. SUPPORT -->
+<div style="background-color:#f6f3ef;padding:48px 40px;">
+<div style="max-width:540px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:28px;">
+    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#c9a84c;
+      text-transform:uppercase;margin:0 0 8px;">Need Help?</p>
+    <h2 style="font-size:26px;font-weight:800;color:#0f1117;
+      letter-spacing:-0.5px;margin:0;">Support</h2>
   </div>
-
-  <div style="max-width:560px;margin:0 auto;background:#fff;
-    border-radius:16px;border:2px solid #e5dfd6;border-top:4px solid #c9a84c;
-    padding:40px 36px;text-align:center;
-    box-shadow:0 12px 48px rgba(0,0,0,.07);">
-
-    <!-- Icon -->
-    <div style="width:64px;height:64px;border-radius:50%;margin:0 auto 18px;
-      background:linear-gradient(135deg,#c9a84c,#e8c96a);
-      display:flex;align-items:center;justify-content:center;font-size:28px;
-      box-shadow:0 6px 20px rgba(201,168,76,.3);">&#128587;</div>
-
-    <h2 style="font-size:22px;font-weight:800;color:#0f1117;margin:0 0 10px;">
-      We&rsquo;re Here to Help</h2>
-
-    <p style="font-size:14px;color:#666;line-height:1.7;margin:0 0 24px;">
+  <div style="background-color:#ffffff;border-radius:14px;
+    border:2px solid #e5dfd6;border-top:4px solid #c9a84c;
+    padding:36px 32px;text-align:center;">
+    <div style="width:58px;height:58px;border-radius:50%;
+      background-color:#c9a84c;margin:0 auto 16px;
+      font-size:26px;text-align:center;line-height:58px;">&#128587;</div>
+    <p style="font-size:20px;font-weight:800;color:#0f1117;margin:0 0 10px;">
+      We&rsquo;re Here to Help</p>
+    <p style="font-size:14px;color:#666;line-height:1.7;margin:0 0 20px;">
       Need help, customisation, or have a question about Prox Professional?<br/>
-      Reach out directly &mdash; we respond promptly and work with you until it&rsquo;s resolved.
+      Reach out directly &mdash; we respond promptly.
     </p>
-
-    <!-- Email button -->
     <a href="mailto:raj.odoo2026@gmail.com"
-       style="display:inline-block;background:#0f1117;color:#c9a84c;
-         font-weight:700;font-size:15px;
-         padding:13px 28px;border-radius:9px;text-decoration:none;
-         box-shadow:0 4px 16px rgba(15,17,23,.25);">
-      &#9993; &nbsp;raj.odoo2026@gmail.com
+       style="display:inline-block;background-color:#0f1117;color:#c9a84c;
+         font-weight:700;font-size:14px;padding:12px 26px;
+         border-radius:8px;text-decoration:none;">
+      &#9993;&nbsp; raj.odoo2026@gmail.com
     </a>
-
-    <!-- Response badge -->
-    <div style="margin-top:16px;display:inline-flex;align-items:center;gap:7px;
-      font-size:11px;font-weight:700;color:#888;
+    <p style="margin-top:14px;font-size:11px;font-weight:700;color:#888;
       text-transform:uppercase;letter-spacing:1.5px;">
-      <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;
-        display:inline-block;"></span>
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;
+        background-color:#22c55e;margin-right:6px;vertical-align:middle;"></span>
       Response within 24 hours
-    </div>
-
-    <!-- Support chips -->
-    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:24px;">
-      <span style="background:#f6f3ef;border:1px solid #e5dfd6;border-radius:7px;
-        padding:6px 12px;font-size:12px;font-weight:600;color:#555;">
+    </p>
+    <div style="margin-top:18px;">
+      <span style="display:inline-block;background-color:#f6f3ef;border:1px solid #e5dfd6;
+        border-radius:6px;padding:5px 11px;font-size:12px;font-weight:600;color:#555;margin:3px;">
         &#128736; Installation Help</span>
-      <span style="background:#f6f3ef;border:1px solid #e5dfd6;border-radius:7px;
-        padding:6px 12px;font-size:12px;font-weight:600;color:#555;">
+      <span style="display:inline-block;background-color:#f6f3ef;border:1px solid #e5dfd6;
+        border-radius:6px;padding:5px 11px;font-size:12px;font-weight:600;color:#555;margin:3px;">
         &#127912; Customisation</span>
-      <span style="background:#f6f3ef;border:1px solid #e5dfd6;border-radius:7px;
-        padding:6px 12px;font-size:12px;font-weight:600;color:#555;">
+      <span style="display:inline-block;background-color:#f6f3ef;border:1px solid #e5dfd6;
+        border-radius:6px;padding:5px 11px;font-size:12px;font-weight:600;color:#555;margin:3px;">
         &#128030; Bug Reports</span>
-      <span style="background:#f6f3ef;border:1px solid #e5dfd6;border-radius:7px;
-        padding:6px 12px;font-size:12px;font-weight:600;color:#555;">
+      <span style="display:inline-block;background-color:#f6f3ef;border:1px solid #e5dfd6;
+        border-radius:6px;padding:5px 11px;font-size:12px;font-weight:600;color:#555;margin:3px;">
         &#128161; Questions</span>
     </div>
-
   </div>
 </div>
-</section>
+</div>
 
-<!-- ═══════════════════════════════════════════════════
-     CTA FOOTER
-═══════════════════════════════════════════════════ -->
-<section class="oe_container" style="background:#0f1117;max-width:100%;padding:64px 40px;
-  text-align:center;position:relative;overflow:hidden;">
-
-  <div style="position:absolute;right:-1%;top:50%;transform:translateY(-50%);
-    font-size:160px;font-weight:900;color:rgba(201,168,76,.04);
-    letter-spacing:-5px;line-height:1;pointer-events:none;">PROX</div>
-
-  <div style="position:relative;z-index:1;">
-    <h2 style="font-size:28px;font-weight:800;color:#ffffff;margin:0 0 10px;">
-      Built for people who live in Odoo.</h2>
-    <p style="color:rgba(255,255,255,.45);font-size:14px;max-width:400px;
-      margin:0 auto 28px;line-height:1.7;">
-      No distractions. No compromises. A cleaner, faster, more professional backend &mdash; starting today.
-    </p>
-  </div>
-
-</section>
+<!-- ▌ 15. CTA FOOTER IMAGE (dark bg baked in) -->
+<div style="line-height:0;font-size:0;">
+  <img src="cta-banner.png"
+       alt="Built for people who live in Odoo. Install Prox Professional."
+       style="width:100%;max-width:100%;display:block;border:0;"/>
+</div>
