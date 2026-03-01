@@ -1,904 +1,784 @@
-<section class="oe_container" style="padding:0;max-width:100%">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Prox Professional Theme for Odoo 19 — Premium backend UI with dark navbar, gold accents, Swiss financial precision, and pixel-perfect views."/>
+<meta name="keywords" content="Odoo 19 theme, Odoo backend theme, professional Odoo UI, dark theme Odoo, Odoo customization, Prox theme, Odoo app store"/>
+<title>Prox Professional Theme — Premium Odoo 19 Backend UI</title>
+<style>
+/* ── RESET ──────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;background:#fff;color:#1a1a1a;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+code{font-family:'Courier New',monospace;font-size:.85em;background:#f0ede8;padding:2px 7px;border-radius:4px;color:#8b4513}
+kbd{background:#e8e4de;border:1px solid #c8c0b8;border-radius:4px;padding:2px 7px;font-size:.8em}
+a{color:inherit;text-decoration:none}
 
-  <!-- ═══════════════════════════════════════════════════
-       HERO BANNER
-  ═══════════════════════════════════════════════════ -->
-  <div style="background:#0f1117;padding:48px 40px 0;position:relative;overflow:hidden;">
+/* ── ODOO GRID ─────────────────────────── */
+.oe_container{max-width:980px;margin:0 auto;padding:56px 28px}
+.oe_row{display:flex;flex-wrap:wrap;margin:0 -14px}
+.oe_spaced{margin-top:16px}
+.oe_span12{width:100%;padding:0 14px}
+.oe_span8{width:66.66%;padding:0 14px}
+.oe_span6{width:50%;padding:0 14px}
+.oe_span4{width:33.33%;padding:0 14px}
+.oe_span3{width:25%;padding:0 14px}
+.oe_dark{background:#f6f3ef}
+.text-center{text-align:center}
 
-    <!-- Grid texture -->
-    <div style="position:absolute;top:0;left:0;right:0;bottom:0;
-      background-image:linear-gradient(rgba(201,168,76,.05) 1px,transparent 1px),
-                       linear-gradient(90deg,rgba(201,168,76,.05) 1px,transparent 1px);
-      background-size:48px 48px;pointer-events:none;"></div>
+/* ── DESIGN TOKENS ─────────────────────── */
+:root{
+  --ink:#0a0c10;
+  --navy:#0f1117;
+  --gold:#c9a84c;
+  --gold2:#e8c96a;
+  --blue:#1A3A5C;
+  --parch:#F4F3EF;
+  --card:#12151e;
+  --muted:#666;
+  --border:#e5dfd6;
+  --green:#22c55e;
+}
 
-    <!-- Glow -->
-    <div style="position:absolute;top:-100px;left:50%;transform:translateX(-50%);
-      width:800px;height:400px;border-radius:50%;
-      background:radial-gradient(ellipse,rgba(201,168,76,.15) 0%,transparent 65%);
-      pointer-events:none;"></div>
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero{
+  background:var(--navy);
+  position:relative;overflow:hidden;
+  padding:0 0 0 0;
+}
+.hero-glow{
+  position:absolute;top:-20%;left:50%;transform:translateX(-50%);
+  width:900px;height:500px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(201,168,76,.18) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-grid-lines{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;
+}
+.hero-inner{
+  position:relative;z-index:2;
+  max-width:980px;margin:0 auto;
+  padding:64px 28px 0;
+  display:flex;gap:48px;align-items:center;
+}
+.hero-left{flex:0 0 auto;max-width:460px}
+.hero-right{flex:1;min-width:0}
 
-    <div style="position:relative;z-index:2;max-width:960px;margin:0 auto;">
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(201,168,76,.12);
+  border:1px solid rgba(201,168,76,.3);
+  color:var(--gold);font-size:.72rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:6px 14px;border-radius:100px;margin-bottom:22px;
+}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
 
-      <!-- Eyebrow badge -->
-      <div style="display:inline-block;background:rgba(201,168,76,.12);
-        border:1px solid rgba(201,168,76,.35);color:#c9a84c;
-        font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-        padding:5px 14px;border-radius:100px;margin-bottom:20px;">
-        &#9679; &nbsp;Premium Odoo 19 Backend Theme
-      </div>
+.hero h1{
+  font-size:2.6rem;font-weight:800;color:#fff;
+  line-height:1.08;letter-spacing:-.03em;margin-bottom:18px;
+}
+.hero h1 .gold{color:var(--gold)}
+.hero h1 .outline{
+  -webkit-text-stroke:1.5px rgba(201,168,76,.5);
+  color:transparent;
+}
+.hero-sub{
+  font-size:.97rem;color:rgba(255,255,255,.55);
+  line-height:1.75;margin-bottom:28px;max-width:420px;
+}
+.hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.hbadge{
+  padding:4px 13px;border-radius:100px;
+  font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+}
+.hb-gold{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.35)}
+.hb-blue{background:rgba(100,160,255,.1);color:#7ab0f5;border:1px solid rgba(100,160,255,.25)}
+.hb-dim{background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.12)}
 
-      <!-- Main headline -->
-      <h1 style="font-size:42px;font-weight:800;color:#ffffff;
-        line-height:1.08;letter-spacing:-1px;margin:0 0 16px;font-family:inherit;">
-        Make Odoo Look<br/>
-        <span style="color:#c9a84c;">Seriously</span>
-        <span style="color:transparent;-webkit-text-stroke:1.5px #c9a84c;"> Professional.</span>
+.hero-img-wrap{
+  position:relative;border-radius:12px 12px 0 0;overflow:hidden;
+  border:1px solid rgba(201,168,76,.25);border-bottom:none;
+  box-shadow:0 -8px 60px rgba(201,168,76,.15),0 0 0 1px rgba(255,255,255,.04) inset;
+}
+.hero-img-bar{
+  background:#0a0c10;padding:9px 14px;
+  display:flex;align-items:center;gap:6px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.dot{width:10px;height:10px;border-radius:50%}
+.dr{background:#ff5f56}.dy{background:#ffbd2e}.dg{background:#27c93f}
+.hero-img-bar span{margin-left:10px;font-size:.68rem;color:rgba(255,255,255,.25);font-family:monospace}
+.hero-img-wrap img{width:100%;display:block}
+
+/* ── GOLD BAR ────────────────────────── */
+.gold-bar{
+  background:linear-gradient(90deg,#b8942e,var(--gold),var(--gold2),var(--gold));
+  display:flex;justify-content:center;flex-wrap:wrap;
+}
+.gb-item{padding:20px 40px;text-align:center;border-right:1px solid rgba(0,0,0,.1)}
+.gb-item:last-child{border-right:none}
+.gb-val{font-size:1.8rem;font-weight:800;color:var(--navy);line-height:1}
+.gb-lbl{font-size:.65rem;font-weight:700;color:rgba(0,0,0,.5);margin-top:4px;text-transform:uppercase;letter-spacing:.07em}
+
+/* ── SECTION CHROME ─────────────────── */
+.eyebrow{font-size:.67rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+h2.st{font-size:1.75rem;font-weight:800;color:var(--navy);letter-spacing:-.025em;margin-bottom:12px;line-height:1.15}
+p.sb{font-size:.94rem;color:var(--muted);line-height:1.75}
+
+/* ══════════════════════════════════════
+   HERO LIST SHOWCASE (first full image)
+══════════════════════════════════════ */
+.showcase-wrap{
+  background:var(--navy);padding:0 0 48px;
+}
+.showcase-inner{max-width:980px;margin:0 auto;padding:0 28px}
+.showcase-label{
+  text-align:center;padding:40px 0 24px;
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(201,168,76,.7);
+}
+.showcase-frame{
+  border-radius:12px;overflow:hidden;
+  border:1px solid rgba(201,168,76,.3);
+  box-shadow:0 20px 80px rgba(0,0,0,.5),0 0 0 1px rgba(201,168,76,.1) inset;
+}
+.showcase-bar{
+  background:#050608;padding:10px 16px;
+  display:flex;align-items:center;gap:6px;
+  border-bottom:1px solid rgba(201,168,76,.1);
+}
+.showcase-bar span{margin-left:12px;font-size:.68rem;color:rgba(255,255,255,.2);font-family:monospace}
+.showcase-frame img{width:100%;display:block}
+
+/* ══════════════════════════════════════
+   COMPARE — the key selling section
+══════════════════════════════════════ */
+.compare-section{padding:56px 0}
+.compare-wrap{max-width:980px;margin:0 auto;padding:0 28px}
+
+.compare-block{margin-bottom:52px}
+.compare-block:last-child{margin-bottom:0}
+
+.compare-header{
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;gap:12px;margin-bottom:12px;
+}
+.compare-tag{
+  padding:8px 14px;border-radius:8px 8px 0 0;
+  font-size:.7rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;text-align:center;
+}
+.ct-default{background:#e8e4de;color:#888}
+.ct-prox{background:var(--gold);color:var(--navy)}
+.vs-badge{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:var(--navy);color:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:800;letter-spacing:.03em;
+  box-shadow:0 2px 12px rgba(0,0,0,.25);
+}
+.compare-images{display:flex;gap:12px;align-items:stretch}
+.cside{
+  flex:1;border-radius:0 0 10px 10px;overflow:hidden;
+  box-shadow:0 4px 24px rgba(0,0,0,.1);
+  border:2px solid transparent;
+}
+.cside.def{border-color:#ddd}
+.cside.prx{border-color:var(--gold);box-shadow:0 4px 28px rgba(201,168,76,.2)}
+.cside img{width:100%;height:auto;display:block}
+.vs-mid{
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;width:42px;
+}
+.compare-caption{
+  text-align:center;margin-top:10px;
+  font-size:.78rem;color:#999;font-style:italic;
+}
+.compare-caption strong{color:var(--gold);font-style:normal}
+
+/* ── FEATURE CARDS ─────────────────── */
+.fcard{
+  background:#fff;border:1px solid var(--border);
+  border-top:3px solid var(--gold);border-radius:12px;
+  padding:26px 20px;margin-bottom:20px;
+  transition:box-shadow .2s,transform .2s;
+}
+.fcard:hover{box-shadow:0 10px 32px rgba(0,0,0,.09);transform:translateY(-2px)}
+.fi{font-size:1.8rem;margin-bottom:12px;line-height:1}
+.fcard h3{font-size:.93rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.fcard p{font-size:.83rem;color:var(--muted);line-height:1.65}
+
+/* ── CHECKLIST ──────────────────────── */
+.cklist{list-style:none}
+.cklist li{
+  padding:10px 0;border-bottom:1px solid #ede8e2;
+  font-size:.87rem;color:#333;
+  display:flex;align-items:flex-start;gap:10px;line-height:1.55;
+}
+.cklist li:last-child{border-bottom:none}
+.ck{
+  width:20px;height:20px;border-radius:50%;flex-shrink:0;margin-top:1px;
+  background:var(--gold);color:var(--navy);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;font-weight:900;
+}
+
+/* ── THEMES GRID ─────────────────── */
+.themes-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:12px;margin-top:24px;
+}
+.theme-chip{
+  border-radius:10px;overflow:hidden;
+  border:1px solid var(--border);
+  transition:transform .2s,box-shadow .2s;
+}
+.theme-chip:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.tc-swatch{height:52px;display:flex}
+.tc-half{flex:1}
+.tc-body{padding:8px 10px;background:#fff}
+.tc-name{font-size:.78rem;font-weight:700;color:var(--navy)}
+.tc-desc{font-size:.65rem;color:var(--muted);margin-top:1px}
+
+/* ── PALETTE ────────────────────────── */
+.palette{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.sw{text-align:center;width:62px}
+.sw-dot{width:62px;height:62px;border-radius:14px;margin-bottom:6px;border:1px solid rgba(0,0,0,.07)}
+.sw-hex{font-size:.58rem;font-family:monospace;color:#888;display:block}
+.sw-name{font-size:.63rem;color:#bbb;display:block;margin-top:2px}
+
+/* ── SPEC CARDS ─────────────────────── */
+.spec-card{background:var(--navy);border-radius:12px;padding:20px 12px;text-align:center;margin-bottom:16px}
+.sv{font-size:1.2rem;font-weight:800;color:var(--gold);line-height:1.2}
+.sl{font-size:.65rem;color:rgba(255,255,255,.4);margin-top:4px;text-transform:uppercase;letter-spacing:.07em}
+
+/* ── STEPS ──────────────────────────── */
+.steps{list-style:none;counter-reset:step}
+.steps li{
+  counter-increment:step;
+  display:flex;gap:16px;align-items:flex-start;
+  padding:14px 0;border-bottom:1px solid #ede8e2;
+  font-size:.87rem;color:#444;line-height:1.65;
+}
+.steps li:last-child{border-bottom:none}
+.steps li::before{
+  content:counter(step);
+  background:var(--gold);color:var(--navy);
+  font-size:.72rem;font-weight:800;
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:2px;
+}
+
+/* ── SUPPORT ────────────────────────── */
+.support-card{
+  max-width:580px;margin:0 auto;
+  background:#fff;border-radius:18px;
+  border:2px solid var(--border);
+  border-top:4px solid var(--gold);
+  padding:44px 40px;text-align:center;
+  box-shadow:0 12px 48px rgba(0,0,0,.08);
+}
+.support-icon-wrap{
+  width:68px;height:68px;border-radius:50%;margin:0 auto 20px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;
+  box-shadow:0 6px 24px rgba(201,168,76,.35);
+}
+.support-card h2{font-size:1.75rem;font-weight:800;color:var(--navy);margin-bottom:10px}
+.support-card p{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:380px;margin-left:auto;margin-right:auto}
+.email-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--navy);color:var(--gold);
+  font-weight:700;font-size:.97rem;
+  padding:14px 28px;border-radius:10px;
+  box-shadow:0 4px 18px rgba(15,17,23,.25);
+  transition:transform .15s,box-shadow .15s;
+  text-decoration:none;
+}
+.email-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(15,17,23,.35)}
+.resp-badge{
+  margin-top:18px;display:inline-flex;align-items:center;gap:7px;
+  font-size:.75rem;font-weight:700;color:#888;
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.rdot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.support-chips{
+  display:flex;gap:10px;flex-wrap:wrap;
+  justify-content:center;margin-top:26px;
+}
+.schip{
+  display:flex;align-items:center;gap:6px;
+  background:var(--parch);border:1px solid var(--border);
+  border-radius:8px;padding:7px 13px;
+  font-size:.78rem;font-weight:600;color:#555;
+}
+
+/* ── CTA ─────────────────────────────── */
+.cta-section{
+  background:var(--navy);
+  padding:68px 28px;text-align:center;position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'PROX';
+  position:absolute;right:-1%;top:50%;transform:translateY(-50%);
+  font-size:14rem;font-weight:900;
+  color:rgba(201,168,76,.04);letter-spacing:-.05em;
+  line-height:1;pointer-events:none;
+}
+.cta-section h2{font-size:1.9rem;font-weight:800;color:#fff;margin-bottom:10px}
+.cta-section p{color:rgba(255,255,255,.45);font-size:.9rem;max-width:420px;margin:0 auto 30px;line-height:1.7}
+.cta-btn{
+  display:inline-block;background:var(--gold);color:var(--navy);
+  padding:14px 36px;border-radius:10px;font-weight:800;font-size:.92rem;
+  letter-spacing:.02em;
+  box-shadow:0 6px 28px rgba(201,168,76,.4);
+  transition:transform .15s,box-shadow .15s;
+}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(201,168,76,.5)}
+
+/* ── DIVIDER ────────────────────────── */
+.gold-divider{
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  border:none;margin:0;
+}
+
+/* ── RESPONSIVE ─────────────────────── */
+@media(max-width:720px){
+  .hero-inner{flex-direction:column;gap:32px;padding-top:48px}
+  .hero-right{display:none}
+  .oe_span8,.oe_span6,.oe_span4,.oe_span3{width:100%}
+  .gb-item{padding:16px 20px}
+  .hero h1{font-size:2rem}
+  .compare-header{grid-template-columns:1fr 1fr}
+  .vs-mid,.vs-badge{display:none}
+  .compare-images{flex-direction:column}
+  .cside{border-radius:10px}
+  .support-card{padding:32px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════ -->
+<div class="hero" itemscope itemtype="https://schema.org/SoftwareApplication">
+  <div class="hero-glow"></div>
+  <div class="hero-grid-lines"></div>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Premium Odoo 19 Backend Theme</div>
+      <h1>
+        Make Odoo<br>
+        Look <span class="gold">Seriously</span><br>
+        <span class="outline">Professional.</span>
       </h1>
-
-      <p style="font-size:15px;color:rgba(255,255,255,.55);line-height:1.75;
-        margin:0 0 28px;max-width:520px;">
+      <p class="hero-sub" itemprop="description">
         A framework-level UI overhaul for Odoo 19 — Swiss financial precision meets
         modern fintech polish. Dark navbar, gold accents, refined typography.
         Every view transformed.
       </p>
-
-      <!-- Badges row -->
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px;">
-        <span style="background:rgba(201,168,76,.15);color:#c9a84c;
-          border:1px solid rgba(201,168,76,.4);
-          font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-          padding:4px 12px;border-radius:100px;">&#9733; Odoo 19.0</span>
-        <span style="background:rgba(100,160,255,.12);color:#7ab0f5;
-          border:1px solid rgba(100,160,255,.3);
-          font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-          padding:4px 12px;border-radius:100px;">Backend Theme</span>
-        <span style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.5);
-          border:1px solid rgba(255,255,255,.14);
-          font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-          padding:4px 12px;border-radius:100px;">LGPL-3</span>
-        <span style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.5);
-          border:1px solid rgba(255,255,255,.14);
-          font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-          padding:4px 12px;border-radius:100px;">by Rajashekar B</span>
+      <div class="hero-badges">
+        <span class="hbadge hb-gold">&#9733; Odoo 19.0</span>
+        <span class="hbadge hb-blue">Backend Theme</span>
+        <span class="hbadge hb-dim">LGPL-3</span>
+        <span class="hbadge hb-dim">by Rajashekar B</span>
       </div>
+    </div>
 
-      <!-- Hero screenshot -->
-      <div style="border-radius:12px 12px 0 0;overflow:hidden;
-        border:1px solid rgba(201,168,76,.3);border-bottom:none;
-        box-shadow:0 -10px 60px rgba(201,168,76,.15);">
-        <div style="background:#050608;padding:9px 14px;
-          border-bottom:1px solid rgba(201,168,76,.1);
-          display:flex;align-items:center;gap:6px;">
-          <span style="width:10px;height:10px;border-radius:50%;background:#ff5f56;display:inline-block;"></span>
-          <span style="width:10px;height:10px;border-radius:50%;background:#ffbd2e;display:inline-block;"></span>
-          <span style="width:10px;height:10px;border-radius:50%;background:#27c93f;display:inline-block;"></span>
-          <span style="margin-left:10px;font-size:11px;color:rgba(255,255,255,.2);font-family:monospace;">
-            purchase &middot; requests for quotation &middot; list view
-          </span>
+    <div class="hero-right">
+      <div class="hero-img-wrap">
+        <div class="hero-img-bar">
+          <div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div>
+          <span>purchase &#183; requests for quotation &#183; list view</span>
         </div>
-        <img src="prox-thm-list.png" alt="Prox Professional — RFQ List View"
-             style="width:100%;display:block;height: 850px;"/>
+        <img src="prox-thm-list.png" alt="Prox Professional Theme — RFQ List View" itemprop="screenshot"/>
       </div>
-
-    </div>
-  </div><!-- /hero -->
-
-  <!-- ═══════════════════════════════════════════════════
-       GOLD STATS BAR
-  ═══════════════════════════════════════════════════ -->
-  <div style="background:linear-gradient(90deg,#b8942e,#c9a84c,#e8c96a,#c9a84c);
-    display:flex;flex-wrap:wrap;justify-content:center;">
-    <div style="padding:20px 44px;text-align:center;border-right:1px solid rgba(0,0,0,.1);">
-      <div style="font-size:28px;font-weight:800;color:#0f1117;line-height:1;">6</div>
-      <div style="font-size:10px;font-weight:700;color:rgba(0,0,0,.5);margin-top:4px;
-        text-transform:uppercase;letter-spacing:1.5px;">Views Transformed</div>
-    </div>
-    <div style="padding:20px 44px;text-align:center;border-right:1px solid rgba(0,0,0,.1);">
-      <div style="font-size:28px;font-weight:800;color:#0f1117;line-height:1;">10+</div>
-      <div style="font-size:10px;font-weight:700;color:rgba(0,0,0,.5);margin-top:4px;
-        text-transform:uppercase;letter-spacing:1.5px;">Theme Variants</div>
-    </div>
-    <div style="padding:20px 44px;text-align:center;border-right:1px solid rgba(0,0,0,.1);">
-      <div style="font-size:28px;font-weight:800;color:#0f1117;line-height:1;">3</div>
-      <div style="font-size:10px;font-weight:700;color:rgba(0,0,0,.5);margin-top:4px;
-        text-transform:uppercase;letter-spacing:1.5px;">Font Families</div>
-    </div>
-    <div style="padding:20px 44px;text-align:center;border-right:1px solid rgba(0,0,0,.1);">
-      <div style="font-size:28px;font-weight:800;color:#0f1117;line-height:1;">v19</div>
-      <div style="font-size:10px;font-weight:700;color:rgba(0,0,0,.5);margin-top:4px;
-        text-transform:uppercase;letter-spacing:1.5px;">Odoo Version</div>
-    </div>
-    <div style="padding:20px 44px;text-align:center;">
-      <div style="font-size:28px;font-weight:800;color:#0f1117;line-height:1;">24h</div>
-      <div style="font-size:10px;font-weight:700;color:rgba(0,0,0,.5);margin-top:4px;
-        text-transform:uppercase;letter-spacing:1.5px;">Support Response</div>
     </div>
   </div>
+</div>
 
-</section>
+<!-- ── Showcase full-width beneath hero ── -->
+<div class="showcase-wrap">
+  <div class="showcase-inner">
+    <div class="showcase-label">&#9650; Prox Professional &#183; Purchase List View — Full Width</div>
+    <div class="showcase-frame">
+      <div class="showcase-bar">
+        <div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div>
+        <span>localhost:8069 &#183; purchase &#183; rfq list</span>
+      </div>
+      <img src="prox-thm-list.png" alt="Prox Professional full-width list view"/>
+    </div>
+  </div>
+</div>
 
-<!-- ═══════════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════════
+     GOLD STATS BAR
+══════════════════════════════════════════════════ -->
+<div class="gold-bar">
+  <div class="gb-item"><div class="gb-val">6</div><div class="gb-lbl">Views Transformed</div></div>
+  <div class="gb-item"><div class="gb-val">10+</div><div class="gb-lbl">Theme Variants</div></div>
+  <div class="gb-item"><div class="gb-val">3</div><div class="gb-lbl">Font Families</div></div>
+  <div class="gb-item"><div class="gb-val">v19</div><div class="gb-lbl">Odoo Version</div></div>
+  <div class="gb-item"><div class="gb-val">24h</div><div class="gb-lbl">Support</div></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
      INTRO — 2 COL
-═══════════════════════════════════════════════════ -->
+══════════════════════════════════════════════════ -->
 <section class="oe_container">
-  <div class="oe_row oe_spaced" style="align-items:center;">
-
-    <div class="oe_span6">
-      <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-        color:#c9a84c;margin:0 0 8px;">About This Theme</p>
-      <h2 class="oe_slogan" style="font-size:26px;font-weight:800;color:#0f1117;
-        letter-spacing:-.5px;margin:0 0 14px;line-height:1.2;">
-        Not just a color swap.<br/>A complete UI rethink.
-      </h2>
-      <p style="font-size:14px;color:#555;line-height:1.8;margin:0 0 12px;">
+  <div class="oe_row oe_spaced" style="align-items:center;gap:0">
+    <div class="oe_span6" style="padding-right:24px">
+      <div class="eyebrow">About This Theme</div>
+      <h2 class="st">Not just a color swap.<br>A complete UI rethink.</h2>
+      <p class="sb">
         Prox Professional hooks into Odoo 19's three-layer SCSS bundle hierarchy — overriding
-        <code style="font-family:monospace;font-size:12px;background:#f0ede8;padding:2px 6px;
-          border-radius:4px;color:#8b4513;">$o-*</code>
-        variables first, Bootstrap variables second, then appending visual CSS last.
-        Stable across upgrades.
+        <code>$o-*</code> variables first, Bootstrap variables second, then appending visual CSS last.
+        The result works <em>with</em> the framework, not against it. Stable across upgrades.
       </p>
-      <p style="font-size:14px;color:#555;line-height:1.8;margin:0;">
-        Built for finance teams, procurement managers, and operations leads who spend
-        hours inside Odoo every day and need an interface that earns their trust.
+      <p class="sb" style="margin-top:12px">
+        Built for finance teams, procurement managers, and operations leads who spend hours
+        inside Odoo every day and need an interface that earns their trust.
       </p>
     </div>
-
     <div class="oe_span6">
       <img src="prox-thm-apps-page.png" alt="Prox Professional — Apps Page"
-           style="width:100%;border-radius:10px;
-             border:2px solid #c9a84c;
-             box-shadow:0 10px 40px rgba(201,168,76,.2);display:block;"/>
+           style="border-radius:12px;border:2px solid var(--gold);box-shadow:0 10px 40px rgba(201,168,76,.2)"/>
     </div>
-
   </div>
 </section>
 
-<!-- gold divider -->
-<div style="height:3px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);"></div>
+<hr class="gold-divider"/>
 
-<!-- ═══════════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════════
      SIDE-BY-SIDE COMPARISONS
-═══════════════════════════════════════════════════ -->
-<section class="oe_container" style="background:#f6f3ef;max-width:100%;padding:52px 40px;">
-<div style="max-width:960px;margin:0 auto;">
+══════════════════════════════════════════════════ -->
+<div class="oe_dark">
+<div class="compare-section">
+  <div class="compare-wrap">
 
-  <div style="text-align:center;margin-bottom:44px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Visual Transformation</p>
-    <h2 style="font-size:28px;font-weight:800;color:#0f1117;
-      letter-spacing:-.5px;margin:0 0 10px;">Side-by-Side Comparison</h2>
-    <p style="font-size:14px;color:#777;max-width:460px;margin:0 auto;line-height:1.7;">
-      Default Odoo on the left &mdash; <strong>Prox Professional on the right</strong>.
-      See every transformation.
-    </p>
+    <div class="text-center" style="margin-bottom:44px">
+      <div class="eyebrow">Visual Transformation</div>
+      <h2 class="st" style="color:var(--navy)">Side-by-Side Comparison</h2>
+      <p class="sb" style="max-width:500px;margin:0 auto">
+        Default Odoo on the left &mdash; <strong>Prox Professional on the right</strong>.
+        See exactly how every view is transformed.
+      </p>
+    </div>
+
+    <!-- APPS PAGE -->
+    <div class="compare-block">
+      <div class="compare-header">
+        <div class="compare-tag ct-default">&#9632; Odoo Default &mdash; Apps Page</div>
+        <div class="vs-badge">VS</div>
+        <div class="compare-tag ct-prox">&#10022; Prox Professional &mdash; Apps Page</div>
+      </div>
+      <div class="compare-images">
+        <div class="cside def"><img src="odoo-default-apps-page.png" alt="Odoo default apps page" loading="lazy"/></div>
+        <div class="vs-mid"><div class="vs-badge">VS</div></div>
+        <div class="cside prx"><img src="prox-thm-apps-page.png" alt="Prox theme apps page" loading="lazy"/></div>
+      </div>
+      <p class="compare-caption"><strong>Gold highlights, cleaner card borders, refined spacing</strong> &mdash; immediately more premium</p>
+    </div>
+
+    <!-- TREE / LIST VIEW -->
+    <div class="compare-block">
+      <div class="compare-header">
+        <div class="compare-tag ct-default">&#9632; Odoo Default &mdash; List View</div>
+        <div class="vs-badge">VS</div>
+        <div class="compare-tag ct-prox">&#10022; Prox Professional &mdash; List View</div>
+      </div>
+      <div class="compare-images">
+        <div class="cside def"><img src="odoo-default-tree-view.png" alt="Odoo default list view" loading="lazy"/></div>
+        <div class="vs-mid"><div class="vs-badge">VS</div></div>
+        <div class="cside prx"><img src="prox-thm-tree-view.png" alt="Prox theme list view" loading="lazy"/></div>
+      </div>
+      <p class="compare-caption"><strong>Dark navbar, monospace amounts, warm parchment</strong> &mdash; built for data-heavy work</p>
+    </div>
+
+    <!-- KANBAN VIEW -->
+    <div class="compare-block">
+      <div class="compare-header">
+        <div class="compare-tag ct-default">&#9632; Odoo Default &mdash; Kanban View</div>
+        <div class="vs-badge">VS</div>
+        <div class="compare-tag ct-prox">&#10022; Prox Professional &mdash; Kanban View</div>
+      </div>
+      <div class="compare-images">
+        <div class="cside def"><img src="odoo-default-kanban-view.png" alt="Odoo default kanban view" loading="lazy"/></div>
+        <div class="vs-mid"><div class="vs-badge">VS</div></div>
+        <div class="cside prx"><img src="prox-thm-kanban-view.png" alt="Prox theme kanban view" loading="lazy"/></div>
+      </div>
+      <p class="compare-caption"><strong>Left-accent hover bars, elevated card shadows</strong> &mdash; your pipeline finally looks the part</p>
+    </div>
+
+    <!-- FORM VIEW -->
+    <div class="compare-block">
+      <div class="compare-header">
+        <div class="compare-tag ct-default">&#9632; Odoo Default &mdash; Form View</div>
+        <div class="vs-badge">VS</div>
+        <div class="compare-tag ct-prox">&#10022; Prox Professional &mdash; Form View</div>
+      </div>
+      <div class="compare-images">
+        <div class="cside def"><img src="odoo-default-form-view.png" alt="Odoo default form view" loading="lazy"/></div>
+        <div class="vs-mid"><div class="vs-badge">VS</div></div>
+        <div class="cside prx"><img src="prox-thm-form-view.png" alt="Prox theme form view" loading="lazy"/></div>
+      </div>
+      <p class="compare-caption"><strong>Instrument Serif headings, refined field layout, navy status breadcrumb</strong></p>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="compare-block">
+      <div class="compare-header">
+        <div class="compare-tag ct-default">&#9632; Odoo Default &mdash; Search Bar</div>
+        <div class="vs-badge">VS</div>
+        <div class="compare-tag ct-prox">&#10022; Prox Professional &mdash; Search Bar</div>
+      </div>
+      <div class="compare-images">
+        <div class="cside def"><img src="odoo-default-search-bar.png" alt="Odoo default search bar" loading="lazy"/></div>
+        <div class="vs-mid"><div class="vs-badge">VS</div></div>
+        <div class="cside prx"><img src="prox-thm-search-bar.png" alt="Prox theme search bar" loading="lazy"/></div>
+      </div>
+      <p class="compare-caption"><strong>Gold-tinted focus ring, polished filter chips, Ctrl+/ shortcut</strong></p>
+    </div>
+
+    <!-- SMART BUTTONS -->
+    <div class="compare-block">
+      <div class="compare-header">
+        <div class="compare-tag ct-default">&#9632; Odoo Default &mdash; Smart Buttons</div>
+        <div class="vs-badge">VS</div>
+        <div class="compare-tag ct-prox">&#10022; Prox Professional &mdash; Smart Buttons</div>
+      </div>
+      <div class="compare-images">
+        <div class="cside def"><img src="odoo-default-smart-btns.png" alt="Odoo default smart buttons" loading="lazy"/></div>
+        <div class="vs-mid"><div class="vs-badge">VS</div></div>
+        <div class="cside prx"><img src="prox-thm-smart-btns.png" alt="Prox theme smart buttons" loading="lazy"/></div>
+      </div>
+      <p class="compare-caption"><strong>Elevated pill style, DM Mono numbers, gold hover accent</strong></p>
+    </div>
+
   </div>
-
-  <!-- ── COMPARE MACRO ── used for each pair ── -->
-
-  <!-- APPS PAGE -->
-  <div style="margin-bottom:52px;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; Apps Page
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);align-self:center;">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; Apps Page
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-apps-page.png" alt="Odoo default apps page"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-apps-page.png" alt="Prox theme apps page"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Gold highlights, cleaner card borders, refined spacing</strong>
-      &mdash; immediately more premium
-    </p>
-  </div>
-
-  <!-- TREE / LIST VIEW -->
-  <div style="margin-bottom:52px;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; List View
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; List View
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-tree-view.png" alt="Odoo default list view"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-tree-view.png" alt="Prox theme list view"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Dark navbar, monospace amounts, warm parchment</strong>
-      &mdash; built for data-heavy work
-    </p>
-  </div>
-
-  <!-- KANBAN VIEW -->
-  <div style="margin-bottom:52px;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; Kanban View
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; Kanban View
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-kanban-view.png" alt="Odoo default kanban"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-kanban-view.png" alt="Prox theme kanban"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Left-accent hover bars, elevated card shadows</strong>
-      &mdash; your pipeline finally looks the part
-    </p>
-  </div>
-
-  <!-- FORM VIEW -->
-  <div style="margin-bottom:52px;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; Form View
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; Form View
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-form-view.png" alt="Odoo default form"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-form-view.png" alt="Prox theme form"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Instrument Serif headings, refined field layout, navy breadcrumb</strong>
-    </p>
-  </div>
-
-  <!-- SEARCH BAR -->
-  <div style="margin-bottom:52px;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; Search Bar
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; Search Bar
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-search-bar.png" alt="Odoo default search"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-search-bar.png" alt="Prox theme search"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Gold focus ring, polished filter chips, Ctrl+/ shortcut</strong>
-    </p>
-  </div>
-
-  <!-- SMART BUTTONS -->
-  <div style="margin-bottom:0;">
-    <div style="display:flex;gap:10px;margin-bottom:10px;align-items:center;">
-      <div style="flex:1;background:#e8e4de;color:#888;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#9632; &nbsp;Odoo Default &mdash; Smart Buttons
-      </div>
-      <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;
-        background:#0f1117;color:#c9a84c;font-size:10px;font-weight:800;
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 2px 10px rgba(0,0,0,.3);">VS</div>
-      <div style="flex:1;background:#c9a84c;color:#0f1117;font-size:10px;font-weight:700;
-        letter-spacing:1.5px;text-transform:uppercase;text-align:center;
-        padding:7px 10px;border-radius:6px 6px 0 0;">
-        &#10022; &nbsp;Prox Professional &mdash; Smart Buttons
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #ddd;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-        <img src="odoo-default-smart-btns.png" alt="Odoo default smart buttons"
-             style="width:100%;display:block;"/>
-      </div>
-      <div style="flex:1;border-radius:0 0 8px 8px;overflow:hidden;
-        border:2px solid #c9a84c;box-shadow:0 4px 24px rgba(201,168,76,.2);">
-        <img src="prox-thm-smart-btns.png" alt="Prox theme smart buttons"
-             style="width:100%;display:block;"/>
-      </div>
-    </div>
-    <p style="text-align:center;margin:10px 0 0;font-size:12px;color:#999;font-style:italic;">
-      <strong style="color:#c9a84c;font-style:normal;">Elevated pill style, DM Mono numbers, gold hover accent</strong>
-    </p>
-  </div>
-
 </div>
-</section>
+</div>
 
-<!-- gold divider -->
-<div style="height:3px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);"></div>
+<hr class="gold-divider"/>
 
-<!-- ═══════════════════════════════════════════════════
-     FEATURE CARDS — 3 COL
-═══════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════
+     FEATURE CARDS
+══════════════════════════════════════════════════ -->
 <section class="oe_container">
-
-  <div style="text-align:center;margin-bottom:36px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Core Features</p>
-    <h2 style="font-size:26px;font-weight:800;color:#0f1117;
-      letter-spacing:-.5px;margin:0;">Everything that makes it different</h2>
-  </div>
-
   <div class="oe_row">
-
-    <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#128292;</div>
-        <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
-          Premium Typography Stack</h3>
-        <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
-          <strong>Instrument Serif</strong> for display, <strong>Syne</strong> for UI,
-          <strong>DM Mono</strong> for financial data. Every context gets exactly the right typeface.</p>
-      </div>
+    <div class="oe_span12 text-center" style="margin-bottom:36px">
+      <div class="eyebrow">Core Features</div>
+      <h2 class="st">Everything that makes it different</h2>
     </div>
-
-    <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#9644;</div>
-        <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
-          Dark Navbar + Gold Brand</h3>
-        <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
-          Deep <strong>#0f1117</strong> navbar with <strong>#c9a84c</strong> gold accent.
-          Warm parchment background. No eye-straining pure-white surfaces.</p>
-      </div>
-    </div>
-
-    <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#128203;</div>
-        <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
-          Professional List Views</h3>
-        <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
-          Monospace amounts, tighter row density, alternating tints, and hover highlights.
-          Built for data-heavy procurement and finance tables.</p>
-      </div>
-    </div>
-
-    <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#128193;</div>
-        <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
-          Kanban Card Makeover</h3>
-        <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
-          Left-accent hover bars, elevated shadows, cleaner stage headers.
-          Your pipeline looks as good as it performs.</p>
-      </div>
-    </div>
-
-    <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#127991;</div>
-        <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
-          Purchase &amp; RFQ Badges</h3>
-        <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
-          Status-aware badge system across Purchase and RFQ views.
-          Row animations and colour-coded triage for procurement teams.</p>
-      </div>
-    </div>
-
-    <div class="oe_span4">
-      <div style="background:#fff;border:1px solid #e5dfd6;border-top:3px solid #c9a84c;
-        border-radius:10px;padding:24px 20px;margin-bottom:18px;
-        box-shadow:0 2px 12px rgba(0,0,0,.04);">
-        <div style="font-size:28px;margin-bottom:10px;line-height:1;">&#9889;</div>
-        <h3 style="font-size:14px;font-weight:700;color:#0f1117;margin:0 0 8px;">
-          Smart Interactions</h3>
-        <p style="font-size:13px;color:#666;line-height:1.65;margin:0;">
-          Gold AJAX progress bar, smooth view transitions, <strong>Ctrl+/</strong> search shortcut.
-          Fully respects <code style="font-family:monospace;font-size:11px;background:#f0ede8;padding:1px 5px;border-radius:3px;">prefers-reduced-motion</code>.</p>
-      </div>
-    </div>
-
+  </div>
+  <div class="oe_row oe_spaced">
+    <div class="oe_span4"><div class="fcard">
+      <div class="fi">&#128292;</div>
+      <h3>Premium Typography Stack</h3>
+      <p><strong>Instrument Serif</strong> for display, <strong>Syne</strong> for UI labels, <strong>DM Mono</strong> for all financial data. Every context gets exactly the right typeface.</p>
+    </div></div>
+    <div class="oe_span4"><div class="fcard">
+      <div class="fi">&#9679;</div>
+      <h3>Dark Navbar + Gold Brand</h3>
+      <p>Deep <strong>#0f1117</strong> navbar with a warm <strong>#c9a84c</strong> gold accent. Parchment background. No harsh pure-white surfaces during long sessions.</p>
+    </div></div>
+    <div class="oe_span4"><div class="fcard">
+      <div class="fi">&#128203;</div>
+      <h3>Professional List Views</h3>
+      <p>Monospace amounts, tighter row density, alternating tints, and hover highlights — optimised for data-heavy procurement and finance tables.</p>
+    </div></div>
+    <div class="oe_span4"><div class="fcard">
+      <div class="fi">&#128193;</div>
+      <h3>Kanban Card Makeover</h3>
+      <p>Left-accent hover bars, elevated shadows, cleaner stage headers, and refined typography. Your pipeline finally looks as good as it performs.</p>
+    </div></div>
+    <div class="oe_span4"><div class="fcard">
+      <div class="fi">&#127991;</div>
+      <h3>Purchase &amp; RFQ Badges</h3>
+      <p>Status-aware badge system across Purchase and RFQ views. Row animations and instant colour-coded triage for procurement teams.</p>
+    </div></div>
+    <div class="oe_span4"><div class="fcard">
+      <div class="fi">&#9889;</div>
+      <h3>Smart Interactions</h3>
+      <p>Gold AJAX progress bar, smooth view transitions, <strong>Ctrl+/</strong> search shortcut. Fully respects <code>prefers-reduced-motion</code>.</p>
+    </div></div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     COMPLETE CHECKLIST
-═══════════════════════════════════════════════════ -->
-<section class="oe_container" style="background:#f6f3ef;max-width:100%;padding:52px 40px;">
-<div style="max-width:960px;margin:0 auto;">
-
-  <div style="text-align:center;margin-bottom:32px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Complete Feature List</p>
-    <h2 style="font-size:26px;font-weight:800;color:#0f1117;letter-spacing:-.5px;margin:0;">
-      Everything included, nothing hidden</h2>
-  </div>
-
+<!-- ══════════════════════════════════════════════════
+     FULL CHECKLIST
+══════════════════════════════════════════════════ -->
+<div class="oe_dark">
+<section class="oe_container">
   <div class="oe_row">
-    <div class="oe_span6">
-      <table style="width:100%;border-collapse:collapse;">
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;flex-shrink:0;">&#10003;</span>
-          <strong>Correct Odoo 19 SCSS asset pipeline</strong> — three-layer bundle integration
-        </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>$o-* primary variable overrides</strong> at the earliest bundle layer
-        </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Bootstrap variable overrides</strong> prepended before compilation
-        </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Dark navbar</strong> #0f1117 with gold brand accent #c9a84c
-        </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Warm parchment background</strong> #F4F3EF across all backend views
-        </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Deep navy</strong> #1A3A5C for body text and headings
-        </td></tr>
-        <tr><td style="padding:10px 0;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Instrument Serif</strong> for display and form headings
-        </td></tr>
-      </table>
-    </div>
-    <div class="oe_span6">
-      <table style="width:100%;border-collapse:collapse;">
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Syne font</strong> for menus, labels, and UI buttons
-        </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>DM Mono</strong> for all numeric and financial data
-        </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Refined stat cards</strong> with elevated shadows and warm fill
-        </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Kanban left-accent hover bars</strong> with CSS transitions
-        </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Purchase/RFQ badge system</strong> — status-aware row styling
-        </td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #ede8e2;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Gold AJAX progress bar</strong> loading indicator
-        </td></tr>
-        <tr><td style="padding:10px 0;font-size:13px;color:#333;vertical-align:top;">
-          <span style="display:inline-block;width:20px;height:20px;border-radius:50%;
-            background:#c9a84c;color:#0f1117;font-size:10px;font-weight:900;
-            text-align:center;line-height:20px;margin-right:10px;">&#10003;</span>
-          <strong>Ctrl+/</strong> global search shortcut + smooth view animations
-        </td></tr>
-      </table>
+    <div class="oe_span12 text-center" style="margin-bottom:32px">
+      <div class="eyebrow">Complete Feature List</div>
+      <h2 class="st">Everything included, nothing hidden</h2>
     </div>
   </div>
-
+  <div class="oe_row oe_spaced">
+    <div class="oe_span6">
+      <ul class="cklist">
+        <li><span class="ck">&#10003;</span><span><strong>Correct Odoo 19 SCSS asset pipeline</strong> — three-layer bundle integration</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>$o-* primary variable overrides</strong> at the earliest bundle layer</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>Bootstrap variable overrides</strong> prepended before compilation</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>Dark navbar</strong> #0f1117 with gold brand accent #c9a84c</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>Warm parchment background</strong> #F4F3EF across all backend views</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>Deep navy</strong> #1A3A5C for body text and headings</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>Instrument Serif</strong> for display and form headings</span></li>
+      </ul>
+    </div>
+    <div class="oe_span6">
+      <ul class="cklist">
+        <li><span class="ck">&#10003;</span><span><strong>Syne font</strong> for menus, labels, and UI buttons</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>DM Mono</strong> for all numeric and financial data</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>Refined stat cards</strong> with elevated shadows and warm fill</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>Kanban left-accent hover bars</strong> with CSS transitions</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>Purchase/RFQ badge system</strong> — status-aware row styling</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>Gold AJAX progress bar</strong> loading indicator</span></li>
+        <li><span class="ck">&#10003;</span><span><strong>Ctrl+/</strong> global search shortcut + smooth view animations</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
 </div>
-</section>
 
-<!-- ═══════════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════════
      COLOUR PALETTE
-═══════════════════════════════════════════════════ -->
+══════════════════════════════════════════════════ -->
 <section class="oe_container">
-
-  <div style="text-align:center;margin-bottom:24px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Design System</p>
-    <h2 style="font-size:26px;font-weight:800;color:#0f1117;letter-spacing:-.5px;margin:0 0 8px;">
-      Colour Palette</h2>
-    <p style="font-size:14px;color:#777;max-width:440px;margin:0 auto;">
-      Swiss financial design — every colour chosen for hierarchy, contrast, and professionalism.</p>
-  </div>
-
-  <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:20px;">
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#0f1117;
-        margin-bottom:7px;border:1px solid rgba(0,0,0,.1);"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#0f1117</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Navbar</span>
+  <div class="oe_row">
+    <div class="oe_span12 text-center" style="margin-bottom:8px">
+      <div class="eyebrow">Design System</div>
+      <h2 class="st">Colour Palette</h2>
+      <p class="sb" style="max-width:460px;margin:0 auto">Swiss financial design — every colour chosen for hierarchy, contrast, and professionalism.</p>
     </div>
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#c9a84c;
-        margin-bottom:7px;border:1px solid rgba(0,0,0,.1);"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#c9a84c</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Gold</span>
-    </div>
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#1A3A5C;
-        margin-bottom:7px;border:1px solid rgba(0,0,0,.1);"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#1A3A5C</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Navy</span>
-    </div>
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#F4F3EF;
-        margin-bottom:7px;border:1px solid #ddd;"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#F4F3EF</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Parchment</span>
-    </div>
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#2563eb;
-        margin-bottom:7px;border:1px solid rgba(0,0,0,.1);"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#2563eb</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Action</span>
-    </div>
-    <div style="text-align:center;width:72px;">
-      <div style="width:72px;height:72px;border-radius:14px;background:#12151e;
-        margin-bottom:7px;border:1px solid rgba(0,0,0,.1);"></div>
-      <span style="font-size:10px;font-family:monospace;color:#888;display:block;">#12151e</span>
-      <span style="font-size:11px;color:#bbb;display:block;margin-top:2px;">Card BG</span>
+    <div class="oe_span12">
+      <div class="palette">
+        <div class="sw"><div class="sw-dot" style="background:#0f1117"></div><span class="sw-hex">#0f1117</span><span class="sw-name">Navbar</span></div>
+        <div class="sw"><div class="sw-dot" style="background:#c9a84c"></div><span class="sw-hex">#c9a84c</span><span class="sw-name">Gold</span></div>
+        <div class="sw"><div class="sw-dot" style="background:#1A3A5C"></div><span class="sw-hex">#1A3A5C</span><span class="sw-name">Navy</span></div>
+        <div class="sw"><div class="sw-dot" style="background:#F4F3EF;border:1px solid #ddd"></div><span class="sw-hex">#F4F3EF</span><span class="sw-name">Parchment</span></div>
+        <div class="sw"><div class="sw-dot" style="background:#2563eb"></div><span class="sw-hex">#2563eb</span><span class="sw-name">Action</span></div>
+        <div class="sw"><div class="sw-dot" style="background:#12151e"></div><span class="sw-hex">#12151e</span><span class="sw-name">Card BG</span></div>
+      </div>
     </div>
   </div>
-
 </section>
 
-<!-- gold divider -->
-<div style="height:3px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);"></div>
+<hr class="gold-divider"/>
 
-<!-- ═══════════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════════
      TECH SPECS
-═══════════════════════════════════════════════════ -->
-<section class="oe_container" style="background:#f6f3ef;max-width:100%;padding:52px 40px;">
-<div style="max-width:960px;margin:0 auto;">
-
-  <div style="text-align:center;margin-bottom:30px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Technical Details</p>
-    <h2 style="font-size:26px;font-weight:800;color:#0f1117;letter-spacing:-.5px;margin:0;">
-      Module Specifications</h2>
-  </div>
-
-  <div class="oe_row">
-    <div class="oe_span3">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:22px;font-weight:800;color:#c9a84c;line-height:1.2;">19.0</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
-          text-transform:uppercase;letter-spacing:1.5px;">Odoo Version</div>
-      </div>
-    </div>
-    <div class="oe_span3">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:22px;font-weight:800;color:#c9a84c;line-height:1.2;">1.0.0</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
-          text-transform:uppercase;letter-spacing:1.5px;">Module Version</div>
-      </div>
-    </div>
-    <div class="oe_span3">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:22px;font-weight:800;color:#c9a84c;line-height:1.2;">OPL-1</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
-          text-transform:uppercase;letter-spacing:1.5px;">License</div>
-      </div>
-    </div>
-    <div class="oe_span3">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:18px;font-weight:800;color:#c9a84c;line-height:1.2;">base, web</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
-          text-transform:uppercase;letter-spacing:1.5px;">Dependencies</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="oe_row">
-    <div class="oe_span4">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:16px;font-weight:800;color:#c9a84c;line-height:1.2;">Themes / Backend</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
-          text-transform:uppercase;letter-spacing:1.5px;">Category</div>
-      </div>
-    </div>
-    <div class="oe_span4">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:16px;font-weight:800;color:#c9a84c;line-height:1.2;">3 SCSS Bundles</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
-          text-transform:uppercase;letter-spacing:1.5px;">Asset Layers</div>
-      </div>
-    </div>
-    <div class="oe_span4">
-      <div style="background:#0f1117;border-radius:10px;padding:20px 12px;
-        text-align:center;margin-bottom:14px;">
-        <div style="font-size:16px;font-weight:800;color:#c9a84c;line-height:1.2;">1 JS File</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;
-          text-transform:uppercase;letter-spacing:1.5px;">Backend Enhancements</div>
-      </div>
-    </div>
-  </div>
-
-</div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════
-     INSTALLATION
-═══════════════════════════════════════════════════ -->
+══════════════════════════════════════════════════ -->
+<div class="oe_dark">
 <section class="oe_container">
-
-  <div style="text-align:center;margin-bottom:28px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Get Started</p>
-    <h2 style="font-size:26px;font-weight:800;color:#0f1117;letter-spacing:-.5px;margin:0;">
-      Installation</h2>
+  <div class="oe_row">
+    <div class="oe_span12 text-center" style="margin-bottom:28px">
+      <div class="eyebrow">Technical Details</div>
+      <h2 class="st">Module Specifications</h2>
+    </div>
   </div>
-
-  <div style="max-width:620px;margin:0 auto;">
-
-    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #ede8e2;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">1</span>
-      <span>Copy the <code style="font-family:monospace;font-size:12px;background:#f0ede8;
-        padding:2px 6px;border-radius:4px;color:#8b4513;">theme_prox_professional</code>
-        folder into your Odoo <strong>custom addons path</strong>.</span>
-    </div>
-
-    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #ede8e2;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">2</span>
-      <span>Restart the Odoo server:
-        <code style="font-family:monospace;font-size:12px;background:#f0ede8;
-          padding:2px 6px;border-radius:4px;color:#8b4513;">sudo systemctl restart odoo</code>
-      </span>
-    </div>
-
-    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #ede8e2;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">3</span>
-      <span>Go to <strong>Settings &rarr; Apps</strong> and click <strong>Update App List</strong>.</span>
-    </div>
-
-    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #ede8e2;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">4</span>
-      <span>Search for <strong>"Prox Professional"</strong> and click <strong>Install</strong>.</span>
-    </div>
-
-    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #ede8e2;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">5</span>
-      <span>Hard-refresh your browser with
-        <kbd style="background:#e8e4de;border:1px solid #c8c0b8;border-radius:4px;
-          padding:1px 6px;font-size:11px;">Ctrl+Shift+R</kbd>
-        to flush cached assets.</span>
-    </div>
-
-    <div style="display:flex;gap:14px;padding:14px 0;
-      font-size:13px;color:#444;line-height:1.65;align-items:flex-start;">
-      <span style="background:#c9a84c;color:#0f1117;font-size:11px;font-weight:800;
-        width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
-        justify-content:center;flex-shrink:0;margin-top:2px;text-align:center;line-height:26px;">6</span>
-      <span>Done &mdash; the theme is now active globally across all backend views. No further configuration needed.</span>
-    </div>
-
+  <div class="oe_row oe_spaced">
+    <div class="oe_span3"><div class="spec-card"><div class="sv">19.0</div><div class="sl">Odoo Version</div></div></div>
+    <div class="oe_span3"><div class="spec-card"><div class="sv">1.0.0</div><div class="sl">Module Version</div></div></div>
+    <div class="oe_span3"><div class="spec-card"><div class="sv">LGPL-3</div><div class="sl">License</div></div></div>
+    <div class="oe_span3"><div class="spec-card"><div class="sv">base, web</div><div class="sl">Dependencies</div></div></div>
+  </div>
+  <div class="oe_row" style="margin-top:14px">
+    <div class="oe_span4"><div class="spec-card"><div class="sv" style="font-size:.95rem">Themes / Backend</div><div class="sl">Category</div></div></div>
+    <div class="oe_span4"><div class="spec-card"><div class="sv" style="font-size:.95rem">3 SCSS Bundles</div><div class="sl">Asset Layers</div></div></div>
+    <div class="oe_span4"><div class="spec-card"><div class="sv" style="font-size:.95rem">1 JS File</div><div class="sl">Backend Enhancements</div></div></div>
   </div>
 </section>
-
-<!-- gold divider -->
-<div style="height:3px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);"></div>
-
-<!-- ═══════════════════════════════════════════════════
-     SUPPORT
-═══════════════════════════════════════════════════ -->
-<section class="oe_container" style="background:#f6f3ef;max-width:100%;padding:52px 40px;">
-<div style="max-width:960px;margin:0 auto;">
-
-  <div style="text-align:center;margin-bottom:32px;">
-    <p style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-      color:#c9a84c;margin:0 0 8px;">Need Help?</p>
-    <h2 style="font-size:26px;font-weight:800;color:#0f1117;letter-spacing:-.5px;margin:0;">
-      Support</h2>
-  </div>
-
-  <div style="max-width:560px;margin:0 auto;background:#fff;
-    border-radius:16px;border:2px solid #e5dfd6;border-top:4px solid #c9a84c;
-    padding:40px 36px;text-align:center;
-    box-shadow:0 12px 48px rgba(0,0,0,.07);">
-
-    <!-- Icon -->
-    <div style="width:64px;height:64px;border-radius:50%;margin:0 auto 18px;
-      background:linear-gradient(135deg,#c9a84c,#e8c96a);
-      display:flex;align-items:center;justify-content:center;font-size:28px;
-      box-shadow:0 6px 20px rgba(201,168,76,.3);">&#128587;</div>
-
-    <h2 style="font-size:22px;font-weight:800;color:#0f1117;margin:0 0 10px;">
-      We&rsquo;re Here to Help</h2>
-
-    <p style="font-size:14px;color:#666;line-height:1.7;margin:0 0 24px;">
-      Need help, customisation, or have a question about Prox Professional?<br/>
-      Reach out directly &mdash; we respond promptly and work with you until it&rsquo;s resolved.
-    </p>
-
-    <!-- Email button -->
-    <a href="mailto:raj.odoo2026@gmail.com"
-       style="display:inline-block;background:#0f1117;color:#c9a84c;
-         font-weight:700;font-size:15px;
-         padding:13px 28px;border-radius:9px;text-decoration:none;
-         box-shadow:0 4px 16px rgba(15,17,23,.25);">
-      &#9993; &nbsp;raj.odoo2026@gmail.com
-    </a>
-
-    <!-- Response badge -->
-    <div style="margin-top:16px;display:inline-flex;align-items:center;gap:7px;
-      font-size:11px;font-weight:700;color:#888;
-      text-transform:uppercase;letter-spacing:1.5px;">
-      <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;
-        display:inline-block;"></span>
-      Response within 24 hours
-    </div>
-
-    <!-- Support chips -->
-    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:24px;">
-      <span style="background:#f6f3ef;border:1px solid #e5dfd6;border-radius:7px;
-        padding:6px 12px;font-size:12px;font-weight:600;color:#555;">
-        &#128736; Installation Help</span>
-      <span style="background:#f6f3ef;border:1px solid #e5dfd6;border-radius:7px;
-        padding:6px 12px;font-size:12px;font-weight:600;color:#555;">
-        &#127912; Customisation</span>
-      <span style="background:#f6f3ef;border:1px solid #e5dfd6;border-radius:7px;
-        padding:6px 12px;font-size:12px;font-weight:600;color:#555;">
-        &#128030; Bug Reports</span>
-      <span style="background:#f6f3ef;border:1px solid #e5dfd6;border-radius:7px;
-        padding:6px 12px;font-size:12px;font-weight:600;color:#555;">
-        &#128161; Questions</span>
-    </div>
-
-  </div>
 </div>
-</section>
 
-<!-- ═══════════════════════════════════════════════════
-     CTA FOOTER
-═══════════════════════════════════════════════════ -->
-<section class="oe_container" style="background:#0f1117;max-width:100%;padding:64px 40px;
-  text-align:center;position:relative;overflow:hidden;">
-
-  <div style="position:absolute;right:-1%;top:50%;transform:translateY(-50%);
-    font-size:160px;font-weight:900;color:rgba(201,168,76,.04);
-    letter-spacing:-5px;line-height:1;pointer-events:none;">PROX</div>
-
-  <div style="position:relative;z-index:1;">
-    <h2 style="font-size:28px;font-weight:800;color:#ffffff;margin:0 0 10px;">
-      Built for people who live in Odoo.</h2>
-    <p style="color:rgba(255,255,255,.45);font-size:14px;max-width:400px;
-      margin:0 auto 28px;line-height:1.7;">
-      No distractions. No compromises. A cleaner, faster, more professional backend &mdash; starting today.
-    </p>
+<!-- ══════════════════════════════════════════════════
+     INSTALLATION
+══════════════════════════════════════════════════ -->
+<section class="oe_container">
+  <div class="oe_row">
+    <div class="oe_span12 text-center" style="margin-bottom:28px">
+      <div class="eyebrow">Get Started</div>
+      <h2 class="st">Installation</h2>
+    </div>
   </div>
-
+  <div class="oe_row oe_spaced">
+    <div class="oe_span8" style="margin:0 auto;float:none">
+      <ol class="steps">
+        <li>Copy the <code>theme_prox_professional</code> folder into your Odoo <strong>custom addons path</strong>.</li>
+        <li>Restart the Odoo server: <code>sudo systemctl restart odoo</code></li>
+        <li>Go to <strong>Settings &#8594; Apps</strong> and click <strong>Update App List</strong>.</li>
+        <li>Search for <strong>"Prox Professional"</strong> and click <strong>Install</strong>.</li>
+        <li>Hard-refresh your browser with <kbd>Ctrl+Shift+R</kbd> to flush cached assets.</li>
+        <li>Done &mdash; the theme is now active globally across all backend views.</li>
+      </ol>
+    </div>
+  </div>
 </section>
+
+<hr class="gold-divider"/>
+
+<!-- ══════════════════════════════════════════════════
+     SUPPORT
+══════════════════════════════════════════════════ -->
+<div class="oe_dark">
+<section class="oe_container">
+  <div class="oe_row">
+    <div class="oe_span12 text-center" style="margin-bottom:32px">
+      <div class="eyebrow">Need Help?</div>
+      <h2 class="st">Support</h2>
+    </div>
+    <div class="oe_span12">
+      <div class="support-card" itemscope itemtype="https://schema.org/ContactPoint">
+        <div class="support-icon-wrap">&#128587;</div>
+        <h2>We're Here to Help</h2>
+        <p>
+          Need help, customisation, or have a question about Prox Professional?
+          Reach out directly — we respond promptly and work with you until it's resolved.
+        </p>
+        <a href="mailto:raj.odoo2026@gmail.com" class="email-btn" itemprop="email">
+          &#9993;&nbsp; raj.odoo2026@gmail.com
+        </a>
+        <div class="resp-badge">
+          <span class="rdot"></span>
+          Response within 24 hours
+        </div>
+        <div class="support-chips">
+          <div class="schip">&#128736; Installation Help</div>
+          <div class="schip">&#127912; Customisation</div>
+          <div class="schip">&#128030; Bug Reports</div>
+          <div class="schip">&#128161; Questions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     CTA
+══════════════════════════════════════════════════ -->
+<div class="cta-section">
+  <h2>Built for people who live in Odoo.</h2>
+  <p>No distractions. No compromises. A cleaner, faster, more professional backend — starting today.</p>
+  <a href="https://apps.odoo.com" class="cta-btn">Install Prox Professional &#8594;</a>
+</div>
+
+</body>
+</html>
