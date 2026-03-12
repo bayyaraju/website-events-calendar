@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_woo_product_list" model="ir.ui.view">
+        <field name="name">woo.product.template.list</field>
+        <field name="model">woo.product.template</field>
+        <field name="arch" type="xml">
+            <list string="WooCommerce Products"
+                  decoration-warning="sync_state == 'pending'"
+                  decoration-danger="sync_state == 'error'"
+                  decoration-success="sync_state == 'synced'">
+                <field name="woo_image" widget="image" options="{'size': [38, 38]}" optional="show"/>
+                <field name="name"/>
+                <field name="woo_id"/>
+                <field name="instance_id"/>
+                <field name="woo_type"/>
+                <field name="woo_sku"/>
+                <field name="woo_regular_price"/>
+                <field name="woo_stock_quantity"/>
+                <field name="woo_status"/>
+                <field name="sync_state"/>
+                <field name="last_synced"/>
+                <field name="product_tmpl_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_woo_product_form" model="ir.ui.view">
+        <field name="name">woo.product.template.form</field>
+        <field name="model">woo.product.template</field>
+        <field name="arch" type="xml">
+            <form string="WooCommerce Product">
+                <sheet>
+                    <field name="woo_image" widget="image"
+                           class="oe_avatar"
+                           options="{'preview_image': 'woo_image', 'size': [128, 128]}"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Product Name"/></h1>
+                    </div>
+                    <group>
+                        <group string="WooCommerce Info">
+                            <field name="woo_id"/>
+                            <field name="instance_id"/>
+                            <field name="woo_type"/>
+                            <field name="woo_sku"/>
+                            <field name="woo_status"/>
+                            <field name="sync_state"/>
+                            <field name="last_synced"/>
+                        </group>
+                        <group string="Pricing &amp; Stock">
+                            <field name="woo_regular_price"/>
+                            <field name="woo_sale_price"/>
+                            <field name="woo_stock_quantity"/>
+                            <field name="woo_stock_status"/>
+                            <field name="woo_weight"/>
+                            <field name="product_tmpl_id"/>
+                        </group>
+                    </group>
+                    <group string="Image URL" col="1">
+                        <field name="woo_image_url" readonly="True"/>
+                    </group>
+                    <notebook>
+                        <page string="Categories">
+                            <field name="woo_category_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="woo_id"/>
+                                    <field name="slug"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Variants" invisible="woo_type != 'variable'">
+                            <field name="variant_ids">
+                                <list>
+                                    <field name="woo_id"/>
+                                    <field name="sku"/>
+                                    <field name="regular_price"/>
+                                    <field name="stock_quantity"/>
+                                    <field name="odoo_variant_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Sync Error" invisible="not sync_error">
+                            <field name="sync_error" readonly="True"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_woo_product_search" model="ir.ui.view">
+        <field name="name">woo.product.template.search</field>
+        <field name="model">woo.product.template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="woo_sku"/>
+                <field name="instance_id"/>
+                <filter name="synced" string="Synced" domain="[('sync_state','=','synced')]"/>
+                <filter name="pending" string="Pending" domain="[('sync_state','=','pending')]"/>
+                <filter name="errors" string="Errors" domain="[('sync_state','=','error')]"/>
+                <separator/>
+                <filter name="group_instance" string="Instance"
+                        context="{'group_by': 'instance_id'}"/>
+                <filter name="group_type" string="Type"
+                        context="{'group_by': 'woo_type'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_woo_products" model="ir.actions.act_window">
+        <field name="name">WooCommerce Products</field>
+        <field name="res_model">woo.product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_woo_product_search"/>
+    </record>
+
+</odoo>

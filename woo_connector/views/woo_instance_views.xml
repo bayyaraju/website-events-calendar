@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Instance Form View -->
+    <record id="view_woo_instance_form" model="ir.ui.view">
+        <field name="name">woo.instance.form</field>
+        <field name="model">woo.instance</field>
+        <field name="arch" type="xml">
+            <form string="WooCommerce Instance">
+                <header>
+                    <button name="action_test_connection"
+                            string="Test Connection"
+                            type="object"
+                            class="btn-primary"/>
+                    <button name="action_sync_orders"
+                            string="Sync Orders"
+                            type="object"
+                            invisible="state != 'connected'"/>
+                    <button name="action_sync_products"
+                            string="Sync Products"
+                            type="object"
+                            invisible="state != 'connected'"/>
+                    <button name="action_sync_stock"
+                            string="Sync Stock"
+                            type="object"
+                            invisible="state != 'connected'"/>
+                    <button name="action_sync_customers"
+                            string="Sync Customers"
+                            type="object"
+                            invisible="state != 'connected'"/>
+                    <button name="action_sync_coupons"
+                            string="Sync Coupons"
+                            type="object"
+                            invisible="state != 'connected'"/>
+                    <button name="action_sync_product_images"
+                            string="Sync Images"
+                            type="object"
+                            invisible="state != 'connected'"/>
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,connected"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_logs"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list">
+                            <field name="log_count" widget="statinfo" string="Logs"/>
+                        </button>
+                        <button name="action_view_queue"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-tasks">
+                            <field name="queue_count" widget="statinfo" string="Queue"/>
+                        </button>
+                        <button name="action_view_products"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-cubes">
+                            <field name="total_products_synced" widget="statinfo" string="Products"/>
+                        </button>
+                        <button name="action_view_orders"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-shopping-cart">
+                            <field name="total_orders_synced" widget="statinfo" string="Orders"/>
+                        </button>
+                        <button name="action_view_coupons"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-tag">
+                            <field name="total_coupons_synced" widget="statinfo" string="Coupons"/>
+                        </button>
+                        <button name="action_view_customers"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-users">
+                            <field name="total_customers_synced" widget="statinfo" string="Customers"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Instance Name"/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page string="Connection">
+                            <group>
+                                <group string="Store Credentials">
+                                    <field name="store_url"
+                                           placeholder="https://yourstore.com"/>
+                                    <field name="consumer_key" password="True"/>
+                                    <field name="consumer_secret" password="True"/>
+                                    <field name="webhook_secret" password="True"/>
+                                </group>
+                                <group string="Company Settings">
+                                    <field name="company_id"/>
+                                    <field name="warehouse_id"/>
+                                    <field name="pricelist_id"/>
+                                    <field name="lang_id"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Order Settings">
+                            <group>
+                                <group>
+                                    <field name="order_prefix"/>
+                                    <field name="auto_confirm_order"/>
+                                    <field name="auto_create_invoice"/>
+                                    <field name="auto_validate_invoice"
+                                           invisible="not auto_create_invoice"/>
+                                    <field name="import_order_status_ids"
+                                           widget="many2many_tags"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Product Settings">
+                            <group>
+                                <field name="default_product_type"/>
+                                <field name="sync_images"/>
+                                <field name="sync_stock"/>
+                                <field name="sync_price"/>
+                                <field name="create_products_in_odoo"/>
+                            </group>
+                        </page>
+                        <page string="Tax Mappings">
+                            <field name="tax_mapping_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="woo_tax_rate_id"/>
+                                    <field name="woo_rate"/>
+                                    <field name="odoo_tax_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Shipping Methods">
+                            <field name="shipping_mapping_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="woo_method_id"/>
+                                    <field name="odoo_delivery_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Sync Status">
+                            <group>
+                                <field name="last_order_sync" readonly="True"/>
+                                <field name="last_product_sync" readonly="True"/>
+                                <field name="last_stock_sync" readonly="True"/>
+                            </group>
+                            <group string="Cron Intervals">
+                                <field name="order_sync_interval"/>
+                                <field name="product_sync_interval"/>
+                                <field name="stock_sync_interval"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Instance List View (tree renamed to list in v17+) -->
+    <record id="view_woo_instance_list" model="ir.ui.view">
+        <field name="name">woo.instance.list</field>
+        <field name="model">woo.instance</field>
+        <field name="arch" type="xml">
+            <list string="WooCommerce Instances"
+                  decoration-success="state == 'connected'"
+                  decoration-danger="state == 'error'">
+                <field name="name"/>
+                <field name="store_url"/>
+                <field name="state"/>
+                <field name="total_orders_synced"/>
+                <field name="total_products_synced"/>
+                <field name="last_order_sync"/>
+                <field name="company_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Instance Action -->
+    <record id="action_woo_instance" model="ir.actions.act_window">
+        <field name="name">WooCommerce Instances</field>
+        <field name="res_model">woo.instance</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add your first WooCommerce store!
+            </p>
+            <p>Connect your WooCommerce store to Odoo and start syncing orders, products and inventory.</p>
+        </field>
+    </record>
+
+</odoo>

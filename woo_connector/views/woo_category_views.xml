@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_woo_category_list" model="ir.ui.view">
+        <field name="name">woo.product.category.list</field>
+        <field name="model">woo.product.category</field>
+        <field name="arch" type="xml">
+            <list string="WooCommerce Categories">
+                <field name="name"/>
+                <field name="woo_id"/>
+                <field name="slug"/>
+                <field name="parent_id"/>
+                <field name="odoo_category_id"/>
+                <field name="count"/>
+                <field name="instance_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_woo_category_form" model="ir.ui.view">
+        <field name="name">woo.product.category.form</field>
+        <field name="model">woo.product.category</field>
+        <field name="arch" type="xml">
+            <form string="WooCommerce Category">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="WooCommerce Info">
+                            <field name="woo_id"/>
+                            <field name="slug"/>
+                            <field name="parent_id"/>
+                            <field name="count"/>
+                            <field name="instance_id"/>
+                        </group>
+                        <group string="Odoo Mapping">
+                            <field name="odoo_category_id"/>
+                            <field name="image_url" widget="url"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="True"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_woo_category_search" model="ir.ui.view">
+        <field name="name">woo.product.category.search</field>
+        <field name="model">woo.product.category</field>
+        <field name="arch" type="xml">
+            <search string="Search Categories">
+                <field name="name"/>
+                <field name="woo_id"/>
+                <field name="instance_id"/>
+                <separator/>
+                <filter string="Has Odoo Category" name="has_odoo_cat"
+                        domain="[('odoo_category_id', '!=', False)]"/>
+                <filter string="No Odoo Category" name="no_odoo_cat"
+                        domain="[('odoo_category_id', '=', False)]"/>
+                <separator/>
+                <filter string="Group by Instance" name="group_instance"
+                        context="{'group_by': 'instance_id'}"/>
+                <filter string="Group by Parent" name="group_parent"
+                        context="{'group_by': 'parent_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_woo_categories" model="ir.actions.act_window">
+        <field name="name">Product Categories</field>
+        <field name="res_model">woo.product.category</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No WooCommerce categories yet.
+            </p>
+            <p>Use Manual Sync to import categories from WooCommerce.</p>
+        </field>
+    </record>
+
+</odoo>

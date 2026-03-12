@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_woo_order_list" model="ir.ui.view">
+        <field name="name">woo.sale.order.list</field>
+        <field name="model">woo.sale.order</field>
+        <field name="arch" type="xml">
+            <list string="WooCommerce Orders">
+                <field name="woo_order_id"/>
+                <field name="woo_order_number"/>
+                <field name="instance_id"/>
+                <field name="woo_order_status"/>
+                <field name="woo_total"/>
+                <field name="woo_currency"/>
+                <field name="payment_method_title"/>
+                <field name="sale_order_id"/>
+                <field name="synced_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_woo_order_form" model="ir.ui.view">
+        <field name="name">woo.sale.order.form</field>
+        <field name="model">woo.sale.order</field>
+        <field name="arch" type="xml">
+            <form string="WooCommerce Order">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="woo_order_id"/>
+                            <field name="woo_order_number"/>
+                            <field name="instance_id"/>
+                            <field name="woo_order_status"/>
+                            <field name="sale_order_id"/>
+                        </group>
+                        <group>
+                            <field name="woo_total"/>
+                            <field name="woo_discount_total"/>
+                            <field name="woo_shipping_total"/>
+                            <field name="woo_tax_total"/>
+                            <field name="woo_currency"/>
+                            <field name="payment_method_title"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_woo_orders" model="ir.actions.act_window">
+        <field name="name">WooCommerce Orders</field>
+        <field name="res_model">woo.sale.order</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Extend Sale Order Form -->
+    <record id="view_sale_order_woo_form" model="ir.ui.view">
+        <field name="name">sale.order.woo.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group" position="before">
+                <group invisible="not is_woo_order">
+                    <group string="WooCommerce Info">
+                        <field name="is_woo_order" invisible="True"/>
+                        <field name="woo_order_number"/>
+                        <field name="woo_order_status"/>
+                        <field name="woo_payment_method"/>
+                        <field name="woo_coupon_code"/>
+                        <field name="woo_instance_id"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

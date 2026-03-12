@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_woo_root"
+              name="WooCommerce"
+              sequence="90"
+              web_icon="woo_connector,static/description/icon.png"/>
+
+    <menuitem id="menu_woo_dashboard"
+              name="Dashboard"
+              parent="menu_woo_root"
+              action="action_woo_dashboard"
+              sequence="5"/>
+
+    <menuitem id="menu_woo_config"
+              name="Configuration"
+              parent="menu_woo_root"
+              sequence="10"/>
+
+    <menuitem id="menu_woo_instances"
+              name="Instances"
+              parent="menu_woo_config"
+              action="action_woo_instance"
+              sequence="10"/>
+
+    <menuitem id="menu_woo_catalog"
+              name="Products"
+              parent="menu_woo_root"
+              sequence="20"/>
+
+    <menuitem id="menu_woo_products"
+              name="WooCommerce Products"
+              parent="menu_woo_catalog"
+              action="action_woo_products"
+              sequence="10"/>
+
+    <menuitem id="menu_woo_categories"
+              name="Product Categories"
+              parent="menu_woo_catalog"
+              action="action_woo_categories"
+              sequence="20"/>
+
+    <menuitem id="menu_woo_sales"
+              name="Orders"
+              parent="menu_woo_root"
+              sequence="30"/>
+
+    <menuitem id="menu_woo_orders"
+              name="WooCommerce Orders"
+              parent="menu_woo_sales"
+              action="action_woo_orders"
+              sequence="10"/>
+
+    <menuitem id="menu_woo_customers"
+              name="Customers"
+              parent="menu_woo_sales"
+              action="action_woo_customers"
+              sequence="20"/>
+
+    <menuitem id="menu_woo_coupons"
+              name="Coupons"
+              parent="menu_woo_sales"
+              action="action_woo_coupons"
+              sequence="30"/>
+
+    <menuitem id="menu_woo_monitoring"
+              name="Monitoring"
+              parent="menu_woo_root"
+              sequence="90"/>
+
+    <menuitem id="menu_woo_logs"
+              name="Sync Logs"
+              parent="menu_woo_monitoring"
+              action="action_woo_logs"
+              sequence="10"/>
+
+    <menuitem id="menu_woo_queue"
+              name="Sync Queue"
+              parent="menu_woo_monitoring"
+              action="action_woo_queue"
+              sequence="20"/>
+
+    <menuitem id="menu_woo_sync_manual"
+              name="Manual Sync"
+              parent="menu_woo_monitoring"
+              action="action_woo_sync_wizard"
+              sequence="30"/>
+
+</odoo>

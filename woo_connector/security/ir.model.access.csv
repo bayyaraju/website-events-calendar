@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_woo_instance_manager,woo.instance.manager,model_woo_instance,base.group_system,1,1,1,1
+access_woo_instance_user,woo.instance.user,model_woo_instance,base.group_user,1,0,0,0
+access_woo_product_template_manager,woo.product.template.manager,model_woo_product_template,base.group_system,1,1,1,1
+access_woo_product_template_user,woo.product.template.user,model_woo_product_template,base.group_user,1,0,0,0
+access_woo_product_variant,woo.product.variant,model_woo_product_variant,base.group_user,1,1,1,1
+access_woo_product_category,woo.product.category,model_woo_product_category,base.group_user,1,1,1,1
+access_woo_sale_order,woo.sale.order,model_woo_sale_order,base.group_user,1,1,1,1
+access_woo_order_status,woo.order.status,model_woo_order_status,base.group_user,1,1,1,1
+access_woo_log_manager,woo.log.manager,model_woo_log,base.group_system,1,1,1,1
+access_woo_log_user,woo.log.user,model_woo_log,base.group_user,1,0,0,0
+access_woo_queue_line,woo.queue.line,model_woo_queue_line,base.group_user,1,1,1,1
+access_woo_tax,woo.tax,model_woo_tax,base.group_user,1,1,1,1
+access_woo_shipping_method,woo.shipping.method,model_woo_shipping_method,base.group_user,1,1,1,1
+access_woo_coupon,woo.coupon,model_woo_coupon,base.group_user,1,1,1,1
+access_woo_sync_wizard,woo.sync.wizard,model_woo_sync_wizard,base.group_user,1,1,1,1
+access_woo_dashboard,woo.dashboard,model_woo_dashboard,base.group_user,1,0,0,0

@@ -1,0 +1,849 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+<t t-name="woo_connector.Dashboard" owl="1">
+
+<div class="woo-dashboard">
+<div class="woo-dash-shell">
+
+  <!-- === HEADER === -->
+  <header class="woo-header">
+    <div class="woo-header-brand">
+      <div class="woo-header-icon"><i class="fa fa-wordpress"/></div>
+      <div>
+        <div class="woo-header-title">WooCommerce Analytics</div>
+        <div class="woo-header-sub" t-if="state.data &amp;&amp; state.data.last_syncs &amp;&amp; state.data.last_syncs.instance_name">
+          <span t-esc="state.data.last_syncs.instance_name"/>
+          <span t-if="state.data.last_syncs.instance_state == 'connected'" class="woo-badge-connected">Connected</span>
+          <span t-else="" class="woo-badge-disconnected"><t t-esc="state.data.last_syncs.instance_state || 'Disconnected'"/></span>
+        </div>
+        <div class="woo-header-sub" t-if="!state.data || !state.data.last_syncs">
+          <span style="color:#484f58;">Loading instance...</span>
+        </div>
+      </div>
+    </div>
+    <div class="woo-header-controls">
+      <select class="woo-select" t-on-change="onInstanceChange">
+        <option value="">All Instances</option>
+        <t t-foreach="state.instances" t-as="inst" t-key="inst.id">
+          <option t-att-value="inst.id" t-att-selected="state.selectedInstance == inst.id">
+            <t t-esc="inst.name"/>
+          </option>
+        </t>
+      </select>
+      <button class="woo-btn woo-btn-ghost" t-on-click="onRefresh"><i class="fa fa-refresh"/> Refresh</button>
+      <button class="woo-btn woo-btn-primary" t-on-click="onSyncNow"><i class="fa fa-cloud-upload"/> Sync Now</button>
+      <button class="woo-btn woo-btn-config" t-on-click="openWooConfig"><i class="fa fa-cog"/> Configuration</button>
+    </div>
+  </header>
+
+  <!-- === KPI STRIP === -->
+  <div class="woo-kpi-strip" t-if="state.data">
+    <div class="woo-kpi woo-animate woo-animate-d1">
+      <div class="woo-kpi-accent" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);"/>
+      <div class="woo-kpi-label">Total Revenue</div>
+      <div class="woo-kpi-value" style="color:#a78bfa;"><t t-esc="formatCurrency(state.data.kpis.total_revenue)"/></div>
+      <div class="woo-kpi-sub">Avg order: <t t-esc="formatCurrency(state.data.kpis.avg_order_value)"/></div>
+      <div class="woo-kpi-icon" style="background:rgba(167,139,250,0.12);color:#a78bfa;"><i class="fa fa-line-chart"/></div>
+    </div>
+    <div class="woo-kpi woo-animate woo-animate-d2">
+      <div class="woo-kpi-accent" style="background:linear-gradient(180deg,#60a5fa,#2563eb);"/>
+      <div class="woo-kpi-label">Total Orders</div>
+      <div class="woo-kpi-value" style="color:#60a5fa;"><t t-esc="formatNumber(state.data.kpis.total_orders)"/></div>
+      <div class="woo-kpi-sub">
+        <t t-foreach="state.data.orders_by_status.slice(0,2)" t-as="s" t-key="s.status">
+          <t t-esc="s.label"/>: <t t-esc="s.value"/><t t-if="!s_last"> . </t>
+        </t>
+      </div>
+      <div class="woo-kpi-icon" style="background:rgba(96,165,250,0.12);color:#60a5fa;"><i class="fa fa-shopping-bag"/></div>
+    </div>
+    <div class="woo-kpi woo-animate woo-animate-d3">
+      <div class="woo-kpi-accent" style="background:linear-gradient(180deg,#34d399,#059669);"/>
+      <div class="woo-kpi-label">Products</div>
+      <div class="woo-kpi-value" style="color:#34d399;"><t t-esc="formatNumber(state.data.kpis.total_products)"/></div>
+      <div class="woo-kpi-sub">In stock: <t t-esc="state.data.stock_status.instock || 0"/></div>
+      <div class="woo-kpi-icon" style="background:rgba(52,211,153,0.12);color:#34d399;"><i class="fa fa-th-large"/></div>
+    </div>
+    <div class="woo-kpi woo-animate woo-animate-d4">
+      <div class="woo-kpi-accent" style="background:linear-gradient(180deg,#fbbf24,#d97706);"/>
+      <div class="woo-kpi-label">Customers</div>
+      <div class="woo-kpi-value" style="color:#fbbf24;"><t t-esc="formatNumber(state.data.kpis.total_customers)"/></div>
+      <div class="woo-kpi-sub">Coupons: <t t-esc="state.data.kpis.total_coupons"/></div>
+      <div class="woo-kpi-icon" style="background:rgba(251,191,36,0.12);color:#fbbf24;"><i class="fa fa-users"/></div>
+    </div>
+  </div>
+
+  <!-- === TABS === -->
+  <nav class="woo-tabs">
+    <button class="woo-tab" t-att-class="{'active': state.activeTab == 'overview'}"  t-on-click="setTabOverview"><i class="fa fa-dashboard"/> Overview</button>
+    <button class="woo-tab" t-att-class="{'active': state.activeTab == 'orders'}"   t-on-click="setTabOrders"><i class="fa fa-list-alt"/> Orders</button>
+    <button class="woo-tab" t-att-class="{'active': state.activeTab == 'products'}" t-on-click="setTabProducts"><i class="fa fa-th"/> Products</button>
+    <button class="woo-tab" t-att-class="{'active': state.activeTab == 'sync'}"     t-on-click="setTabSync"><i class="fa fa-heartbeat"/> Sync Health</button>
+    <div class="woo-tab-spacer"/>
+    <button class="woo-tab" t-att-class="{'active': state.activeTab == 'coupons'}"  t-on-click="setTabCoupons" style="color:#34d399;"><i class="fa fa-tag"/> Coupons</button>
+    <button class="woo-tab" t-att-class="{'active': state.activeTab == 'config'}"   t-on-click="setTabConfig"  style="color:#fbbf24;"><i class="fa fa-cog"/> Configuration</button>
+  </nav>
+
+  <!-- === CONTENT === -->
+  <div class="woo-content">
+
+    <!-- Loading -->
+    <div t-if="state.loading" class="woo-loading">
+      <div class="woo-spinner"/>
+      <div class="woo-loading-text">Loading analytics...</div>
+    </div>
+
+    <!-- Error -->
+    <div t-elif="state.error" class="woo-alert woo-alert-danger">
+      <i class="fa fa-exclamation-triangle"/> <t t-esc="state.error"/>
+    </div>
+
+    <!-- == OVERVIEW == -->
+    <div t-elif="state.activeTab == 'overview'" class="woo-animate">
+      <div class="woo-grid-8-4 mb-18">
+
+        <div class="woo-card">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-area-chart"/> Revenue Trend (12 Months)</div>
+            <span class="woo-chip"><i class="fa fa-calendar"/> Monthly</span>
+          </div>
+          <div class="woo-card-body" style="padding-top:10px;">
+            <canvas id="woo-revenue-chart" style="width:100%;display:block;"/>
+          </div>
+        </div>
+
+        <div class="woo-card">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-pie-chart"/> Order Status</div>
+          </div>
+          <div class="woo-card-body" style="padding-top:10px;">
+            <div style="display:flex;justify-content:center;margin-bottom:12px;">
+              <canvas id="woo-status-donut" style="width:140px;height:140px;display:block;"/>
+            </div>
+            <t t-foreach="state.data.orders_by_status" t-as="s" t-key="s.status">
+              <div class="woo-status-row">
+                <div class="woo-status-row-label">
+                  <div class="woo-status-dot" t-attf-style="background:#{statusDot(s.status)};"/>
+                  <span><t t-esc="s.label"/></span>
+                </div>
+                <span class="woo-status-count"><t t-esc="s.value"/></span>
+              </div>
+            </t>
+          </div>
+        </div>
+      </div>
+
+      <!-- Last Sync Times -->
+      <div t-if="state.data.last_syncs &amp;&amp; state.data.last_syncs.orders" class="woo-animate woo-animate-d2">
+        <div class="woo-section-label">Last Sync Times</div>
+        <div class="woo-grid-3 mb-18">
+          <div class="woo-sync-time">
+            <div class="woo-sync-time-label"><i class="fa fa-shopping-cart"/> Orders</div>
+            <div class="woo-sync-time-value"><t t-esc="state.data.last_syncs.orders"/></div>
+          </div>
+          <div class="woo-sync-time">
+            <div class="woo-sync-time-label"><i class="fa fa-th-large"/> Products</div>
+            <div class="woo-sync-time-value"><t t-esc="state.data.last_syncs.products"/></div>
+          </div>
+          <div class="woo-sync-time">
+            <div class="woo-sync-time-label"><i class="fa fa-cubes"/> Stock</div>
+            <div class="woo-sync-time-value"><t t-esc="state.data.last_syncs.stock"/></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="woo-grid-2">
+        <div class="woo-card woo-animate woo-animate-d3">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-cubes"/> Stock Overview</div>
+          </div>
+          <div class="woo-card-body" style="padding-top:10px;display:flex;gap:20px;align-items:center;">
+            <canvas id="woo-stock-mini-donut" style="width:100px;height:100px;flex-shrink:0;display:block;"/>
+            <div style="flex:1;">
+              <div class="woo-status-row">
+                <div class="woo-status-row-label"><div class="woo-status-dot" style="background:#34d399;"/> In Stock</div>
+                <span class="woo-status-count" style="color:#34d399;"><t t-esc="state.data.stock_status.instock || 0"/></span>
+              </div>
+              <div class="woo-status-row">
+                <div class="woo-status-row-label"><div class="woo-status-dot" style="background:#f87171;"/> Out of Stock</div>
+                <span class="woo-status-count" style="color:#f87171;"><t t-esc="state.data.stock_status.outofstock || 0"/></span>
+              </div>
+              <div class="woo-status-row">
+                <div class="woo-status-row-label"><div class="woo-status-dot" style="background:#fbbf24;"/> Backorder</div>
+                <span class="woo-status-count" style="color:#fbbf24;"><t t-esc="state.data.stock_status.onbackorder || 0"/></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="woo-card woo-animate woo-animate-d4">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-credit-card"/> Top Payment Methods</div>
+          </div>
+          <div class="woo-card-body" style="padding-top:10px;">
+            <t t-foreach="state.data.payment_methods.slice(0,5)" t-as="pm" t-key="pm.method">
+              <div class="woo-pm-row">
+                <div class="woo-pm-meta">
+                  <span class="woo-pm-name"><t t-esc="pm.method"/></span>
+                  <span class="woo-pm-count"><t t-esc="pm.count"/></span>
+                </div>
+                <div class="woo-progress">
+                  <div class="woo-progress-bar" t-attf-style="background:#60a5fa;width:#{pmPct(pm.count)}%;"/>
+                </div>
+              </div>
+            </t>
+            <p t-if="state.data.payment_methods.length == 0" style="color:#484f58;font-size:13px;">No payment data yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- == ORDERS == -->
+    <div t-elif="state.activeTab == 'orders'" class="woo-animate">
+      <div class="woo-grid-8-4 mb-18">
+        <div class="woo-card">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-bar-chart"/> Monthly Order Volume</div>
+          </div>
+          <div class="woo-card-body" style="padding-top:10px;">
+            <canvas id="woo-orders-chart" style="width:100%;display:block;"/>
+          </div>
+        </div>
+        <div class="woo-card">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-credit-card"/> Payment Methods</div>
+          </div>
+          <div class="woo-card-body" style="padding-top:10px;">
+            <t t-foreach="state.data.payment_methods.slice(0,8)" t-as="pm" t-key="pm.method">
+              <div class="woo-pm-row">
+                <div class="woo-pm-meta">
+                  <span class="woo-pm-name"><t t-esc="pm.method"/></span>
+                  <span class="woo-pm-count"><t t-esc="pm.count"/></span>
+                </div>
+                <div class="woo-progress">
+                  <div class="woo-progress-bar" t-attf-style="background:#60a5fa;width:#{pmPct(pm.count)}%;"/>
+                </div>
+              </div>
+            </t>
+            <p t-if="state.data.payment_methods.length == 0" style="color:#484f58;font-size:13px;">No data yet.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="woo-card">
+        <div class="woo-card-header">
+          <div class="woo-card-title"><i class="fa fa-list-ul"/> Recent Orders</div>
+          <span class="woo-chip"><t t-esc="state.data.recent_orders.length"/> orders</span>
+        </div>
+        <div class="woo-card-body-flush">
+          <div class="woo-table-scroll">
+            <table class="woo-table">
+              <thead>
+                <tr>
+                  <th>Order #</th><th>Status</th><th>Total</th><th>Payment</th><th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr t-foreach="state.data.recent_orders" t-as="o" t-key="o.woo_id">
+                  <td class="bold mono" style="color:#a78bfa;">#<t t-esc="o.number"/></td>
+                  <td><span class="woo-status" t-att-class="statusClass(o.status)"><t t-esc="o.status"/></span></td>
+                  <td class="bold mono"><t t-esc="o.currency"/> <t t-esc="toFixed2(o.total)"/></td>
+                  <td class="dim"><t t-esc="o.payment || '--'"/></td>
+                  <td class="dim mono"><t t-esc="o.date"/></td>
+                </tr>
+                <tr t-if="state.data.recent_orders.length == 0">
+                  <td colspan="5" style="text-align:center;color:#484f58;padding:32px;">No orders yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- == PRODUCTS == -->
+    <div t-elif="state.activeTab == 'products'" class="woo-animate">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="woo-section-label" style="margin:0;"><t t-esc="state.data.top_products.length"/> Products</div>
+          <span class="woo-chip" style="color:#34d399;background:rgba(52,211,153,0.08);">
+            <i class="fa fa-check-circle"/> <t t-esc="state.data.stock_status.instock || 0"/> In Stock
+          </span>
+          <span class="woo-chip" style="color:#f87171;background:rgba(248,113,113,0.08);">
+            <i class="fa fa-times-circle"/> <t t-esc="state.data.stock_status.outofstock || 0"/> Out of Stock
+          </span>
+        </div>
+        <div class="woo-view-toggle">
+          <button class="woo-view-btn" t-att-class="{'active': state.productView == 'kanban'}" t-on-click="setViewKanban"><i class="fa fa-th"/></button>
+          <button class="woo-view-btn" t-att-class="{'active': state.productView == 'table'}"  t-on-click="setViewTable"><i class="fa fa-list"/></button>
+        </div>
+      </div>
+
+      <!-- KANBAN -->
+      <div t-if="state.productView == 'kanban'" class="woo-card" style="overflow:hidden;">
+        <div class="woo-kanban">
+          <t t-foreach="state.data.top_products" t-as="p" t-key="p.woo_id || p.name">
+            <div class="woo-product-card">
+              <div class="woo-product-sync-indicator" t-att-class="syncClass(p.sync_state)"
+                   style="border:1px solid rgba(255,255,255,0.1);">
+                <i t-att-class="p.sync_state == 'synced' ? 'fa fa-check' : p.sync_state == 'error' ? 'fa fa-times' : 'fa fa-clock-o'"/>
+              </div>
+              <t t-if="p.image_url">
+                <img class="woo-product-img" t-att-src="p.image_url" t-att-alt="p.name"/>
+              </t>
+              <t t-else="">
+                <div class="woo-product-img-placeholder"><i class="fa fa-image"/></div>
+              </t>
+              <div class="woo-product-info">
+                <div class="woo-product-name" t-att-title="p.name"><t t-esc="p.name"/></div>
+                <div class="woo-product-sku" t-if="p.sku">SKU: <t t-esc="p.sku"/></div>
+                <div class="woo-product-price-row">
+                  <t t-if="p.sale_price &amp;&amp; p.sale_price > 0">
+                    <span class="woo-product-old"><t t-esc="formatCurrency(p.price)"/></span>
+                    <span class="woo-product-sale"><t t-esc="formatCurrency(p.sale_price)"/></span>
+                  </t>
+                  <t t-else="">
+                    <span class="woo-product-price"><t t-esc="formatCurrency(p.price)"/></span>
+                  </t>
+                </div>
+                <div class="woo-product-meta">
+                  <span class="woo-product-stock-badge" t-att-class="stockClass(p.stock_status)" style="font-size:10px;">
+                    <t t-esc="p.stock"/> units
+                  </span>
+                  <span class="woo-product-type-badge"
+                        style="background:rgba(167,139,250,0.12);color:#a78bfa;border:1px solid rgba(167,139,250,0.2);">
+                    <t t-esc="p.type"/>
+                  </span>
+                </div>
+                <div t-if="p.categories" style="margin-top:6px;font-size:10px;color:#484f58;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                  <i class="fa fa-tag" style="margin-right:3px;"/><t t-esc="p.categories"/>
+                </div>
+              </div>
+            </div>
+          </t>
+          <div t-if="state.data.top_products.length == 0"
+               style="grid-column:1/-1;text-align:center;padding:40px;color:#484f58;">
+            No products synced yet.
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <div t-if="state.productView == 'table'" class="woo-card">
+        <div class="woo-card-body-flush">
+          <div class="woo-table-scroll">
+            <table class="woo-table">
+              <thead>
+                <tr>
+                  <th style="width:42px;"/>
+                  <th>Product</th><th>SKU</th><th>Type</th>
+                  <th>Price</th><th>Sale</th><th>Stock</th>
+                  <th>Status</th><th>Sync</th><th>Last Synced</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr t-foreach="state.data.top_products" t-as="p" t-key="p.woo_id || p.name">
+                  <td style="padding:8px 12px;">
+                    <t t-if="p.image_url">
+                      <img t-att-src="p.image_url" t-att-alt="p.name"
+                           style="width:30px;height:30px;object-fit:cover;border-radius:6px;display:block;"/>
+                    </t>
+                    <t t-else="">
+                      <div style="width:30px;height:30px;border-radius:6px;background:rgba(167,139,250,0.1);display:flex;align-items:center;justify-content:center;">
+                        <i class="fa fa-image" style="font-size:11px;color:#484f58;"/>
+                      </div>
+                    </t>
+                  </td>
+                  <td class="bold" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" t-att-title="p.name">
+                    <t t-esc="p.name"/>
+                    <div t-if="p.categories" style="font-size:10px;color:#484f58;font-weight:400;margin-top:2px;">
+                      <i class="fa fa-tag"/> <t t-esc="p.categories"/>
+                    </div>
+                  </td>
+                  <td class="dim mono"><t t-esc="p.sku || '--'"/></td>
+                  <td>
+                    <span style="font-size:10px;font-weight:700;text-transform:uppercase;padding:2px 7px;border-radius:4px;background:rgba(167,139,250,0.12);color:#a78bfa;border:1px solid rgba(167,139,250,0.2);">
+                      <t t-esc="p.type"/>
+                    </span>
+                  </td>
+                  <td class="mono bold" style="color:#a78bfa;"><t t-esc="formatCurrency(p.price)"/></td>
+                  <td class="mono" style="color:#34d399;">
+                    <t t-if="p.sale_price &amp;&amp; p.sale_price > 0"><t t-esc="formatCurrency(p.sale_price)"/></t>
+                    <t t-else="">--</t>
+                  </td>
+                  <td><span class="woo-status" t-att-class="stockClass(p.stock_status)"><t t-esc="p.stock"/></span></td>
+                  <td><span class="woo-status" t-att-class="statusClass(p.status)"><t t-esc="p.status"/></span></td>
+                  <td><span class="woo-status" t-att-class="syncClass(p.sync_state)"><t t-esc="p.sync_state"/></span></td>
+                  <td class="dim mono" style="white-space:nowrap;"><t t-esc="p.last_synced || '--'"/></td>
+                </tr>
+                <tr t-if="state.data.top_products.length == 0">
+                  <td colspan="10" style="text-align:center;color:#484f58;padding:32px;">No products yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="woo-card" style="margin-top:18px;">
+        <div class="woo-card-header">
+          <div class="woo-card-title"><i class="fa fa-pie-chart"/> Stock Distribution</div>
+        </div>
+        <div class="woo-card-body" style="display:flex;align-items:center;gap:24px;padding-top:10px;">
+          <canvas id="woo-stock-donut" style="width:140px;height:140px;flex-shrink:0;display:block;"/>
+          <div style="flex:1;">
+            <div class="woo-status-row">
+              <div class="woo-status-row-label"><div class="woo-status-dot" style="background:#34d399;"/> In Stock</div>
+              <span class="woo-status-count" style="color:#34d399;"><t t-esc="state.data.stock_status.instock || 0"/></span>
+            </div>
+            <div class="woo-status-row">
+              <div class="woo-status-row-label"><div class="woo-status-dot" style="background:#f87171;"/> Out of Stock</div>
+              <span class="woo-status-count" style="color:#f87171;"><t t-esc="state.data.stock_status.outofstock || 0"/></span>
+            </div>
+            <div class="woo-status-row">
+              <div class="woo-status-row-label"><div class="woo-status-dot" style="background:#fbbf24;"/> On Backorder</div>
+              <span class="woo-status-count" style="color:#fbbf24;"><t t-esc="state.data.stock_status.onbackorder || 0"/></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- == SYNC HEALTH == -->
+    <div t-elif="state.activeTab == 'sync'" class="woo-animate">
+      <t t-set="ll" t-value="state.data.log_levels"/>
+      <t t-set="tl" t-value="totalLogs()"/>
+      <t t-set="qs" t-value="state.data.queue_summary"/>
+
+      <div class="woo-grid-2 mb-18">
+        <div class="woo-card">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-heartbeat"/> Sync Logs (Last 7 Days)</div>
+          </div>
+          <div class="woo-card-body" style="padding-top:14px;">
+            <div class="woo-log-row">
+              <div class="woo-log-icon" style="background:rgba(52,211,153,0.12);color:#34d399;"><i class="fa fa-check-circle"/></div>
+              <div class="woo-log-body">
+                <div class="woo-log-meta">
+                  <span class="woo-log-name" style="color:#34d399;">Success</span>
+                  <span class="woo-log-count" style="color:#34d399;"><t t-esc="ll.success || 0"/></span>
+                </div>
+                <div class="woo-progress">
+                  <div class="woo-progress-bar" t-attf-style="background:#34d399;width:#{logPct(ll.success || 0, tl)}%;"/>
+                </div>
+              </div>
+            </div>
+            <div class="woo-log-row">
+              <div class="woo-log-icon" style="background:rgba(96,165,250,0.12);color:#60a5fa;"><i class="fa fa-info-circle"/></div>
+              <div class="woo-log-body">
+                <div class="woo-log-meta">
+                  <span class="woo-log-name" style="color:#60a5fa;">Info</span>
+                  <span class="woo-log-count" style="color:#60a5fa;"><t t-esc="ll.info || 0"/></span>
+                </div>
+                <div class="woo-progress">
+                  <div class="woo-progress-bar" t-attf-style="background:#60a5fa;width:#{logPct(ll.info || 0, tl)}%;"/>
+                </div>
+              </div>
+            </div>
+            <div class="woo-log-row">
+              <div class="woo-log-icon" style="background:rgba(251,191,36,0.12);color:#fbbf24;"><i class="fa fa-exclamation-triangle"/></div>
+              <div class="woo-log-body">
+                <div class="woo-log-meta">
+                  <span class="woo-log-name" style="color:#fbbf24;">Warning</span>
+                  <span class="woo-log-count" style="color:#fbbf24;"><t t-esc="ll.warning || 0"/></span>
+                </div>
+                <div class="woo-progress">
+                  <div class="woo-progress-bar" t-attf-style="background:#fbbf24;width:#{logPct(ll.warning || 0, tl)}%;"/>
+                </div>
+              </div>
+            </div>
+            <div class="woo-log-row">
+              <div class="woo-log-icon" style="background:rgba(248,113,113,0.12);color:#f87171;"><i class="fa fa-times-circle"/></div>
+              <div class="woo-log-body">
+                <div class="woo-log-meta">
+                  <span class="woo-log-name" style="color:#f87171;">Error</span>
+                  <span class="woo-log-count" style="color:#f87171;"><t t-esc="ll.error || 0"/></span>
+                </div>
+                <div class="woo-progress">
+                  <div class="woo-progress-bar" t-attf-style="background:#f87171;width:#{logPct(ll.error || 0, tl)}%;"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="woo-card">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-tasks"/> Queue Status</div>
+          </div>
+          <div class="woo-card-body" style="padding-top:14px;">
+            <div class="woo-queue-item">
+              <div class="woo-queue-label"><div class="woo-status-dot" style="background:#34d399;"/> Completed</div>
+              <span class="woo-queue-pill" style="background:rgba(52,211,153,0.12);color:#34d399;"><t t-esc="qs.done || 0"/></span>
+            </div>
+            <div class="woo-queue-item">
+              <div class="woo-queue-label"><div class="woo-status-dot" style="background:#60a5fa;"/> Pending</div>
+              <span class="woo-queue-pill" style="background:rgba(96,165,250,0.12);color:#60a5fa;"><t t-esc="qs.draft || 0"/></span>
+            </div>
+            <div class="woo-queue-item">
+              <div class="woo-queue-label"><div class="woo-status-dot" style="background:#fbbf24;"/> Processing</div>
+              <span class="woo-queue-pill" style="background:rgba(251,191,36,0.12);color:#fbbf24;"><t t-esc="qs.processing || 0"/></span>
+            </div>
+            <div class="woo-queue-item">
+              <div class="woo-queue-label"><div class="woo-status-dot" style="background:#f87171;"/> Failed</div>
+              <span class="woo-queue-pill" style="background:rgba(248,113,113,0.12);color:#f87171;"><t t-esc="qs.failed || 0"/></span>
+            </div>
+            <hr class="woo-divider"/>
+            <div style="display:flex;justify-content:space-between;font-size:13px;">
+              <span style="color:#484f58;">Total queue items</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-weight:700;color:#f0f6fc;">
+                <t t-esc="totalQueue()"/>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div t-if="state.data.last_syncs &amp;&amp; state.data.last_syncs.orders" class="woo-card">
+        <div class="woo-card-header">
+          <div class="woo-card-title"><i class="fa fa-clock-o"/> Sync Timeline</div>
+        </div>
+        <div class="woo-card-body" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding-top:14px;">
+          <div class="woo-sync-time">
+            <div class="woo-sync-time-label"><i class="fa fa-shopping-cart"/> Orders Sync</div>
+            <div class="woo-sync-time-value"><t t-esc="state.data.last_syncs.orders"/></div>
+          </div>
+          <div class="woo-sync-time">
+            <div class="woo-sync-time-label"><i class="fa fa-th-large"/> Products Sync</div>
+            <div class="woo-sync-time-value"><t t-esc="state.data.last_syncs.products"/></div>
+          </div>
+          <div class="woo-sync-time">
+            <div class="woo-sync-time-label"><i class="fa fa-cubes"/> Stock Sync</div>
+            <div class="woo-sync-time-value"><t t-esc="state.data.last_syncs.stock"/></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- == COUPONS == -->
+    <div t-elif="state.activeTab == 'coupons'" class="woo-animate">
+      <!-- Stats row -->
+      <div class="woo-kpi-strip" t-if="state.data &amp;&amp; state.data.coupon_stats" style="border-radius:12px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.08);">
+        <div class="woo-kpi">
+          <div class="woo-kpi-accent" style="background:linear-gradient(180deg,#34d399,#059669);"/>
+          <div class="woo-kpi-label">Total Coupons</div>
+          <div class="woo-kpi-value" style="color:#34d399;"><t t-esc="state.data.coupon_stats.total"/></div>
+          <div class="woo-kpi-sub">All instances</div>
+          <div class="woo-kpi-icon" style="background:rgba(52,211,153,0.12);color:#34d399;"><i class="fa fa-tag"/></div>
+        </div>
+        <div class="woo-kpi">
+          <div class="woo-kpi-accent" style="background:linear-gradient(180deg,#60a5fa,#2563eb);"/>
+          <div class="woo-kpi-label">Active</div>
+          <div class="woo-kpi-value" style="color:#60a5fa;"><t t-esc="state.data.coupon_stats.active"/></div>
+          <div class="woo-kpi-sub">Ready to use</div>
+          <div class="woo-kpi-icon" style="background:rgba(96,165,250,0.12);color:#60a5fa;"><i class="fa fa-check-circle"/></div>
+        </div>
+        <div class="woo-kpi">
+          <div class="woo-kpi-accent" style="background:linear-gradient(180deg,#f87171,#dc2626);"/>
+          <div class="woo-kpi-label">Expired / Used Up</div>
+          <div class="woo-kpi-value" style="color:#f87171;"><t t-esc="state.data.coupon_stats.expired"/></div>
+          <div class="woo-kpi-sub">No longer valid</div>
+          <div class="woo-kpi-icon" style="background:rgba(248,113,113,0.12);color:#f87171;"><i class="fa fa-times-circle"/></div>
+        </div>
+        <div class="woo-kpi">
+          <div class="woo-kpi-accent" style="background:linear-gradient(180deg,#fbbf24,#d97706);"/>
+          <div class="woo-kpi-label">Total Uses</div>
+          <div class="woo-kpi-value" style="color:#fbbf24;"><t t-esc="formatNumber(state.data.coupon_stats.total_usage)"/></div>
+          <div class="woo-kpi-sub">Across all coupons</div>
+          <div class="woo-kpi-icon" style="background:rgba(251,191,36,0.12);color:#fbbf24;"><i class="fa fa-bar-chart"/></div>
+        </div>
+      </div>
+
+      <!-- Breakdown + Filter -->
+      <div class="woo-grid-2 mb-18" t-if="state.data &amp;&amp; state.data.coupon_stats">
+        <!-- Discount type breakdown -->
+        <div class="woo-card">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-pie-chart"/> Discount Types</div>
+          </div>
+          <div class="woo-card-body" style="padding-top:14px;">
+            <div class="woo-status-row">
+              <div class="woo-status-row-label">
+                <div class="woo-status-dot" style="background:#a78bfa;"/>
+                Percentage Off
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;flex:1;margin-left:12px;">
+                <div class="woo-progress" style="flex:1;">
+                  <div class="woo-progress-bar" t-attf-style="background:#a78bfa;width:#{pmPct(state.data.coupon_stats.by_type.percent || 0)}%;"/>
+                </div>
+                <span style="font-family:'Courier New',monospace;font-weight:700;color:#a78bfa;min-width:24px;text-align:right;">
+                  <t t-esc="state.data.coupon_stats.by_type.percent || 0"/>
+                </span>
+              </div>
+            </div>
+            <div class="woo-status-row">
+              <div class="woo-status-row-label">
+                <div class="woo-status-dot" style="background:#60a5fa;"/>
+                Fixed Cart Discount
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;flex:1;margin-left:12px;">
+                <div class="woo-progress" style="flex:1;">
+                  <div class="woo-progress-bar" t-attf-style="background:#60a5fa;width:#{pmPct(state.data.coupon_stats.by_type.fixed_cart || 0)}%;"/>
+                </div>
+                <span style="font-family:'Courier New',monospace;font-weight:700;color:#60a5fa;min-width:24px;text-align:right;">
+                  <t t-esc="state.data.coupon_stats.by_type.fixed_cart || 0"/>
+                </span>
+              </div>
+            </div>
+            <div class="woo-status-row">
+              <div class="woo-status-row-label">
+                <div class="woo-status-dot" style="background:#34d399;"/>
+                Fixed Product Discount
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;flex:1;margin-left:12px;">
+                <div class="woo-progress" style="flex:1;">
+                  <div class="woo-progress-bar" t-attf-style="background:#34d399;width:#{pmPct(state.data.coupon_stats.by_type.fixed_product || 0)}%;"/>
+                </div>
+                <span style="font-family:'Courier New',monospace;font-weight:700;color:#34d399;min-width:24px;text-align:right;">
+                  <t t-esc="state.data.coupon_stats.by_type.fixed_product || 0"/>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick stats -->
+        <div class="woo-card">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-info-circle"/> Quick Stats</div>
+          </div>
+          <div class="woo-card-body" style="padding-top:14px;">
+            <div class="woo-config-row">
+              <div class="woo-config-label">Active Coupons</div>
+              <span style="font-family:'Courier New',monospace;font-size:18px;font-weight:700;color:#34d399;">
+                <t t-esc="state.data.coupon_stats.active"/>
+              </span>
+            </div>
+            <div class="woo-config-row">
+              <div class="woo-config-label">Unlimited Use</div>
+              <span style="font-family:'Courier New',monospace;font-size:18px;font-weight:700;color:#60a5fa;">
+                <t t-esc="state.data.coupon_stats.unlimited"/>
+              </span>
+            </div>
+            <div class="woo-config-row">
+              <div class="woo-config-label">Total Times Redeemed</div>
+              <span style="font-family:'Courier New',monospace;font-size:18px;font-weight:700;color:#fbbf24;">
+                <t t-esc="formatNumber(state.data.coupon_stats.total_usage)"/>
+              </span>
+            </div>
+            <div class="woo-config-row">
+              <div class="woo-config-label">Expired / Used Up</div>
+              <span style="font-family:'Courier New',monospace;font-size:18px;font-weight:700;color:#f87171;">
+                <t t-esc="state.data.coupon_stats.expired"/>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coupon Table -->
+      <div class="woo-card" t-if="state.data &amp;&amp; state.data.coupons">
+        <div class="woo-card-header">
+          <div class="woo-card-title"><i class="fa fa-list-ul"/> All Coupons</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <select class="woo-select" style="width:140px;height:30px;font-size:12px;" t-on-change="setCouponFilter">
+              <option value="all">All Coupons</option>
+              <option value="active">Active Only</option>
+              <option value="expired">Expired / Used</option>
+            </select>
+            <span class="woo-chip"><t t-esc="filteredCoupons().length"/> shown</span>
+          </div>
+        </div>
+        <div class="woo-card-body-flush">
+          <div class="woo-table-scroll">
+            <table class="woo-table">
+              <thead>
+                <tr>
+                  <th>Coupon Code</th>
+                  <th>Type</th>
+                  <th>Discount</th>
+                  <th>Usage</th>
+                  <th>Progress</th>
+                  <th>Expiry</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-foreach="filteredCoupons()" t-as="c" t-key="c.woo_id">
+                  <tr>
+                    <td>
+                      <span style="font-family:'Courier New',monospace;font-size:13px;font-weight:700;color:#f0f6fc;background:rgba(255,255,255,0.07);padding:3px 10px;border-radius:6px;letter-spacing:.5px;">
+                        <t t-esc="c.code"/>
+                      </span>
+                    </td>
+                    <td>
+                      <span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;"
+                            t-attf-style="background:#{couponTypeColor(c.discount_type)}18;color:#{couponTypeColor(c.discount_type)};border:1px solid #{couponTypeColor(c.discount_type)}40;">
+                        <t t-esc="couponTypeLabel(c.discount_type)"/>
+                      </span>
+                    </td>
+                    <td class="mono bold" style="color:#a78bfa;font-size:15px;"><t t-esc="c.discount_label"/></td>
+                    <td class="mono">
+                      <t t-esc="c.usage_count"/>
+                      <span t-if="c.usage_limit > 0" style="color:#484f58;"> / <t t-esc="c.usage_limit"/></span>
+                      <span t-else="" style="color:#484f58;font-size:11px;"> / unlimited</span>
+                    </td>
+                    <td style="min-width:100px;">
+                      <t t-if="c.usage_limit > 0">
+                        <div class="woo-progress">
+                          <div class="woo-progress-bar"
+                               t-attf-style="background:#{c.usage_pct >= 100 ? '#f87171' : c.usage_pct > 70 ? '#fbbf24' : '#34d399'};width:#{c.usage_pct}%;"/>
+                        </div>
+                        <div style="font-size:10px;color:#484f58;margin-top:2px;"><t t-esc="c.usage_pct"/>%</div>
+                      </t>
+                      <span t-else="" style="font-size:11px;color:#484f58;">No limit</span>
+                    </td>
+                    <td class="dim mono" style="white-space:nowrap;"><t t-esc="c.expiry_date"/></td>
+                    <td>
+                      <span t-if="c.status == 'active'"   class="woo-status s-synced">Active</span>
+                      <span t-elif="c.status == 'used_up'" class="woo-status s-error">Used Up</span>
+                      <span t-else=""                      class="woo-status s-error">Expired</span>
+                    </td>
+                  </tr>
+                </t>
+                <tr t-if="state.data.coupons.length == 0">
+                  <td colspan="7" style="text-align:center;color:#484f58;padding:32px;">No coupons synced yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- == CONFIGURATION == -->
+    <div t-elif="state.activeTab == 'config'" class="woo-animate">
+      <div t-if="state.data" class="woo-instance-status-bar mb-18">
+        <div class="woo-stat-mini">
+          <div class="woo-stat-mini-val" style="color:#a78bfa;"><t t-esc="formatNumber(state.data.kpis.total_orders)"/></div>
+          <div class="woo-stat-mini-label">Total Orders</div>
+        </div>
+        <div class="woo-stat-mini">
+          <div class="woo-stat-mini-val" style="color:#34d399;"><t t-esc="formatNumber(state.data.kpis.total_products)"/></div>
+          <div class="woo-stat-mini-label">Total Products</div>
+        </div>
+        <div class="woo-stat-mini">
+          <div class="woo-stat-mini-val" style="color:#60a5fa;"><t t-esc="formatNumber(state.data.kpis.total_customers)"/></div>
+          <div class="woo-stat-mini-label">Total Customers</div>
+        </div>
+      </div>
+
+      <div class="woo-grid-2">
+        <div class="woo-card">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-sliders"/> Sync Settings</div>
+          </div>
+          <div class="woo-card-body" style="padding-top:6px;">
+            <div class="woo-config-row">
+              <div>
+                <div class="woo-config-label">Sync Product Images</div>
+                <div class="woo-config-sublabel">Download and store product images locally</div>
+              </div>
+              <div class="woo-toggle" t-att-class="{'on': state.configToggles.sync_images}" t-on-click="toggleSyncImages"/>
+            </div>
+            <div class="woo-config-row">
+              <div>
+                <div class="woo-config-label">Create Products in Odoo</div>
+                <div class="woo-config-sublabel">Auto-create Odoo products during sync</div>
+              </div>
+              <div class="woo-toggle" t-att-class="{'on': state.configToggles.create_products}" t-on-click="toggleCreateProds"/>
+            </div>
+            <div class="woo-config-row">
+              <div>
+                <div class="woo-config-label">Auto Sync (Scheduled)</div>
+                <div class="woo-config-sublabel">Automatically sync on cron schedule</div>
+              </div>
+              <div class="woo-toggle" t-att-class="{'on': state.configToggles.auto_sync}" t-on-click="toggleAutoSync"/>
+            </div>
+            <div class="woo-config-row">
+              <div>
+                <div class="woo-config-label">Sync Stock Quantities</div>
+                <div class="woo-config-sublabel">Keep WooCommerce stock in sync with Odoo</div>
+              </div>
+              <div class="woo-toggle" t-att-class="{'on': state.configToggles.sync_stock}" t-on-click="toggleSyncStock"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="woo-card">
+          <div class="woo-card-header">
+            <div class="woo-card-title"><i class="fa fa-server"/> Instance Details</div>
+          </div>
+          <div class="woo-card-body" style="padding-top:14px;">
+            <div t-if="state.data &amp;&amp; state.data.last_syncs">
+              <div class="woo-config-row">
+                <div class="woo-config-label">Store Name</div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#f0f6fc;">
+                  <t t-esc="state.data.last_syncs.instance_name || '--'"/>
+                </span>
+              </div>
+              <div class="woo-config-row">
+                <div class="woo-config-label">Status</div>
+                <span t-if="state.data.last_syncs.instance_state == 'connected'" class="woo-badge-connected">Connected</span>
+                <span t-else="" class="woo-badge-disconnected"><t t-esc="state.data.last_syncs.instance_state || 'Unknown'"/></span>
+              </div>
+              <div class="woo-config-row">
+                <div class="woo-config-label">Last Order Sync</div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8b949e;"><t t-esc="state.data.last_syncs.orders"/></span>
+              </div>
+              <div class="woo-config-row">
+                <div class="woo-config-label">Last Product Sync</div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8b949e;"><t t-esc="state.data.last_syncs.products"/></span>
+              </div>
+              <div class="woo-config-row">
+                <div class="woo-config-label">Last Stock Sync</div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8b949e;"><t t-esc="state.data.last_syncs.stock"/></span>
+              </div>
+            </div>
+            <hr class="woo-divider"/>
+            <div style="display:flex;gap:10px;">
+              <button class="woo-btn woo-btn-primary" t-on-click="onSyncNow" style="flex:1;"><i class="fa fa-cloud-upload"/> Sync Now</button>
+              <button class="woo-btn woo-btn-ghost"   t-on-click="onRefresh"  style="flex:1;"><i class="fa fa-refresh"/> Refresh</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="woo-card" style="margin-top:18px;border-color:rgba(248,113,113,0.2);">
+        <div class="woo-card-header">
+          <div class="woo-card-title" style="color:#f87171;"><i class="fa fa-warning"/> Danger Zone</div>
+        </div>
+        <div class="woo-card-body">
+          <div class="woo-config-row">
+            <div>
+              <div class="woo-config-label">Clear Sync Queue</div>
+              <div class="woo-config-sublabel">Remove all pending/failed queue items. Cannot be undone.</div>
+            </div>
+            <button class="woo-btn woo-btn-danger"><i class="fa fa-trash"/> Clear Queue</button>
+          </div>
+          <div class="woo-config-row">
+            <div>
+              <div class="woo-config-label">Reset Sync State</div>
+              <div class="woo-config-sublabel">Mark all records as pending re-sync on next run.</div>
+            </div>
+            <button class="woo-btn woo-btn-danger"><i class="fa fa-undo"/> Reset All</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div t-elif="!state.loading &amp;&amp; !state.error"
+         style="display:flex;align-items:center;justify-content:center;min-height:200px;color:#484f58;font-size:14px;">
+      Select an instance to view analytics.
+    </div>
+
+  </div>
+</div>
+</div>
+
+</t>
+</templates>

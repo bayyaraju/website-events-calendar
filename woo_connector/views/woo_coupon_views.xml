@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_woo_coupon_list" model="ir.ui.view">
+        <field name="name">woo.coupon.list</field>
+        <field name="model">woo.coupon</field>
+        <field name="arch" type="xml">
+            <list string="WooCommerce Coupons"
+                  decoration-muted="expiry_date and expiry_date &lt; current_date">
+                <field name="name" string="Coupon Code"/>
+                <field name="woo_id"/>
+                <field name="instance_id"/>
+                <field name="discount_type"/>
+                <field name="amount"/>
+                <field name="expiry_date"/>
+                <field name="usage_count"/>
+                <field name="usage_limit"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_woo_coupon_form" model="ir.ui.view">
+        <field name="name">woo.coupon.form</field>
+        <field name="model">woo.coupon</field>
+        <field name="arch" type="xml">
+            <form string="WooCommerce Coupon">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Coupon Code"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Coupon Details">
+                            <field name="woo_id" readonly="1"/>
+                            <field name="instance_id"/>
+                            <field name="discount_type"/>
+                            <field name="amount"/>
+                            <field name="expiry_date"/>
+                        </group>
+                        <group string="Usage">
+                            <field name="usage_count"/>
+                            <field name="usage_limit"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_woo_coupon_search" model="ir.ui.view">
+        <field name="name">woo.coupon.search</field>
+        <field name="model">woo.coupon</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Coupon Code"/>
+                <field name="instance_id"/>
+                <filter name="percent" string="Percentage" domain="[('discount_type','=','percent')]"/>
+                <filter name="fixed_cart" string="Fixed Cart" domain="[('discount_type','=','fixed_cart')]"/>
+                <filter name="fixed_product" string="Fixed Product" domain="[('discount_type','=','fixed_product')]"/>
+                <separator/>
+                <filter name="group_instance" string="Instance"
+                        context="{'group_by': 'instance_id'}"/>
+                <filter name="group_type" string="Discount Type"
+                        context="{'group_by': 'discount_type'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_woo_coupons" model="ir.actions.act_window">
+        <field name="name">WooCommerce Coupons</field>
+        <field name="res_model">woo.coupon</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_woo_coupon_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No coupons imported yet!
+            </p>
+            <p>Use Manual Sync → Coupons to import coupons from WooCommerce.</p>
+        </field>
+    </record>
+
+</odoo>

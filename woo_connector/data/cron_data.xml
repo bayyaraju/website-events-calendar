@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Order Sync Cron -->
+        <record id="ir_cron_woo_order_sync" model="ir.cron">
+            <field name="name">WooCommerce: Sync Orders</field>
+            <field name="model_id" ref="model_woo_instance"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_sync_orders()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+<!--            <field name="numbercall">-1</field>-->
+            <field name="active">True</field>
+        </record>
+
+        <!-- Product Sync Cron -->
+        <record id="ir_cron_woo_product_sync" model="ir.cron">
+            <field name="name">WooCommerce: Sync Products</field>
+            <field name="model_id" ref="model_woo_instance"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_sync_products()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+<!--            <field name="numbercall">-1</field>-->
+            <field name="active">True</field>
+        </record>
+
+        <!-- Stock Sync Cron -->
+        <record id="ir_cron_woo_stock_sync" model="ir.cron">
+            <field name="name">WooCommerce: Sync Stock</field>
+            <field name="model_id" ref="model_woo_instance"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_sync_stock()</field>
+            <field name="interval_number">30</field>
+            <field name="interval_type">minutes</field>
+<!--            <field name="numbercall">-1</field>-->
+            <field name="active">True</field>
+        </record>
+
+        <!-- Queue Processor Cron -->
+        <record id="ir_cron_woo_queue_process" model="ir.cron">
+            <field name="name">WooCommerce: Process Queue</field>
+            <field name="model_id" ref="model_woo_instance"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_process_queue()</field>
+            <field name="interval_number">5</field>
+            <field name="interval_type">minutes</field>
+<!--            <field name="numbercall">-1</field>-->
+            <field name="active">True</field>
+        </record>
+
+        <!-- Log Cleanup Cron -->
+        <record id="ir_cron_woo_log_cleanup" model="ir.cron">
+            <field name="name">WooCommerce: Clean Old Logs</field>
+            <field name="model_id" ref="model_woo_log"/>
+            <field name="state">code</field>
+            <field name="code">model.clean_old_logs(days=30)</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+<!--            <field name="numbercall">-1</field>-->
+            <field name="active">True</field>
+        </record>
+
+        <!-- Default WooCommerce Order Statuses -->
+        <record id="woo_status_pending" model="woo.order.status">
+            <field name="name">Pending Payment</field>
+            <field name="code">pending</field>
+        </record>
+        <record id="woo_status_processing" model="woo.order.status">
+            <field name="name">Processing</field>
+            <field name="code">processing</field>
+        </record>
+        <record id="woo_status_on_hold" model="woo.order.status">
+            <field name="name">On Hold</field>
+            <field name="code">on-hold</field>
+        </record>
+        <record id="woo_status_completed" model="woo.order.status">
+            <field name="name">Completed</field>
+            <field name="code">completed</field>
+        </record>
+        <record id="woo_status_cancelled" model="woo.order.status">
+            <field name="name">Cancelled</field>
+            <field name="code">cancelled</field>
+        </record>
+        <record id="woo_status_refunded" model="woo.order.status">
+            <field name="name">Refunded</field>
+            <field name="code">refunded</field>
+        </record>
+        <record id="woo_status_failed" model="woo.order.status">
+            <field name="name">Failed</field>
+            <field name="code">failed</field>
+        </record>
+
+    </data>
+</odoo>
