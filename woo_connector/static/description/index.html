@@ -6,533 +6,525 @@
   <title>WooCommerce Odoo 19 Connector | Bidirectional Sync – Orders, Products, Stock | Trinus Systems</title>
   <meta name="description" content="WooCommerce Odoo 19 connector with bidirectional sync. Auto-import orders, sync products and SKUs, push stock to WooCommerce, multi-store support, real-time webhooks, analytics dashboard. Works with Odoo 19 Community and Enterprise."/>
   <meta name="keywords" content="WooCommerce Odoo connector, WooCommerce Odoo 19, Odoo WooCommerce integration, WooCommerce Odoo sync, Odoo eCommerce connector, WooCommerce order sync Odoo, Odoo inventory WooCommerce, bidirectional WooCommerce Odoo, WooCommerce Odoo module, Odoo 19 WooCommerce plugin, WooCommerce stock sync Odoo, Odoo WooCommerce product sync, WooCommerce SKU mapping Odoo, Odoo WooCommerce multi-store"/>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "WooCommerce Odoo 19 Connector",
-    "alternateName": ["WooCommerce Odoo Connector", "Odoo WooCommerce Integration", "WooCommerce Odoo Sync"],
-    "applicationCategory": "BusinessApplication",
-    "applicationSubCategory": "eCommerce Integration",
-    "operatingSystem": "Odoo 19",
-    "softwareVersion": "19.0.1.0.0",
-    "description": "Bidirectional WooCommerce to Odoo 19 connector. Real-time order sync via webhooks, bidirectional product and SKU sync, automatic stock push, customer deduplication, multi-store support, analytics dashboard.",
-    "featureList": [
-      "Bidirectional WooCommerce Odoo product sync",
-      "Real-time WooCommerce order import to Odoo",
-      "WooCommerce stock sync from Odoo inventory",
-      "SKU mapping between WooCommerce and Odoo",
-      "Multi-store WooCommerce Odoo support",
-      "WooCommerce webhook integration",
-      "Odoo 19 Community and Enterprise compatible"
-    ],
-    "author": {"@type": "Organization", "name": "Trinus Systems", "url": "https://trinus.in"},
-    "offers": {"@type": "Offer", "availability": "https://schema.org/InStock"},
-    "license": "https://www.gnu.org/licenses/OPL-1.0.html",
-    "softwareRequirements": "Odoo 19.0, WooCommerce 6+",
-    "programmingLanguage": "Python"
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Does this WooCommerce Odoo connector work with Odoo 19 Community?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Yes. Fully compatible with both Odoo 19 Community and Enterprise. The OWL 2 dashboard, webhooks, and sync queue all work in Community without Enterprise dependencies."}
-      },
-      {
-        "@type": "Question",
-        "name": "How does WooCommerce SKU sync to Odoo work?",
-        "acceptedAnswer": {"@type": "Answer", "text": "WooCommerce SKUs are written to product.template.default_code on every sync run. SKU changes in WooCommerce are detected and updated in Odoo automatically. SKU changes in Odoo are pushed back to WooCommerce on the next sync."}
-      },
-      {
-        "@type": "Question",
-        "name": "Why is WooCommerce showing stock as 0 after syncing from Odoo?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Stock sync pushes Odoo on-hand quantities to WooCommerce. If Odoo products have no stock records the pushed quantity is 0. Add inventory in Odoo via Inventory then Products then Update Quantity and run Sync Stock again."}
-      },
-      {
-        "@type": "Question",
-        "name": "Does the WooCommerce Odoo integration support variable products?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Yes. WooCommerce variable products are fully supported. Each variant SKU, price, and stock quantity are synced and mapped to Odoo product.product records."}
-      },
-      {
-        "@type": "Question",
-        "name": "Can I connect multiple WooCommerce stores to one Odoo 19 database?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Yes. The connector supports unlimited WooCommerce store instances per Odoo database. Each store has its own credentials, warehouse, pricelist, and sync configuration."}
-      }
-    ]
-  }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"WooCommerce Odoo 19 Connector","alternateName":["WooCommerce Odoo Connector","Odoo WooCommerce Integration","WooCommerce Odoo Sync"],"applicationCategory":"BusinessApplication","applicationSubCategory":"eCommerce Integration","operatingSystem":"Odoo 19","softwareVersion":"19.0.1.0.0","description":"Bidirectional WooCommerce to Odoo 19 connector. Real-time order sync via webhooks, bidirectional product and SKU sync, automatic stock push, customer deduplication, multi-store support, analytics dashboard.","featureList":["Bidirectional WooCommerce Odoo product sync","Real-time WooCommerce order import to Odoo","WooCommerce stock sync from Odoo inventory","SKU mapping between WooCommerce and Odoo","Multi-store WooCommerce Odoo support","WooCommerce webhook integration","Odoo 19 Community and Enterprise compatible"],"author":{"@type":"Organization","name":"Trinus Systems","url":"https://trinus.in"},"offers":{"@type":"Offer","availability":"https://schema.org/InStock"},"license":"https://www.gnu.org/licenses/OPL-1.0.html","softwareRequirements":"Odoo 19.0, WooCommerce 6+","programmingLanguage":"Python"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does this WooCommerce Odoo connector work with Odoo 19 Community?","acceptedAnswer":{"@type":"Answer","text":"Yes. Fully compatible with both Odoo 19 Community and Enterprise. The OWL 2 dashboard, webhooks, and sync queue all work in Community without Enterprise dependencies."}},{"@type":"Question","name":"How does WooCommerce SKU sync to Odoo work?","acceptedAnswer":{"@type":"Answer","text":"WooCommerce SKUs are written to product.template.default_code on every sync run. SKU changes in WooCommerce are detected and updated in Odoo automatically. SKU changes in Odoo are pushed back to WooCommerce on the next sync."}},{"@type":"Question","name":"Why is WooCommerce showing stock as 0 after syncing from Odoo?","acceptedAnswer":{"@type":"Answer","text":"Stock sync pushes Odoo on-hand quantities to WooCommerce. If Odoo products have no stock records the pushed quantity is 0. Add inventory in Odoo via Inventory then Products then Update Quantity and run Sync Stock again."}},{"@type":"Question","name":"Does the WooCommerce Odoo integration support variable products?","acceptedAnswer":{"@type":"Answer","text":"Yes. WooCommerce variable products are fully supported. Each variant SKU, price, and stock quantity are synced and mapped to Odoo product.product records."}},{"@type":"Question","name":"Can I connect multiple WooCommerce stores to one Odoo 19 database?","acceptedAnswer":{"@type":"Answer","text":"Yes. The connector supports unlimited WooCommerce store instances per Odoo database. Each store has its own credentials, warehouse, pricelist, and sync configuration."}}]}</script>
 </head>
 <body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;font-size:14px;line-height:1.6;color:#2c2c3a;background:#fff;">
 
-<!-- ═══════ HERO ═══════ -->
-<div style="background:#2d1b4e;padding:48px 32px 44px;text-align:center;">
+<!-- ═══════ HERO — table-based so background survives Odoo sanitizer ═══════ -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#2d1b4e;padding:48px 32px 44px;text-align:center;">
 
-  <div style="margin-bottom:18px;">
-    <span style="display:inline-block;background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:600;margin:3px;">Odoo 19</span>
-    <span style="display:inline-block;background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:600;margin:3px;">Community &amp; Enterprise</span>
-    <span style="display:inline-block;background:#7a3d0a;color:#fdd9b0;border:1px solid #c0621a;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:600;margin:3px;">v19.0.1.0.0</span>
-    <span style="display:inline-block;background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:600;margin:3px;">OPL-1</span>
-  </div>
+      <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 18px;">
+        <tr>
+          <td style="background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:600;">Odoo 19</td>
+          <td width="6"></td>
+          <td style="background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:600;">Community &amp; Enterprise</td>
+          <td width="6"></td>
+          <td style="background:#7a3d0a;color:#fdd9b0;border:1px solid #c0621a;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:600;">v19.0.1.0.0</td>
+          <td width="6"></td>
+          <td style="background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:600;">OPL-1</td>
+        </tr>
+      </table>
 
-  <h1 style="font-size:28px;font-weight:800;color:#fff;margin:0 0 12px;letter-spacing:-0.5px;">
-    WooCommerce &#8596; <span style="color:#f5a623;">Odoo 19</span> Connector
-  </h1>
+      <h1 style="font-size:28px;font-weight:800;color:#fff;margin:0 0 12px;letter-spacing:-0.5px;">
+        WooCommerce &#8596; <span style="color:#f5a623;">Odoo 19</span> Connector
+      </h1>
 
-  <h2 style="font-size:15px;font-weight:400;color:#c8b8e8;max-width:600px;margin:0 auto 24px;">
-    The most complete <strong style="color:#fff;font-weight:700;">WooCommerce Odoo integration</strong> for Odoo 19 —
-    bidirectional product sync, real-time order import, automatic stock push, SKU mapping and multi-store support.
-  </h2>
+      <h2 style="font-size:15px;font-weight:400;color:#c8b8e8;max-width:600px;margin:0 auto 24px;">
+        The most complete <strong style="color:#fff;font-weight:700;">WooCommerce Odoo integration</strong> for Odoo 19 —
+        bidirectional product sync, real-time order import, automatic stock push, SKU mapping and multi-store support.
+      </h2>
 
-  <div style="margin-top:4px;">
-    <span style="display:inline-block;background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;margin:3px;font-weight:500;">Real-time Webhooks</span>
-    <span style="display:inline-block;background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;margin:3px;font-weight:500;">Order Sync</span>
-    <span style="display:inline-block;background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;margin:3px;font-weight:500;">Stock Sync</span>
-    <span style="display:inline-block;background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;margin:3px;font-weight:500;">SKU Mapping</span>
-    <span style="display:inline-block;background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;margin:3px;font-weight:500;">Multi-Store</span>
-    <span style="display:inline-block;background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;margin:3px;font-weight:500;">Dashboard</span>
-    <span style="display:inline-block;background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;margin:3px;font-weight:500;">Smart Queue</span>
-  </div>
-</div>
+      <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
+        <tr>
+          <td style="background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;">Real-time Webhooks</td>
+          <td width="6"></td>
+          <td style="background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;">Order Sync</td>
+          <td width="6"></td>
+          <td style="background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;">Stock Sync</td>
+          <td width="6"></td>
+          <td style="background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;">SKU Mapping</td>
+          <td width="6"></td>
+          <td style="background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;">Multi-Store</td>
+          <td width="6"></td>
+          <td style="background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;">Dashboard</td>
+          <td width="6"></td>
+          <td style="background:#3d2860;color:#d8c8f5;border:1px solid #5a3d8a;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;">Smart Queue</td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
 
 <!-- ═══════ TRUST BAR ═══════ -->
-<div style="background:#f0ebf8;border-top:3px solid #7f54b3;border-bottom:1px solid #e0dce8;padding:14px 32px;text-align:center;">
-  <span style="font-size:12px;color:#7f54b3;font-weight:600;margin:0 16px;">&#10003; Odoo 19 Certified</span>
-  <span style="font-size:12px;color:#7f54b3;font-weight:600;margin:0 16px;">&#10003; Full Source Code Included</span>
-  <span style="font-size:12px;color:#7f54b3;font-weight:600;margin:0 16px;">&#10003; Community &amp; Enterprise</span>
-  <span style="font-size:12px;color:#7f54b3;font-weight:600;margin:0 16px;">&#10003; Email Support Included</span>
-  <span style="font-size:12px;color:#7f54b3;font-weight:600;margin:0 16px;">&#10003; Free Bug Fix Updates</span>
-</div>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#f0ebf8;border-top:3px solid #7f54b3;border-bottom:1px solid #e0dce8;padding:14px 32px;text-align:center;">
+      <span style="font-size:12px;color:#7f54b3;font-weight:600;margin:0 14px;">&#10003; Odoo 19 Certified</span>
+      <span style="font-size:12px;color:#7f54b3;font-weight:600;margin:0 14px;">&#10003; Full Source Code Included</span>
+      <span style="font-size:12px;color:#7f54b3;font-weight:600;margin:0 14px;">&#10003; Community &amp; Enterprise</span>
+      <span style="font-size:12px;color:#7f54b3;font-weight:600;margin:0 14px;">&#10003; Email Support Included</span>
+      <span style="font-size:12px;color:#7f54b3;font-weight:600;margin:0 14px;">&#10003; Free Bug Fix Updates</span>
+    </td>
+  </tr>
+</table>
 
 <!-- ═══════ HOW IT WORKS ═══════ -->
-<div style="padding:40px 32px;background:#faf9fc;border-top:3px solid #7f54b3;">
-  <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">How WooCommerce Odoo Sync Works</h2>
-  <p style="color:#666678;font-size:13px;margin:0 0 24px;">Bidirectional, real-time data sync between your WooCommerce store and Odoo 19 — no middleware, no third-party SaaS.</p>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#faf9fc;border-top:3px solid #7f54b3;padding:40px 32px;">
+      <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">How WooCommerce Odoo Sync Works</h2>
+      <p style="color:#666678;font-size:13px;margin:0 0 28px;">Bidirectional, real-time data sync between your WooCommerce store and Odoo 19 — no middleware, no third-party SaaS.</p>
 
-  <table style="width:100%;border-collapse:separate;border-spacing:0;max-width:700px;margin:0 auto;">
-    <tr>
-      <td style="width:32%;text-align:center;padding:24px 16px;background:#f0ebf8;border:2px solid #7f54b3;border-radius:8px;">
-        <div style="width:44px;height:44px;margin:0 auto 10px;background:#7f54b3;border-radius:8px;display:flex;align-items:center;justify-content:center;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M16 10a4 4 0 01-8 0" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div style="font-size:14px;font-weight:700;color:#2c2c3a;">WooCommerce</div>
-        <div style="font-size:11px;color:#666678;margin-top:4px;">Orders · Products · Customers</div>
-      </td>
-      <td style="width:12%;text-align:center;padding:0 8px;">
-        <div style="font-size:28px;color:#e67e22;font-weight:700;line-height:1;">&#8651;</div>
-      </td>
-      <td style="width:32%;text-align:center;padding:24px 16px;background:#f5f5f5;border:2px solid #ccc;border-radius:8px;">
-        <div style="width:44px;height:44px;margin:0 auto 10px;background:#888;border-radius:8px;display:flex;align-items:center;justify-content:center;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" stroke="#fff" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" stroke="#fff" stroke-width="2"/></svg>
-        </div>
-        <div style="font-size:14px;font-weight:700;color:#2c2c3a;">Woo Connector</div>
-        <div style="font-size:11px;color:#666678;margin-top:4px;">Webhooks · Queue · Cron</div>
-      </td>
-      <td style="width:12%;text-align:center;padding:0 8px;">
-        <div style="font-size:28px;color:#e67e22;font-weight:700;line-height:1;">&#8651;</div>
-      </td>
-      <td style="width:32%;text-align:center;padding:24px 16px;background:#f5f0f3;border:2px solid #714b67;border-radius:8px;">
-        <div style="width:44px;height:44px;margin:0 auto 10px;background:#714b67;border-radius:8px;display:flex;align-items:center;justify-content:center;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="#fff"/></svg>
-        </div>
-        <div style="font-size:14px;font-weight:700;color:#2c2c3a;">Odoo 19</div>
-        <div style="font-size:11px;color:#666678;margin-top:4px;">Sales · Inventory · Accounting</div>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<!-- ═══════ VIDEO ═══════ -->
-<div style="padding:40px 32px;background:#fff;border-top:1px solid #e0dce8;">
-  <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">See WooCommerce Odoo Sync In Action</h2>
-  <p style="color:#666678;font-size:13px;margin:0 0 20px;">Watch how to install, configure and run your first WooCommerce to Odoo sync — from setup to live order import.</p>
-  <div style="max-width:900px;margin:auto;">
-    <video autoplay muted loop playsinline controls width="100%"
-           style="border-radius:8px;border:2px solid #7f54b3;"
-           poster="icon.png">
-      <source src="WooCommerce-Odoo19.mp4" type="video/mp4">
-    </video>
-  </div>
-</div>
-
-<!-- ═══════ FEATURES ═══════ -->
-<div style="padding:40px 32px;background:#faf9fc;border-top:1px solid #e0dce8;">
-  <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Key Features of WooCommerce Odoo 19 Connector</h2>
-  <p style="color:#666678;font-size:13px;margin:0 0 24px;">Everything you need to run a seamlessly connected WooCommerce and Odoo 19 operation — without any third-party middleware.</p>
-
-  <table style="width:100%;border-collapse:separate;border-spacing:8px;">
-    <tr>
-      <td style="vertical-align:top;width:33%;background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:18px 16px;">
-        <div style="width:36px;height:36px;background:#fff3e0;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#e67e22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">Real-time WooCommerce Order Sync</strong>
-        <span style="font-size:13px;color:#666678;">WooCommerce orders arrive in Odoo seconds after checkout via HMAC-SHA256 verified webhooks. No polling delays, no missed orders.</span>
-      </td>
-      <td style="vertical-align:top;width:33%;background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:18px 16px;">
-        <div style="width:36px;height:36px;background:#f0ebf8;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="17 1 21 5 17 9" stroke="#7f54b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 11V9a4 4 0 014-4h14" stroke="#7f54b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="7 23 3 19 7 15" stroke="#7f54b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 13v2a4 4 0 01-4 4H3" stroke="#7f54b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">Bidirectional WooCommerce Product Sync</strong>
-        <span style="font-size:13px;color:#666678;">Import products, names, SKUs, prices, images and categories from WooCommerce. Push Odoo products and stock back to WooCommerce automatically.</span>
-      </td>
-      <td style="vertical-align:top;width:33%;background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:18px 16px;">
-        <div style="width:36px;height:36px;background:#e8f5e9;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" stroke="#27ae60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="7" y1="7" x2="7.01" y2="7" stroke="#27ae60" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">WooCommerce SKU Mapping to Odoo</strong>
-        <span style="font-size:13px;color:#666678;">WooCommerce SKUs synced to <code style="font-size:11px;background:#f0ebf8;padding:1px 4px;border-radius:3px;color:#7f54b3;">default_code</code> on every import. SKU changes detected and applied in both directions automatically.</span>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align:top;background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:18px 16px;">
-        <div style="width:36px;height:36px;background:#e3f2fd;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">Odoo Inventory Sync to WooCommerce</strong>
-        <span style="font-size:13px;color:#666678;">Odoo on-hand stock pushed to WooCommerce automatically on delivery validation and manual sync. Warehouse-scoped quantities supported.</span>
-      </td>
-      <td style="vertical-align:top;background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:18px 16px;">
-        <div style="width:36px;height:36px;background:#fce4ec;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#c2185b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#c2185b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">Multi-Store WooCommerce Odoo Support</strong>
-        <span style="font-size:13px;color:#666678;">Connect unlimited WooCommerce stores to one Odoo 19 database. Each store has its own credentials, warehouse, pricelist, and sync settings.</span>
-      </td>
-      <td style="vertical-align:top;background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:18px 16px;">
-        <div style="width:36px;height:36px;background:#f3e5f5;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><line x1="18" y1="20" x2="18" y2="10" stroke="#7b1fa2" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="20" x2="12" y2="4" stroke="#7b1fa2" stroke-width="2" stroke-linecap="round"/><line x1="6" y1="20" x2="6" y2="14" stroke="#7b1fa2" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">WooCommerce Analytics Dashboard in Odoo</strong>
-        <span style="font-size:13px;color:#666678;">Live OWL 2 dashboard inside Odoo showing WooCommerce orders, revenue, sync status, and queue health. No external dependencies.</span>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align:top;background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:18px 16px;">
-        <div style="width:36px;height:36px;background:#fff8e1;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="17 1 21 5 17 9" stroke="#f57f17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 01-4 4H3" stroke="#f57f17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">Smart Retry Queue with Full Error Log</strong>
-        <span style="font-size:13px;color:#666678;">Failed WooCommerce Odoo syncs are queued and retried up to 5 times. Full error log and manual retry in Monitoring &#8594; Sync Queue.</span>
-      </td>
-      <td style="vertical-align:top;background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:18px 16px;">
-        <div style="width:36px;height:36px;background:#e8f5e9;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" stroke="#388e3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="7" y1="7" x2="7.01" y2="7" stroke="#388e3c" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">WooCommerce Tax &amp; Coupon Mapping</strong>
-        <span style="font-size:13px;color:#666678;">WooCommerce taxes mapped to Odoo <code style="font-size:11px;background:#f0ebf8;padding:1px 4px;border-radius:3px;color:#7f54b3;">account.tax</code>. Coupons and discount lines fully preserved on Odoo sale orders.</span>
-      </td>
-      <td style="vertical-align:top;background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:18px 16px;">
-        <div style="width:36px;height:36px;background:#e3f2fd;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="#1565c0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="#1565c0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">WooCommerce Customer Sync to Odoo</strong>
-        <span style="font-size:13px;color:#666678;">Matches WooCommerce customers to existing Odoo partners by email. No duplicate <code style="font-size:11px;background:#f0ebf8;padding:1px 4px;border-radius:3px;color:#7f54b3;">res.partner</code> records created.</span>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<!-- ═══════ SYNC TABLE ═══════ -->
-<div style="padding:40px 32px;background:#fff;border-top:1px solid #e0dce8;">
-  <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">WooCommerce &#8596; Odoo: Complete Sync Coverage</h2>
-  <p style="color:#666678;font-size:13px;margin:0 0 20px;">Every data type synced between WooCommerce and Odoo 19 — and in which direction.</p>
-  <table style="width:100%;border-collapse:collapse;font-size:13px;">
-    <thead>
-      <tr>
-        <th style="background:#7f54b3;color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;border-radius:6px 0 0 0;">Data Type</th>
-        <th style="background:#7f54b3;color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;">WooCommerce &#8594; Odoo</th>
-        <th style="background:#7f54b3;color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;">Odoo &#8594; WooCommerce</th>
-        <th style="background:#7f54b3;color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;border-radius:0 6px 0 0;">Notes</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Orders</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Real-time</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Status push</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Webhook + cron fallback</td></tr>
-      <tr style="background:#faf9fc;"><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Products</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Import</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Push (sync_to_woo)</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Name, price, description, images</td></tr>
-      <tr><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>SKUs</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Every sync</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; With stock sync</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">product.template.default_code</td></tr>
-      <tr style="background:#faf9fc;"><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Stock / Inventory</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; On import</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Auto-push</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Warehouse-scoped qty_available</td></tr>
-      <tr><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Product Images</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Download</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#aaa;">&#8212;</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Stored on product.template.image_1920</td></tr>
-      <tr style="background:#faf9fc;"><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Customers</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Import</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#aaa;">&#8212;</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Deduplication by email</td></tr>
-      <tr><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Taxes</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Map</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#aaa;">&#8212;</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Mapped to account.tax</td></tr>
-      <tr style="background:#faf9fc;"><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Coupons</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Import</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#aaa;">&#8212;</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">As discount lines on sale orders</td></tr>
-      <tr><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Shipping</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Map</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#aaa;">&#8212;</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Mapped to delivery products</td></tr>
-      <tr style="background:#faf9fc;"><td style="padding:9px 14px;"><strong>Variable Products</strong></td><td style="padding:9px 14px;color:#27ae60;font-weight:700;">&#10004; Supported</td><td style="padding:9px 14px;color:#aaa;">&#8212;</td><td style="padding:9px 14px;color:#666678;">Variant SKU, price, stock per variant</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<!-- ═══════ WHY CHOOSE ═══════ -->
-<div style="padding:40px 32px;background:#faf9fc;border-top:1px solid #e0dce8;">
-  <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Why Choose This WooCommerce Odoo Connector?</h2>
-  <p style="color:#666678;font-size:13px;margin:0 0 20px;">Built specifically for Odoo 19 — no shortcuts, no legacy code from older versions.</p>
-  <table style="width:100%;border-collapse:separate;border-spacing:8px;">
-    <tr>
-      <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:16px;vertical-align:top;width:50%;">
-        <strong style="font-size:13px;color:#2c2c3a;display:block;margin-bottom:6px;">
-          <span style="display:inline-block;width:10px;height:10px;background:#27ae60;border-radius:50%;margin-right:6px;vertical-align:middle;"></span>
-          Native Odoo 19 Architecture
-        </strong>
-        <span style="font-size:12px;color:#666678;">Built with OWL 2, Odoo 19 model constraints, and the latest API conventions. No deprecated methods, no compatibility hacks.</span>
-      </td>
-      <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:16px;vertical-align:top;width:50%;">
-        <strong style="font-size:13px;color:#2c2c3a;display:block;margin-bottom:6px;">
-          <span style="display:inline-block;width:10px;height:10px;background:#7f54b3;border-radius:50%;margin-right:6px;vertical-align:middle;"></span>
-          No Third-Party SaaS Required
-        </strong>
-        <span style="font-size:12px;color:#666678;">Direct WooCommerce REST API calls from Odoo. No middleware subscriptions, no data leaving your servers, no recurring SaaS fees.</span>
-      </td>
-    </tr>
-    <tr>
-      <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:16px;vertical-align:top;">
-        <strong style="font-size:13px;color:#2c2c3a;display:block;margin-bottom:6px;">
-          <span style="display:inline-block;width:10px;height:10px;background:#e67e22;border-radius:50%;margin-right:6px;vertical-align:middle;"></span>
-          True Bidirectional Sync
-        </strong>
-        <span style="font-size:12px;color:#666678;">Not just WooCommerce to Odoo — push products, stock, SKUs and order status from Odoo back to WooCommerce. Full two-way data flow.</span>
-      </td>
-      <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:16px;vertical-align:top;">
-        <strong style="font-size:13px;color:#2c2c3a;display:block;margin-bottom:6px;">
-          <span style="display:inline-block;width:10px;height:10px;background:#1976d2;border-radius:50%;margin-right:6px;vertical-align:middle;"></span>
-          Full Source Code, OPL-1 License
-        </strong>
-        <span style="font-size:12px;color:#666678;">Complete Python, XML, JS source included. Read it, modify it, extend it. One-time purchase, no annual renewal required.</span>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<!-- ═══════ INSTALLATION ═══════ -->
-<div style="padding:40px 32px;background:#fff;border-top:1px solid #e0dce8;">
-  <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Install WooCommerce Odoo 19 Connector in 5 Minutes</h2>
-  <p style="color:#666678;font-size:13px;margin:0 0 24px;">From download to first WooCommerce order synced in under 5 minutes.</p>
-  <table style="width:100%;border-collapse:collapse;">
-    <tr>
-      <td style="vertical-align:top;padding:0 16px 20px 0;width:36px;">
-        <div style="width:32px;height:32px;border-radius:50%;background:#7f54b3;color:#fff;text-align:center;line-height:32px;font-size:14px;font-weight:700;min-width:32px;">1</div>
-      </td>
-      <td style="vertical-align:top;padding-bottom:20px;">
-        <strong style="font-size:14px;display:block;margin-bottom:3px;">Copy module to your Odoo addons path</strong>
-        <span style="font-size:13px;color:#666678;">Unzip and place the <code style="background:#f0ebf8;border:1px solid #e0dce8;border-radius:4px;padding:1px 6px;font-size:12px;color:#7f54b3;">woo_connector</code> folder inside your custom addons directory.</span>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align:top;padding:0 16px 20px 0;">
-        <div style="width:32px;height:32px;border-radius:50%;background:#7f54b3;color:#fff;text-align:center;line-height:32px;font-size:14px;font-weight:700;min-width:32px;">2</div>
-      </td>
-      <td style="vertical-align:top;padding-bottom:20px;">
-        <strong style="font-size:14px;display:block;margin-bottom:3px;">Update module list &amp; install</strong>
-        <span style="font-size:13px;color:#666678;">Go to <strong>Apps &#8594; Update Apps List</strong>, search <strong>WooCommerce Odoo Connector</strong>, click Install. Or via CLI:</span><br/>
-        <code style="background:#f0ebf8;border:1px solid #e0dce8;border-radius:4px;padding:3px 8px;font-size:12px;color:#7f54b3;display:inline-block;margin-top:5px;">./odoo-bin -u woo_connector -d your_database</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align:top;padding:0 16px 20px 0;">
-        <div style="width:32px;height:32px;border-radius:50%;background:#7f54b3;color:#fff;text-align:center;line-height:32px;font-size:14px;font-weight:700;min-width:32px;">3</div>
-      </td>
-      <td style="vertical-align:top;padding-bottom:20px;">
-        <strong style="font-size:14px;display:block;margin-bottom:3px;">Create a WooCommerce Instance in Odoo</strong>
-        <span style="font-size:13px;color:#666678;">Go to <strong>WooSync &#8594; Configuration &#8594; Instances &#8594; New</strong>. Enter your WooCommerce store URL, Consumer Key, and Consumer Secret.</span>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align:top;padding:0 16px 20px 0;">
-        <div style="width:32px;height:32px;border-radius:50%;background:#7f54b3;color:#fff;text-align:center;line-height:32px;font-size:14px;font-weight:700;min-width:32px;">4</div>
-      </td>
-      <td style="vertical-align:top;padding-bottom:20px;">
-        <strong style="font-size:14px;display:block;margin-bottom:3px;">Test Connection &amp; Run First WooCommerce Sync</strong>
-        <span style="font-size:13px;color:#666678;">Click <strong>Test Connection</strong>, then use <strong>Sync Products</strong>, <strong>Sync Orders</strong>, or <strong>Sync Stock</strong> to run your first WooCommerce Odoo import.</span>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align:top;padding:0 16px 0 0;">
-        <div style="width:32px;height:32px;border-radius:50%;background:#7f54b3;color:#fff;text-align:center;line-height:32px;font-size:14px;font-weight:700;min-width:32px;">5</div>
-      </td>
-      <td style="vertical-align:top;">
-        <strong style="font-size:14px;display:block;margin-bottom:3px;">(Optional) Configure WooCommerce Webhooks</strong>
-        <span style="font-size:13px;color:#666678;">In WooCommerce &#8594; Settings &#8594; Advanced &#8594; Webhooks, set delivery URL to:</span><br/>
-        <code style="background:#f0ebf8;border:1px solid #e0dce8;border-radius:4px;padding:3px 8px;font-size:12px;color:#7f54b3;display:inline-block;margin-top:5px;">https://your-odoo.com/woo/webhook/order</code>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<!-- ═══════ REQUIREMENTS ═══════ -->
-<div style="padding:40px 32px;background:#faf9fc;border-top:1px solid #e0dce8;">
-  <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Requirements</h2>
-  <p style="color:#666678;font-size:13px;margin:0 0 20px;">Minimum versions and dependencies to run the WooCommerce Odoo 19 connector.</p>
-  <table style="width:100%;border-collapse:separate;border-spacing:8px;">
-    <tr>
-      <td style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;vertical-align:middle;">
-        <span style="display:inline-block;width:10px;height:10px;background:#27ae60;border-radius:50%;margin-right:8px;vertical-align:middle;"></span>
-        <strong>Odoo 19.0</strong> — Community or Enterprise
-      </td>
-      <td style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;vertical-align:middle;">
-        <span style="display:inline-block;width:10px;height:10px;background:#7f54b3;border-radius:50%;margin-right:8px;vertical-align:middle;"></span>
-        <strong>WooCommerce 6+</strong> — REST API v3
-      </td>
-    </tr>
-    <tr>
-      <td style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;vertical-align:middle;">
-        <span style="display:inline-block;width:10px;height:10px;background:#1976d2;border-radius:50%;margin-right:8px;vertical-align:middle;"></span>
-        <strong>Python 3.10+</strong> with <code style="background:#f0ebf8;padding:1px 5px;border-radius:3px;color:#7f54b3;font-size:12px;">requests</code> library
-      </td>
-      <td style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;vertical-align:middle;">
-        <span style="display:inline-block;width:10px;height:10px;background:#e67e22;border-radius:50%;margin-right:8px;vertical-align:middle;"></span>
-        Odoo apps: <strong>sale_management, stock, account, mail</strong>
-      </td>
-    </tr>
-    <tr>
-      <td style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;vertical-align:middle;">
-        <span style="display:inline-block;width:10px;height:10px;background:#c2185b;border-radius:50%;margin-right:8px;vertical-align:middle;"></span>
-        WooCommerce <strong>Consumer Key &amp; Secret</strong> (read/write)
-      </td>
-      <td style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;vertical-align:middle;">
-        <span style="display:inline-block;width:10px;height:10px;background:#888;border-radius:50%;margin-right:8px;vertical-align:middle;"></span>
-        Public Odoo URL for webhooks <em>(optional)</em>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<!-- ═══════ FAQ ═══════ -->
-<div style="padding:40px 32px;background:#fff;border-top:1px solid #e0dce8;">
-  <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Frequently Asked Questions — WooCommerce Odoo Connector</h2>
-  <p style="color:#666678;font-size:13px;margin:0 0 20px;">Common questions about setting up WooCommerce with Odoo 19.</p>
-  <div itemscope itemtype="https://schema.org/FAQPage">
-
-    <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">Does this WooCommerce Odoo connector work with Odoo 19 Community Edition?</div>
-      <div style="background:#fff;padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">Yes. Fully compatible with both Odoo 19 Community and Enterprise. The OWL 2 dashboard, webhooks, and sync queue all work in Community without any Enterprise dependencies.</div>
-      </div>
-    </div>
-
-    <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">How does WooCommerce SKU sync to Odoo work?</div>
-      <div style="background:#fff;padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">WooCommerce SKUs are written to product.template.default_code on every sync run. If a SKU changes in WooCommerce, it is detected and updated in Odoo automatically. If you update the SKU in the Odoo WooCommerce product mapping, it is pushed back to WooCommerce on the next Sync Stock run.</div>
-      </div>
-    </div>
-
-    <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">Why is WooCommerce showing stock as 0 after syncing from Odoo?</div>
-      <div style="background:#fff;padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">Stock sync pushes Odoo on-hand quantities to WooCommerce. If your Odoo products have no stock records, the pushed quantity is 0. Add inventory via Inventory then Products then Update Quantity, then click Sync Stock again. Also ensure Manage stock is enabled on the WooCommerce product side.</div>
-      </div>
-    </div>
-
-    <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">Does the WooCommerce Odoo integration support variable products?</div>
-      <div style="background:#fff;padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">Yes. WooCommerce variable products are fully supported. Each variant SKU, price, and stock quantity are synced and mapped to Odoo product.product records.</div>
-      </div>
-    </div>
-
-    <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">Can I connect multiple WooCommerce stores to one Odoo 19 database?</div>
-      <div style="background:#fff;padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">Yes. The connector supports unlimited WooCommerce store instances per Odoo database. Each store has its own credentials, warehouse, pricelist, and sync configuration.</div>
-      </div>
-    </div>
-
-    <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">What happens if a WooCommerce Odoo sync fails?</div>
-      <div style="background:#fff;padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">Failed syncs are saved to the queue with the full error message. The cron job retries them automatically up to 5 attempts. You can also view and manually retry from Monitoring then Sync Queue inside Odoo.</div>
-      </div>
-    </div>
-
-    <div style="border:1px solid #e0dce8;border-radius:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">Is the WooCommerce Odoo connector source code included?</div>
-      <div style="background:#fff;padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">Yes. You receive the complete Odoo module source code — Python, XML, CSS, and JS — under OPL-1 license. You can read, modify, and extend it freely to match your business requirements.</div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ═══════ SUPPORT ═══════ -->
-<div style="padding:40px 32px;border-top:1px solid #e0dce8;background:#fff;">
-  <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Support &amp; Service</h2>
-  <p style="color:#666678;font-size:13px;margin:0 0 20px;">Expert WooCommerce Odoo integration support — from setup to customisation.</p>
-
-  <div style="background:#2d1b4e;border-radius:12px;padding:36px 32px;color:#fff;">
-    <h3 style="font-size:20px;font-weight:800;margin:0 0 8px;color:#fff;">We've Got You Covered</h3>
-    <p style="font-size:13px;margin:0 0 28px;color:#c8b8e8;">From initial WooCommerce Odoo setup to advanced customisation — reach out and we will respond fast.</p>
-
-    <table style="width:100%;border-collapse:separate;border-spacing:10px;margin-bottom:10px;">
-      <tr>
-        <td style="background:#3d2860;border:1px solid #5a3d8a;border-radius:8px;padding:16px 14px;vertical-align:top;width:25%;">
-          <div style="width:32px;height:32px;background:#5a3d8a;border-radius:6px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#d8c8f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke="#d8c8f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <strong style="font-size:13px;display:block;margin-bottom:4px;color:#fff;">Email Support</strong>
-          <span style="font-size:12px;line-height:1.5;color:#c8b8e8;">Direct support for WooCommerce Odoo installation, configuration, and bug reports.</span>
-        </td>
-        <td style="background:#3d2860;border:1px solid #5a3d8a;border-radius:8px;padding:16px 14px;vertical-align:top;width:25%;">
-          <div style="width:32px;height:32px;background:#5a3d8a;border-radius:6px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke="#d8c8f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <strong style="font-size:13px;display:block;margin-bottom:4px;color:#fff;">Bug Fixes</strong>
-          <span style="font-size:12px;line-height:1.5;color:#c8b8e8;">Issues found after purchase are fixed promptly. Updates delivered via email.</span>
-        </td>
-        <td style="background:#3d2860;border:1px solid #5a3d8a;border-radius:8px;padding:16px 14px;vertical-align:top;width:25%;">
-          <div style="width:32px;height:32px;background:#5a3d8a;border-radius:6px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#d8c8f5" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="#d8c8f5" stroke-width="2"/></svg>
-          </div>
-          <strong style="font-size:13px;display:block;margin-bottom:4px;color:#fff;">Customisation</strong>
-          <span style="font-size:12px;line-height:1.5;color:#c8b8e8;">Need extra WooCommerce Odoo features or custom field mapping? Paid customisation available.</span>
-        </td>
-        <td style="background:#3d2860;border:1px solid #5a3d8a;border-radius:8px;padding:16px 14px;vertical-align:top;width:25%;">
-          <div style="width:32px;height:32px;background:#5a3d8a;border-radius:6px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="#d8c8f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="#d8c8f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <strong style="font-size:13px;display:block;margin-bottom:4px;color:#fff;">Documentation</strong>
-          <span style="font-size:12px;line-height:1.5;color:#c8b8e8;">Setup guide, field mapping reference, and WooCommerce webhook config docs included.</span>
-        </td>
-      </tr>
-    </table>
-
-    <!-- Contact bar -->
-    <div style="background:#3a2258;border:1px solid #c0621a;border-radius:8px;padding:20px 24px;margin-top:10px;">
-      <table style="width:100%;border-collapse:collapse;">
+      <table cellpadding="0" cellspacing="0" border="0" style="max-width:680px;margin:0 auto;width:100%;">
         <tr>
-          <td style="vertical-align:middle;padding-right:20px;">
-            <strong style="font-size:15px;display:block;margin-bottom:4px;color:#fff;">Need help with WooCommerce Odoo integration?</strong>
-            <span style="font-size:13px;color:#c8b8e8;">Reach out directly — we reply within 24 hours on business days.</span>
-            <div style="margin-top:10px;font-size:12px;color:#c8b8e8;">
-              <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#27ae60;margin-right:6px;vertical-align:middle;"></span>
-              Avg. response: under 24 hours &nbsp;&#183;&nbsp; Mon–Fri
-            </div>
+          <td width="32%" style="background:#f0ebf8;border:2px solid #7f54b3;border-radius:8px;padding:24px 16px;text-align:center;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 10px;">
+              <tr><td style="background:#7f54b3;border-radius:8px;padding:10px;text-align:center;line-height:0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M16 10a4 4 0 01-8 0" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </td></tr>
+            </table>
+            <div style="font-size:14px;font-weight:700;color:#2c2c3a;">WooCommerce</div>
+            <div style="font-size:11px;color:#666678;margin-top:4px;">Orders · Products · Customers</div>
           </td>
-          <td style="vertical-align:middle;white-space:nowrap;text-align:right;">
-            <a href="mailto:raj.odoo2026@gmail.com"
-               style="display:inline-block;background:#e67e22;color:#fff;font-weight:700;font-size:14px;padding:12px 24px;border-radius:6px;text-decoration:none;border:none;">
-              raj.odoo2026@gmail.com
-            </a>
+          <td width="12%" style="text-align:center;padding:0 10px;">
+            <span style="font-size:30px;color:#e67e22;font-weight:700;">&#8651;</span>
+          </td>
+          <td width="32%" style="background:#f5f5f5;border:2px solid #ccc;border-radius:8px;padding:24px 16px;text-align:center;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 10px;">
+              <tr><td style="background:#888;border-radius:8px;padding:10px;text-align:center;line-height:0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#fff" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="#fff" stroke-width="2"/></svg>
+              </td></tr>
+            </table>
+            <div style="font-size:14px;font-weight:700;color:#2c2c3a;">Woo Connector</div>
+            <div style="font-size:11px;color:#666678;margin-top:4px;">Webhooks · Queue · Cron</div>
+          </td>
+          <td width="12%" style="text-align:center;padding:0 10px;">
+            <span style="font-size:30px;color:#e67e22;font-weight:700;">&#8651;</span>
+          </td>
+          <td width="32%" style="background:#f5f0f3;border:2px solid #714b67;border-radius:8px;padding:24px 16px;text-align:center;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 10px;">
+              <tr><td style="background:#714b67;border-radius:8px;padding:10px;text-align:center;line-height:0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="#fff"/></svg>
+              </td></tr>
+            </table>
+            <div style="font-size:14px;font-weight:700;color:#2c2c3a;">Odoo 19</div>
+            <div style="font-size:11px;color:#666678;margin-top:4px;">Sales · Inventory · Accounting</div>
           </td>
         </tr>
       </table>
-    </div>
-  </div>
-</div>
+    </td>
+  </tr>
+</table>
+
+<!-- ═══════ VIDEO ═══════ -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#fff;border-top:1px solid #e0dce8;padding:40px 32px;">
+      <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">See WooCommerce Odoo Sync In Action</h2>
+      <p style="color:#666678;font-size:13px;margin:0 0 20px;">Watch how to install, configure and run your first WooCommerce to Odoo sync — from setup to live order import.</p>
+      <video autoplay muted loop playsinline controls width="100%" style="border-radius:8px;border:2px solid #7f54b3;display:block;max-width:900px;margin:0 auto;" poster="icon.png">
+        <source src="WooCommerce-Odoo19.mp4" type="video/mp4">
+      </video>
+    </td>
+  </tr>
+</table>
+
+<!-- ═══════ FEATURES ═══════ -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#faf9fc;border-top:1px solid #e0dce8;padding:40px 32px;">
+      <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Key Features of WooCommerce Odoo 19 Connector</h2>
+      <p style="color:#666678;font-size:13px;margin:0 0 24px;">Everything you need to run a seamlessly connected WooCommerce and Odoo 19 operation — without any third-party middleware.</p>
+
+      <table width="100%" cellpadding="0" cellspacing="8" border="0">
+        <tr>
+          <td width="33%" style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:20px 16px;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+              <tr><td style="background:#fff3e0;border-radius:8px;padding:8px;line-height:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#e67e22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </td></tr>
+            </table>
+            <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">Real-time WooCommerce Order Sync</strong>
+            <span style="font-size:13px;color:#666678;">WooCommerce orders arrive in Odoo seconds after checkout via HMAC-SHA256 verified webhooks. No polling delays, no missed orders.</span>
+          </td>
+          <td width="33%" style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:20px 16px;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+              <tr><td style="background:#f0ebf8;border-radius:8px;padding:8px;line-height:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="17 1 21 5 17 9" stroke="#7f54b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 11V9a4 4 0 014-4h14" stroke="#7f54b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="7 23 3 19 7 15" stroke="#7f54b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 13v2a4 4 0 01-4 4H3" stroke="#7f54b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </td></tr>
+            </table>
+            <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">Bidirectional WooCommerce Product Sync</strong>
+            <span style="font-size:13px;color:#666678;">Import products, names, SKUs, prices, images and categories from WooCommerce. Push Odoo products and stock back to WooCommerce automatically.</span>
+          </td>
+          <td width="33%" style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:20px 16px;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+              <tr><td style="background:#e8f5e9;border-radius:8px;padding:8px;line-height:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" stroke="#27ae60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="7" y1="7" x2="7.01" y2="7" stroke="#27ae60" stroke-width="2" stroke-linecap="round"/></svg>
+              </td></tr>
+            </table>
+            <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">WooCommerce SKU Mapping to Odoo</strong>
+            <span style="font-size:13px;color:#666678;">WooCommerce SKUs synced to <code style="font-size:11px;background:#f0ebf8;padding:1px 4px;border-radius:3px;color:#7f54b3;">default_code</code> on every import. SKU changes detected and applied in both directions automatically.</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:20px 16px;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+              <tr><td style="background:#e3f2fd;border-radius:8px;padding:8px;line-height:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </td></tr>
+            </table>
+            <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">Odoo Inventory Sync to WooCommerce</strong>
+            <span style="font-size:13px;color:#666678;">Odoo on-hand stock pushed to WooCommerce automatically on delivery validation and manual sync. Warehouse-scoped quantities supported.</span>
+          </td>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:20px 16px;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+              <tr><td style="background:#fce4ec;border-radius:8px;padding:8px;line-height:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#c2185b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#c2185b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </td></tr>
+            </table>
+            <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">Multi-Store WooCommerce Odoo Support</strong>
+            <span style="font-size:13px;color:#666678;">Connect unlimited WooCommerce stores to one Odoo 19 database. Each store has its own credentials, warehouse, pricelist, and sync settings.</span>
+          </td>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:20px 16px;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+              <tr><td style="background:#f3e5f5;border-radius:8px;padding:8px;line-height:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><line x1="18" y1="20" x2="18" y2="10" stroke="#7b1fa2" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="20" x2="12" y2="4" stroke="#7b1fa2" stroke-width="2" stroke-linecap="round"/><line x1="6" y1="20" x2="6" y2="14" stroke="#7b1fa2" stroke-width="2" stroke-linecap="round"/></svg>
+              </td></tr>
+            </table>
+            <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">WooCommerce Analytics Dashboard in Odoo</strong>
+            <span style="font-size:13px;color:#666678;">Live OWL 2 dashboard inside Odoo showing WooCommerce orders, revenue, sync status, and queue health. No external dependencies.</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:20px 16px;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+              <tr><td style="background:#fff8e1;border-radius:8px;padding:8px;line-height:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="17 1 21 5 17 9" stroke="#f57f17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 01-4 4H3" stroke="#f57f17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </td></tr>
+            </table>
+            <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">Smart Retry Queue with Full Error Log</strong>
+            <span style="font-size:13px;color:#666678;">Failed WooCommerce Odoo syncs queued and retried up to 5 times. Full error log and manual retry in Monitoring &#8594; Sync Queue.</span>
+          </td>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:20px 16px;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+              <tr><td style="background:#e8f5e9;border-radius:8px;padding:8px;line-height:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" stroke="#388e3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="7" y1="7" x2="7.01" y2="7" stroke="#388e3c" stroke-width="2" stroke-linecap="round"/></svg>
+              </td></tr>
+            </table>
+            <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">WooCommerce Tax &amp; Coupon Mapping</strong>
+            <span style="font-size:13px;color:#666678;">WooCommerce taxes mapped to Odoo <code style="font-size:11px;background:#f0ebf8;padding:1px 4px;border-radius:3px;color:#7f54b3;">account.tax</code>. Coupons and discounts fully preserved on Odoo sale orders.</span>
+          </td>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:20px 16px;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+              <tr><td style="background:#e3f2fd;border-radius:8px;padding:8px;line-height:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="#1565c0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="#1565c0" stroke-width="2"/></svg>
+              </td></tr>
+            </table>
+            <strong style="font-size:14px;color:#2c2c3a;display:block;margin-bottom:6px;">WooCommerce Customer Sync to Odoo</strong>
+            <span style="font-size:13px;color:#666678;">Matches WooCommerce customers to existing Odoo partners by email. No duplicate <code style="font-size:11px;background:#f0ebf8;padding:1px 4px;border-radius:3px;color:#7f54b3;">res.partner</code> records created.</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- ═══════ SYNC COVERAGE TABLE ═══════ -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#fff;border-top:1px solid #e0dce8;padding:40px 32px;">
+      <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">WooCommerce &#8596; Odoo: Complete Sync Coverage</h2>
+      <p style="color:#666678;font-size:13px;margin:0 0 20px;">Every data type synced between WooCommerce and Odoo 19 — and in which direction.</p>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:13px;border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th style="background:#7f54b3;color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;">Data Type</th>
+            <th style="background:#7f54b3;color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;">WooCommerce &#8594; Odoo</th>
+            <th style="background:#7f54b3;color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;">Odoo &#8594; WooCommerce</th>
+            <th style="background:#7f54b3;color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Orders</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Real-time</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Status push</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Webhook + cron fallback</td></tr>
+          <tr style="background:#faf9fc;"><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Products</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Import</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Push (sync_to_woo)</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Name, price, description, images</td></tr>
+          <tr><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>SKUs</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Every sync</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; With stock sync</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">product.template.default_code</td></tr>
+          <tr style="background:#faf9fc;"><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Stock / Inventory</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; On import</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Auto-push</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Warehouse-scoped qty_available</td></tr>
+          <tr><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Product Images</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Download</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#aaa;">&#8212;</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Stored on product.template.image_1920</td></tr>
+          <tr style="background:#faf9fc;"><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Customers</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Import</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#aaa;">&#8212;</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Deduplication by email</td></tr>
+          <tr><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Taxes</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Map</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#aaa;">&#8212;</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Mapped to account.tax</td></tr>
+          <tr style="background:#faf9fc;"><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Coupons</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Import</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#aaa;">&#8212;</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">As discount lines on sale orders</td></tr>
+          <tr><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;"><strong>Shipping</strong></td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#27ae60;font-weight:700;">&#10004; Map</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#aaa;">&#8212;</td><td style="padding:9px 14px;border-bottom:1px solid #e0dce8;color:#666678;">Mapped to delivery products</td></tr>
+          <tr style="background:#faf9fc;"><td style="padding:9px 14px;"><strong>Variable Products</strong></td><td style="padding:9px 14px;color:#27ae60;font-weight:700;">&#10004; Supported</td><td style="padding:9px 14px;color:#aaa;">&#8212;</td><td style="padding:9px 14px;color:#666678;">Variant SKU, price, stock per variant</td></tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- ═══════ WHY CHOOSE ═══════ -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#faf9fc;border-top:1px solid #e0dce8;padding:40px 32px;">
+      <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Why Choose This WooCommerce Odoo Connector?</h2>
+      <p style="color:#666678;font-size:13px;margin:0 0 20px;">Built specifically for Odoo 19 — no shortcuts, no legacy code from older versions.</p>
+      <table width="100%" cellpadding="0" cellspacing="8" border="0">
+        <tr>
+          <td width="50%" style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:16px;vertical-align:top;">
+            <strong style="font-size:13px;color:#2c2c3a;display:block;margin-bottom:6px;">
+              <span style="display:inline-block;width:10px;height:10px;background:#27ae60;border-radius:50%;margin-right:6px;"></span>Native Odoo 19 Architecture
+            </strong>
+            <span style="font-size:12px;color:#666678;">Built with OWL 2, Odoo 19 model constraints, and the latest API conventions. No deprecated methods, no compatibility hacks.</span>
+          </td>
+          <td width="50%" style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:16px;vertical-align:top;">
+            <strong style="font-size:13px;color:#2c2c3a;display:block;margin-bottom:6px;">
+              <span style="display:inline-block;width:10px;height:10px;background:#7f54b3;border-radius:50%;margin-right:6px;"></span>No Third-Party SaaS Required
+            </strong>
+            <span style="font-size:12px;color:#666678;">Direct WooCommerce REST API calls from Odoo. No middleware subscriptions, no data leaving your servers, no recurring SaaS fees.</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:16px;vertical-align:top;">
+            <strong style="font-size:13px;color:#2c2c3a;display:block;margin-bottom:6px;">
+              <span style="display:inline-block;width:10px;height:10px;background:#e67e22;border-radius:50%;margin-right:6px;"></span>True Bidirectional Sync
+            </strong>
+            <span style="font-size:12px;color:#666678;">Not just WooCommerce to Odoo — push products, stock, SKUs and order status from Odoo back to WooCommerce. Full two-way data flow.</span>
+          </td>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:8px;padding:16px;vertical-align:top;">
+            <strong style="font-size:13px;color:#2c2c3a;display:block;margin-bottom:6px;">
+              <span style="display:inline-block;width:10px;height:10px;background:#1976d2;border-radius:50%;margin-right:6px;"></span>Full Source Code, OPL-1 License
+            </strong>
+            <span style="font-size:12px;color:#666678;">Complete Python, XML, JS source included. Read it, modify it, extend it. One-time purchase, no annual renewal required.</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- ═══════ INSTALLATION ═══════ -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#fff;border-top:1px solid #e0dce8;padding:40px 32px;">
+      <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Install WooCommerce Odoo 19 Connector in 5 Minutes</h2>
+      <p style="color:#666678;font-size:13px;margin:0 0 24px;">From download to first WooCommerce order synced in under 5 minutes.</p>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="40" style="vertical-align:top;padding:0 16px 20px 0;">
+            <table cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#7f54b3;color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;font-size:14px;font-weight:700;line-height:32px;vertical-align:middle;">1</td></tr></table>
+          </td>
+          <td style="vertical-align:top;padding-bottom:20px;">
+            <strong style="font-size:14px;display:block;margin-bottom:3px;">Copy module to your Odoo addons path</strong>
+            <span style="font-size:13px;color:#666678;">Unzip and place the <code style="background:#f0ebf8;border:1px solid #e0dce8;border-radius:4px;padding:1px 6px;font-size:12px;color:#7f54b3;">woo_connector</code> folder inside your custom addons directory.</span>
+          </td>
+        </tr>
+        <tr>
+          <td width="40" style="vertical-align:top;padding:0 16px 20px 0;">
+            <table cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#7f54b3;color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;font-size:14px;font-weight:700;line-height:32px;vertical-align:middle;">2</td></tr></table>
+          </td>
+          <td style="vertical-align:top;padding-bottom:20px;">
+            <strong style="font-size:14px;display:block;margin-bottom:3px;">Update module list &amp; install</strong>
+            <span style="font-size:13px;color:#666678;">Go to <strong>Apps &#8594; Update Apps List</strong>, search <strong>WooCommerce Odoo Connector</strong>, click Install. Or via CLI:</span><br/>
+            <code style="background:#f0ebf8;border:1px solid #e0dce8;border-radius:4px;padding:3px 8px;font-size:12px;color:#7f54b3;display:inline-block;margin-top:5px;">./odoo-bin -u woo_connector -d your_database</code>
+          </td>
+        </tr>
+        <tr>
+          <td width="40" style="vertical-align:top;padding:0 16px 20px 0;">
+            <table cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#7f54b3;color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;font-size:14px;font-weight:700;line-height:32px;vertical-align:middle;">3</td></tr></table>
+          </td>
+          <td style="vertical-align:top;padding-bottom:20px;">
+            <strong style="font-size:14px;display:block;margin-bottom:3px;">Create a WooCommerce Instance in Odoo</strong>
+            <span style="font-size:13px;color:#666678;">Go to <strong>WooSync &#8594; Configuration &#8594; Instances &#8594; New</strong>. Enter your WooCommerce store URL, Consumer Key, and Consumer Secret.</span>
+          </td>
+        </tr>
+        <tr>
+          <td width="40" style="vertical-align:top;padding:0 16px 20px 0;">
+            <table cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#7f54b3;color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;font-size:14px;font-weight:700;line-height:32px;vertical-align:middle;">4</td></tr></table>
+          </td>
+          <td style="vertical-align:top;padding-bottom:20px;">
+            <strong style="font-size:14px;display:block;margin-bottom:3px;">Test Connection &amp; Run First WooCommerce Sync</strong>
+            <span style="font-size:13px;color:#666678;">Click <strong>Test Connection</strong>, then use <strong>Sync Products</strong>, <strong>Sync Orders</strong>, or <strong>Sync Stock</strong> to run your first WooCommerce Odoo import.</span>
+          </td>
+        </tr>
+        <tr>
+          <td width="40" style="vertical-align:top;padding:0 16px 0 0;">
+            <table cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#7f54b3;color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;font-size:14px;font-weight:700;line-height:32px;vertical-align:middle;">5</td></tr></table>
+          </td>
+          <td style="vertical-align:top;">
+            <strong style="font-size:14px;display:block;margin-bottom:3px;">(Optional) Configure WooCommerce Webhooks</strong>
+            <span style="font-size:13px;color:#666678;">In WooCommerce &#8594; Settings &#8594; Advanced &#8594; Webhooks, set delivery URL to:</span><br/>
+            <code style="background:#f0ebf8;border:1px solid #e0dce8;border-radius:4px;padding:3px 8px;font-size:12px;color:#7f54b3;display:inline-block;margin-top:5px;">https://your-odoo.com/woo/webhook/order</code>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- ═══════ REQUIREMENTS ═══════ -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#faf9fc;border-top:1px solid #e0dce8;padding:40px 32px;">
+      <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Requirements</h2>
+      <p style="color:#666678;font-size:13px;margin:0 0 20px;">Minimum versions and dependencies to run the WooCommerce Odoo 19 connector.</p>
+      <table width="100%" cellpadding="0" cellspacing="8" border="0">
+        <tr>
+          <td width="50%" style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;"><span style="display:inline-block;width:10px;height:10px;background:#27ae60;border-radius:50%;margin-right:8px;vertical-align:middle;"></span><strong>Odoo 19.0</strong> — Community or Enterprise</td>
+          <td width="50%" style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;"><span style="display:inline-block;width:10px;height:10px;background:#7f54b3;border-radius:50%;margin-right:8px;vertical-align:middle;"></span><strong>WooCommerce 6+</strong> — REST API v3</td>
+        </tr>
+        <tr>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;"><span style="display:inline-block;width:10px;height:10px;background:#1976d2;border-radius:50%;margin-right:8px;vertical-align:middle;"></span><strong>Python 3.10+</strong> with <code style="background:#f0ebf8;padding:1px 5px;border-radius:3px;color:#7f54b3;font-size:12px;">requests</code> library</td>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;"><span style="display:inline-block;width:10px;height:10px;background:#e67e22;border-radius:50%;margin-right:8px;vertical-align:middle;"></span>Odoo apps: <strong>sale_management, stock, account, mail</strong></td>
+        </tr>
+        <tr>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;"><span style="display:inline-block;width:10px;height:10px;background:#c2185b;border-radius:50%;margin-right:8px;vertical-align:middle;"></span>WooCommerce <strong>Consumer Key &amp; Secret</strong> (read/write)</td>
+          <td style="background:#fff;border:1px solid #e0dce8;border-radius:6px;padding:12px 14px;font-size:13px;"><span style="display:inline-block;width:10px;height:10px;background:#888;border-radius:50%;margin-right:8px;vertical-align:middle;"></span>Public Odoo URL for webhooks <em>(optional)</em></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- ═══════ FAQ ═══════ -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#fff;border-top:1px solid #e0dce8;padding:40px 32px;">
+      <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Frequently Asked Questions — WooCommerce Odoo Connector</h2>
+      <p style="color:#666678;font-size:13px;margin:0 0 20px;">Common questions about setting up WooCommerce with Odoo 19.</p>
+      <div itemscope itemtype="https://schema.org/FAQPage">
+
+        <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">Does this WooCommerce Odoo connector work with Odoo 19 Community Edition?</td></tr></table>
+          <div style="padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Yes. Fully compatible with both Odoo 19 Community and Enterprise. The OWL 2 dashboard, webhooks, and sync queue all work in Community without any Enterprise dependencies.</div></div>
+        </div>
+
+        <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">How does WooCommerce SKU sync to Odoo work?</td></tr></table>
+          <div style="padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">WooCommerce SKUs are written to product.template.default_code on every sync run. If a SKU changes in WooCommerce, it is detected and updated in Odoo automatically. If you update the SKU in the Odoo WooCommerce product mapping, it is pushed back to WooCommerce on the next Sync Stock run.</div></div>
+        </div>
+
+        <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">Why is WooCommerce showing stock as 0 after syncing from Odoo?</td></tr></table>
+          <div style="padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Stock sync pushes Odoo on-hand quantities to WooCommerce. If your Odoo products have no stock records, the pushed quantity is 0. Add inventory via Inventory then Products then Update Quantity, then click Sync Stock again. Ensure Manage stock is enabled on the WooCommerce product side.</div></div>
+        </div>
+
+        <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">Does the WooCommerce Odoo integration support variable products?</td></tr></table>
+          <div style="padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Yes. WooCommerce variable products are fully supported. Each variant SKU, price, and stock quantity are synced and mapped to Odoo product.product records.</div></div>
+        </div>
+
+        <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">Can I connect multiple WooCommerce stores to one Odoo 19 database?</td></tr></table>
+          <div style="padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Yes. The connector supports unlimited WooCommerce store instances per Odoo database. Each store has its own credentials, warehouse, pricelist, and sync configuration.</div></div>
+        </div>
+
+        <div style="border:1px solid #e0dce8;border-radius:8px;margin-bottom:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">What happens if a WooCommerce Odoo sync fails?</td></tr></table>
+          <div style="padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Failed syncs are saved to the queue with the full error message. The cron job retries them automatically up to 5 attempts. You can also view and manually retry from Monitoring then Sync Queue inside Odoo.</div></div>
+        </div>
+
+        <div style="border:1px solid #e0dce8;border-radius:8px;overflow:hidden;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background:#faf9fc;padding:13px 18px;font-size:14px;font-weight:600;border-bottom:1px solid #e0dce8;color:#2c2c3a;" itemprop="name">Is the WooCommerce Odoo connector source code included?</td></tr></table>
+          <div style="padding:12px 18px;font-size:13px;color:#555;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Yes. You receive the complete Odoo module source code — Python, XML, CSS, and JS — under OPL-1 license. You can read, modify, and extend it freely to match your business requirements.</div></div>
+        </div>
+
+      </div>
+    </td>
+  </tr>
+</table>
+
+<!-- ═══════ SUPPORT — full table structure so dark bg survives ═══════ -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#fff;border-top:1px solid #e0dce8;padding:40px 32px;">
+      <h2 style="font-size:20px;font-weight:700;color:#7f54b3;margin:0 0 6px;padding-left:12px;border-left:4px solid #7f54b3;">Support &amp; Service</h2>
+      <p style="color:#666678;font-size:13px;margin:0 0 20px;">Expert WooCommerce Odoo integration support — from setup to customisation.</p>
+
+      <!-- Outer dark card using table -->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:12px;overflow:hidden;">
+        <tr>
+          <td style="background:#2d1b4e;padding:36px 32px;">
+            <h3 style="font-size:20px;font-weight:800;margin:0 0 8px;color:#fff;">We've Got You Covered</h3>
+            <p style="font-size:13px;margin:0 0 28px;color:#c8b8e8;">From initial WooCommerce Odoo setup to advanced customisation — reach out and we will respond fast.</p>
+
+            <!-- 4 support cards -->
+            <table width="100%" cellpadding="0" cellspacing="10" border="0" style="margin-bottom:16px;">
+              <tr>
+                <td width="25%" style="background:#3d2860;border:1px solid #5a3d8a;border-radius:8px;padding:16px 14px;vertical-align:top;">
+                  <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;"><tr><td style="background:#5a3d8a;border-radius:6px;padding:7px;line-height:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#d8c8f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke="#d8c8f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr></table>
+                  <strong style="font-size:13px;display:block;margin-bottom:4px;color:#fff;">Email Support</strong>
+                  <span style="font-size:12px;line-height:1.5;color:#c8b8e8;">Direct support for WooCommerce Odoo installation, configuration, and bug reports.</span>
+                </td>
+                <td width="25%" style="background:#3d2860;border:1px solid #5a3d8a;border-radius:8px;padding:16px 14px;vertical-align:top;">
+                  <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;"><tr><td style="background:#5a3d8a;border-radius:6px;padding:7px;line-height:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke="#d8c8f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr></table>
+                  <strong style="font-size:13px;display:block;margin-bottom:4px;color:#fff;">Bug Fixes</strong>
+                  <span style="font-size:12px;line-height:1.5;color:#c8b8e8;">Issues found after purchase are fixed promptly. Updates delivered via email.</span>
+                </td>
+                <td width="25%" style="background:#3d2860;border:1px solid #5a3d8a;border-radius:8px;padding:16px 14px;vertical-align:top;">
+                  <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;"><tr><td style="background:#5a3d8a;border-radius:6px;padding:7px;line-height:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#d8c8f5" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="#d8c8f5" stroke-width="2"/></svg></td></tr></table>
+                  <strong style="font-size:13px;display:block;margin-bottom:4px;color:#fff;">Customisation</strong>
+                  <span style="font-size:12px;line-height:1.5;color:#c8b8e8;">Need extra WooCommerce Odoo features or custom field mapping? Paid customisation available.</span>
+                </td>
+                <td width="25%" style="background:#3d2860;border:1px solid #5a3d8a;border-radius:8px;padding:16px 14px;vertical-align:top;">
+                  <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;"><tr><td style="background:#5a3d8a;border-radius:6px;padding:7px;line-height:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="#d8c8f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="#d8c8f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr></table>
+                  <strong style="font-size:13px;display:block;margin-bottom:4px;color:#fff;">Documentation</strong>
+                  <span style="font-size:12px;line-height:1.5;color:#c8b8e8;">Setup guide, field mapping reference, and WooCommerce webhook config docs included.</span>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Contact bar using table -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:8px;overflow:hidden;">
+              <tr>
+                <td style="background:#3a2258;border:1px solid #c0621a;border-radius:8px;padding:20px 24px;">
+                  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td style="vertical-align:middle;padding-right:20px;">
+                        <strong style="font-size:15px;display:block;margin-bottom:4px;color:#fff;">Need help with WooCommerce Odoo integration?</strong>
+                        <span style="font-size:13px;color:#c8b8e8;">Reach out directly — we reply within 24 hours on business days.</span>
+                        <div style="margin-top:8px;font-size:12px;color:#c8b8e8;">
+                          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#27ae60;margin-right:6px;vertical-align:middle;"></span>
+                          Avg. response: under 24 hours &nbsp;&#183;&nbsp; Mon–Fri
+                        </div>
+                      </td>
+                      <td style="vertical-align:middle;white-space:nowrap;text-align:right;">
+                        <table cellpadding="0" cellspacing="0" border="0"><tr>
+                          <td style="background:#e67e22;border-radius:6px;padding:12px 22px;">
+                            <a href="mailto:raj.odoo2026@gmail.com" style="color:#fff;font-weight:700;font-size:14px;text-decoration:none;display:block;">raj.odoo2026@gmail.com</a>
+                          </td>
+                        </tr></table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
 <!-- ═══════ SEO FOOTER ═══════ -->
-<div style="background:#f5f0f8;border-top:1px solid #e0dce8;padding:20px 32px;text-align:center;">
-  <p style="font-size:11px;color:#999;margin:0;line-height:2;">
-    <strong style="color:#7f54b3;">WooCommerce Odoo 19 Connector</strong> by Trinus Systems
-    &nbsp;&#183;&nbsp; Bidirectional WooCommerce Odoo sync
-    &nbsp;&#183;&nbsp; WooCommerce order sync Odoo
-    &nbsp;&#183;&nbsp; Odoo WooCommerce stock sync
-    &nbsp;&#183;&nbsp; WooCommerce SKU mapping Odoo
-    &nbsp;&#183;&nbsp; OPL-1 &nbsp;&#183;&nbsp; Odoo 19 Community &amp; Enterprise
-  </p>
-</div>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background:#f5f0f8;border-top:1px solid #e0dce8;padding:20px 32px;text-align:center;">
+      <p style="font-size:11px;color:#999;margin:0;line-height:2;">
+        <strong style="color:#7f54b3;">WooCommerce Odoo 19 Connector</strong> by Rajashekar B
+        &nbsp;&#183;&nbsp; Bidirectional WooCommerce Odoo sync
+        &nbsp;&#183;&nbsp; WooCommerce order sync Odoo
+        &nbsp;&#183;&nbsp; Odoo WooCommerce stock sync
+        &nbsp;&#183;&nbsp; WooCommerce SKU mapping Odoo
+        &nbsp;&#183;&nbsp; OPL-1 &nbsp;&#183;&nbsp; Odoo 19 Community &amp; Enterprise
+      </p>
+    </td>
+  </tr>
+</table>
 
 </body>
 </html>
