@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Claude AI Assistant / Chat Assistant',
-    'version': '19.0.3.0.0',
+    'version': '19.0.5.1.0',
     'category': 'Extra Tools',
     'summary': 'Claude AI: Query, Create, Update, Delete, Charts & Excel — Full CRUD via Natural Language',
     'depends': ['base', 'web', 'mail'],
