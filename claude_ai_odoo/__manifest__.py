@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Claude AI Assistant | AI Chatbot, Reports, Charts & Excel',
+    'name': 'Claude AI Assistant | AI Chat Assistant | AI Chatbot, Reports, Charts & Excel',
     'version': '19.0.7.2.1',
     'category': 'Extra Tools',
     'summary': 'Claude AI chatbot for Odoo: ask your data in plain English, AI reports, interactive charts, Excel export, invoices & CRUD - most answers free without API calls',
