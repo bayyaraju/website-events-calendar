@@ -345,3 +345,7 @@ Fresh install and upgrade from 19.0.6.0.1 on Odoo 19 (no errors/warnings); all 1
 - **Drill-down**: click a bar, point, slice or legend row → the matching Odoo records open in a dialog (chat stays open).
 - **Result tables**: click a column to sort, type to filter, export visible rows to CSV, click a row to open the record.
 - New endpoint `/claude_ai/chart_data` re-aggregates charts with the user's access rights (model, fields, period and granularity are validated; no AI call, 0 tokens).
+
+## 19.0.7.2.1 — App Store page
+- Rebuilt `index.html` for the Odoo App Store: solid backgrounds (the store strips CSS gradients, which made text invisible), all special characters/emojis as HTML entities (no more garbled symbols), new "Powered by Anthropic Claude" model section, FAQ, keyword-rich headings and image alt texts, mobile-friendly layout.
+- SEO-friendly app name and summary.
