@@ -1,0 +1,301 @@
+<!-- Claude AI Assistant for Odoo 20 -->
+<section style="font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#111827;">
+
+<!-- HERO -->
+<div style="background:linear-gradient(135deg,#2e1065 0%,#5b21b6 55%,#7c3aed 100%);border-radius:22px;padding:46px 30px 30px;text-align:center;margin-bottom:56px;">
+  <div style="display:inline-block;background:rgba(255,255,255,.14);color:#ede9fe;font-size:13px;font-weight:700;letter-spacing:.08em;padding:6px 14px;border-radius:999px;margin-bottom:16px;">ODOO 20 · COMMUNITY &amp; ENTERPRISE · v20.0.7.2</div>
+  <h1 style="color:#fff;font-size:42px;font-weight:800;line-height:1.15;margin:0 0 14px;letter-spacing:-.02em;">Claude AI Assistant for Odoo 20</h1>
+  <p style="color:#ddd6fe;font-size:19px;line-height:1.6;max-width:780px;margin:0 auto 26px;">Ask, create, update, chart and export your live Odoo data in plain English.
+  Everyday requests are answered <b style="color:#6ee7b7;">by Odoo itself, for free</b>&nbsp;&mdash; Claude is called only when it is really needed.</p>
+  <img src="banner.gif" alt="Animated demo: Odoo answers locally, the cache re-uses answers, Claude Opus 5.5 / Sonnet 5.5 handles complex questions" class="img img-responsive" style="width:100% !important;max-width:1000px;margin:0 auto;border-radius:16px;box-shadow:0 30px 70px rgba(0,0,0,.45);"/>
+  <div class="row" style="margin:30px auto 0;max-width:1000px;">
+    <div class="col-md-3 col-sm-6" style="padding:10px;text-align:center;">
+  <div style="font-size:30px;font-weight:800;color:#fff;">90%+</div>
+  <div style="font-size:13.5px;color:#ddd6fe;letter-spacing:.02em;">requests answered at 0 tokens</div></div>
+    <div class="col-md-3 col-sm-6" style="padding:10px;text-align:center;">
+  <div style="font-size:30px;font-weight:800;color:#fff;">1 message</div>
+  <div style="font-size:13.5px;color:#ddd6fe;letter-spacing:.02em;">multi-step tasks, no back-and-forth</div></div>
+    <div class="col-md-3 col-sm-6" style="padding:10px;text-align:center;">
+  <div style="font-size:30px;font-weight:800;color:#fff;">100%</div>
+  <div style="font-size:13.5px;color:#ddd6fe;letter-spacing:.02em;">Odoo access rights enforced</div></div>
+    <div class="col-md-3 col-sm-6" style="padding:10px;text-align:center;">
+  <div style="font-size:30px;font-weight:800;color:#fff;">4 models</div>
+  <div style="font-size:13.5px;color:#ddd6fe;letter-spacing:.02em;">Opus 5.5 · Sonnet 5.5 · Haiku 4.5 · Fable 5.1</div></div>
+  </div>
+</div>
+
+<!-- HOW IT SAVES -->
+<div style="margin-bottom:60px;">
+  <div style="text-align:center;margin:0 auto 34px;max-width:760px;">
+  <h2 style="font-size:32px;font-weight:800;color:#111827;margin:0 0 10px;letter-spacing:-.01em;">Pay for AI only when you need it</h2>
+  <p style="font-size:17px;color:#4b5563;margin:0;line-height:1.6;">Every message goes through three layers. Most never reach the API.</p>
+</div>
+  <div class="row" style="max-width:1100px;margin:0 auto;">
+    <div class="col-md-4" style="padding:10px;">
+  <div style="height:100%;border-radius:16px;padding:24px;background:#fff;border:1px solid #e5e7eb;border-top:5px solid #059669;">
+    <div style="display:inline-block;width:34px;height:34px;line-height:34px;border-radius:50%;background:#059669;color:#fff;font-weight:800;text-align:center;margin-bottom:10px;">1</div>
+    <div style="font-size:18px;font-weight:700;color:#111827;margin-bottom:6px;">⚡ Local engine</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Quick actions, counts, lists, confirm / invoice / post commands and app installs are answered directly by Odoo — instant and free.</div></div></div>
+    <div class="col-md-4" style="padding:10px;">
+  <div style="height:100%;border-radius:16px;padding:24px;background:#fff;border:1px solid #e5e7eb;border-top:5px solid #0891b2;">
+    <div style="display:inline-block;width:34px;height:34px;line-height:34px;border-radius:50%;background:#0891b2;color:#fff;font-weight:800;text-align:center;margin-bottom:10px;">2</div>
+    <div style="font-size:18px;font-weight:700;color:#111827;margin-bottom:6px;">♻️ Answer cache</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">A question Claude already answered is replayed against <b>fresh</b> data — same result, no new AI call.</div></div></div>
+    <div class="col-md-4" style="padding:10px;">
+  <div style="height:100%;border-radius:16px;padding:24px;background:#fff;border:1px solid #e5e7eb;border-top:5px solid #7c3aed;">
+    <div style="display:inline-block;width:34px;height:34px;line-height:34px;border-radius:50%;background:#7c3aed;color:#fff;font-weight:800;text-align:center;margin-bottom:10px;">3</div>
+    <div style="font-size:18px;font-weight:700;color:#111827;margin-bottom:6px;">🤖 Claude AI</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Complex questions go to Claude with prompt caching, short answers and only recent history — far fewer tokens per call.</div></div></div>
+  </div>
+  <p style="text-align:center;color:#4b5563;font-size:14.5px;margin-top:16px;">Live savings (local, cached, AI calls, tokens and $ saved) are shown in the chat and in <b>Configuration</b>. Start a message with <code>!</code> to force Claude.</p>
+</div>
+
+<!-- NEW -->
+<div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:20px;padding:30px;margin-bottom:60px;">
+  <div style="text-align:center;margin-bottom:18px;"><span style="background:#059669;color:#fff;font-weight:700;font-size:13px;letter-spacing:.06em;padding:5px 14px;border-radius:999px;">NEW IN 20.0.7.2</span></div>
+  <div class="row" style="max-width:1100px;margin:0 auto;">
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#0596691a;color:#059669;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">🎯</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Acts, doesn&rsquo;t ask</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Crisp replies (max 2 sentences). No plans, no "let me check", no repeated questions.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#0596691a;color:#059669;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">🔗</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Multi-step in one message</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">"Create invoice for S00022" — the record is looked up and the invoice created in a single turn.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#0596691a;color:#059669;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">🧾</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Order &amp; invoice commands</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Confirm orders, create and post invoices locally — 0 tokens, duplicate-safe.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#0596691a;color:#059669;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">🧠</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Grounded in real results</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Every operation result stays in the conversation — Claude never re-checks or invents numbers.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#0596691a;color:#059669;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">📊</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Interactive charts</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Hover for values, switch Bar/Line/Pie, change period (1M–YTD) and Week/Month/Quarter, export CSV/PNG.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#0596691a;color:#059669;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">🖱️</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Click to drill down</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Click a bar, point or slice to open its records. Tables sort, filter, export and open rows.</div>
+  </div></div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div style="margin-bottom:60px;">
+  <div style="text-align:center;margin:0 auto 34px;max-width:760px;">
+  <h2 style="font-size:32px;font-weight:800;color:#111827;margin:0 0 10px;letter-spacing:-.01em;">Everything your team needs from an AI assistant</h2>
+  <p style="font-size:17px;color:#4b5563;margin:0;line-height:1.6;">One chat window inside Odoo, working on your live database.</p>
+</div>
+  <div class="row" style="max-width:1100px;margin:0 auto;">
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#7c3aed1a;color:#7c3aed;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">💬</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Natural-language queries</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Sales, invoices, stock, purchases, employees — any installed model, in plain English.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#7c3aed1a;color:#7c3aed;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">📊</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Instant charts</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Bar, line, pie and doughnut charts built from real records, with fullscreen view.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#7c3aed1a;color:#7c3aed;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">📋</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Excel reports</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Professional multi-sheet .xlsx exports generated in one click.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#7c3aed1a;color:#7c3aed;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">✏️</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Full CRUD</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Create, update and delete records via chat or guided forms, with confirmation for writes.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#7c3aed1a;color:#7c3aed;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">📁</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">CSV / Excel import</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Attach a file and import hundreds of records in one step.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#7c3aed1a;color:#7c3aed;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">📦</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Install apps</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Browse and install Odoo apps from the chat, with a reload prompt.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#7c3aed1a;color:#7c3aed;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">🔄</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Refresh prompts</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">After a change, the chat tells you to refresh open views (or reload after installs).</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#7c3aed1a;color:#7c3aed;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">🗂️</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Sessions &amp; history</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Per-user chat sessions, token tracking and full message history.</div>
+  </div></div>
+    <div class="col-md-4 col-sm-6" style="padding:10px;">
+  <div style="height:100%;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <div style="width:44px;height:44px;border-radius:12px;background:#7c3aed1a;color:#7c3aed;font-size:22px;line-height:44px;text-align:center;margin-bottom:12px;">🌗</div>
+    <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">Dark / light theme</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">A modern chat UI with loaders, source badges and savings box.</div>
+  </div></div>
+  </div>
+</div>
+
+<!-- FREE COMMANDS -->
+<div style="margin-bottom:60px;">
+  <div style="text-align:center;margin:0 auto 34px;max-width:760px;">
+  <h2 style="font-size:32px;font-weight:800;color:#111827;margin:0 0 10px;letter-spacing:-.01em;">Free commands — answered by Odoo, not the API</h2>
+  
+</div>
+  <div style="max-width:960px;margin:0 auto;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;box-shadow:0 4px 14px rgba(17,24,39,.05);">
+    <table style="width:100%;border-collapse:collapse;background:#fff;">
+      <thead><tr style="background:#f5f3ff;"><th style="padding:12px 16px;text-align:left;color:#5b21b6;">You type</th><th style="padding:12px 16px;text-align:left;color:#5b21b6;">What happens</th><th style="padding:12px 16px;text-align:left;color:#5b21b6;">Cost</th></tr></thead>
+      <tbody><tr style="border-top:1px solid #e5e7eb;"><td style="padding:11px 16px;"><code style="background:#f5f3ff;color:#5b21b6;padding:3px 8px;border-radius:6px;font-size:14px;">show customers / list products</code></td><td style="padding:11px 16px;color:#4b5563;font-size:14.5px;">Lists records of any model</td><td style="padding:11px 16px;color:#059669;font-weight:700;font-size:14px;white-space:nowrap;">0 tokens</td></tr><tr style="border-top:1px solid #e5e7eb;"><td style="padding:11px 16px;"><code style="background:#f5f3ff;color:#5b21b6;padding:3px 8px;border-radius:6px;font-size:14px;">how many invoices</code></td><td style="padding:11px 16px;color:#4b5563;font-size:14.5px;">Counts records</td><td style="padding:11px 16px;color:#059669;font-weight:700;font-size:14px;white-space:nowrap;">0 tokens</td></tr><tr style="border-top:1px solid #e5e7eb;"><td style="padding:11px 16px;"><code style="background:#f5f3ff;color:#5b21b6;padding:3px 8px;border-radius:6px;font-size:14px;">confirm S00022</code></td><td style="padding:11px 16px;color:#4b5563;font-size:14.5px;">Confirms a sale or purchase order</td><td style="padding:11px 16px;color:#059669;font-weight:700;font-size:14px;white-space:nowrap;">0 tokens</td></tr><tr style="border-top:1px solid #e5e7eb;"><td style="padding:11px 16px;"><code style="background:#f5f3ff;color:#5b21b6;padding:3px 8px;border-radius:6px;font-size:14px;">create invoice for S00022</code></td><td style="padding:11px 16px;color:#4b5563;font-size:14.5px;">Creates the draft invoice (no duplicates)</td><td style="padding:11px 16px;color:#059669;font-weight:700;font-size:14px;white-space:nowrap;">0 tokens</td></tr><tr style="border-top:1px solid #e5e7eb;"><td style="padding:11px 16px;"><code style="background:#f5f3ff;color:#5b21b6;padding:3px 8px;border-radius:6px;font-size:14px;">post invoice for S00022</code></td><td style="padding:11px 16px;color:#4b5563;font-size:14.5px;">Validates the draft invoice</td><td style="padding:11px 16px;color:#059669;font-weight:700;font-size:14px;white-space:nowrap;">0 tokens</td></tr><tr style="border-top:1px solid #e5e7eb;"><td style="padding:11px 16px;"><code style="background:#f5f3ff;color:#5b21b6;padding:3px 8px;border-radius:6px;font-size:14px;">install crm module</code></td><td style="padding:11px 16px;color:#4b5563;font-size:14.5px;">Installs an app (admins only)</td><td style="padding:11px 16px;color:#059669;font-weight:700;font-size:14px;white-space:nowrap;">0 tokens</td></tr><tr style="border-top:1px solid #e5e7eb;"><td style="padding:11px 16px;"><code style="background:#f5f3ff;color:#5b21b6;padding:3px 8px;border-radius:6px;font-size:14px;">10 Quick Actions</code></td><td style="padding:11px 16px;color:#4b5563;font-size:14.5px;">Sales, revenue pie, unpaid invoices, Excel, top products, stock, employees, trend, apps, POs</td><td style="padding:11px 16px;color:#059669;font-weight:700;font-size:14px;white-space:nowrap;">0 tokens</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SCREENSHOTS -->
+<div style="margin-bottom:40px;">
+  <div style="text-align:center;margin:0 auto 34px;max-width:760px;">
+  <h2 style="font-size:32px;font-weight:800;color:#111827;margin:0 0 10px;letter-spacing:-.01em;">See it in action</h2>
+  <p style="font-size:17px;color:#4b5563;margin:0;line-height:1.6;">Real screenshots from a live Odoo 20 database — no mockups.</p>
+</div>
+  <div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Confirm → invoice → post, in plain English</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Order commands run locally in seconds, with a refresh prompt and the resulting records.</div>
+  <img src="local-invoice-flow.png" alt="Confirm → invoice → post, in plain English" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+  <div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Interactive charts — hover, switch, re-period</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Tooltips with value and share, Bar / Line / Pie switch, 1M–YTD periods, Week / Month / Quarter grouping, CSV and PNG export.</div>
+  <img src="interactive-chart.png" alt="Interactive charts — hover, switch, re-period" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+<div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Click to drill down</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Click any bar, point or slice and the matching Odoo records open right away — without leaving the chat.</div>
+  <img src="chart-drilldown.png" alt="Click to drill down" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+<div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Interactive result tables</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Sort any column, filter rows as you type, export to CSV and click a row to open the record.</div>
+  <img src="interactive-table.png" alt="Interactive result tables" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+<div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Charts answered locally</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Monthly revenue trend built from real sale orders — 0 tokens, with the live savings box on the left.</div>
+  <img src="chat-overview.png" alt="Charts answered locally" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+  <div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Revenue pie chart</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">One click on a Quick Action — grouped server-side, rendered instantly.</div>
+  <img src="local-pie-chart.png" alt="Revenue pie chart" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+  <div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Unpaid invoices</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Filtered, totalled and listed without calling the API.</div>
+  <img src="local-unpaid-invoices.png" alt="Unpaid invoices" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+  <div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Top products</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Bar chart of best-selling products this year.</div>
+  <img src="local-top-products.png" alt="Top products" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+  <div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Ask anything — Claude handles the complex questions</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Natural-language questions on any model, answered from your live data.</div>
+  <img src="sale-order-quotation.png" alt="Ask anything — Claude handles the complex questions" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+  <div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Excel reports</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Formatted multi-sheet exports, ready to download.</div>
+  <img src="excel-file-preview.png" alt="Excel reports" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+  <div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Install apps from the chat</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Admins can install modules; the chat asks to reload so new menus appear.</div>
+  <img src="local-install-refresh.png" alt="Install apps from the chat" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+  <div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Cost-saving settings &amp; statistics</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Toggle the local engine and cache, set the cache lifetime and see tokens and money saved.</div>
+  <img src="config-cost-saving.png" alt="Cost-saving settings &amp; statistics" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+  <div style="margin:0 auto 46px;max-width:1080px;">
+  <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:4px;">Simple configuration</div>
+  <div style="font-size:15px;color:#4b5563;margin-bottom:14px;">Paste your Anthropic API key, pick a model, test the connection.</div>
+  <img src="Claude-connection.png" alt="Simple configuration" class="img img-responsive" style="width:100% !important;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(17,24,39,.12);"/>
+</div>
+</div>
+
+<!-- SECURITY -->
+<div style="background:#0f172a;border-radius:20px;padding:34px 30px;margin-bottom:60px;">
+  <h2 style="color:#fff;text-align:center;font-size:28px;font-weight:800;margin:0 0 22px;">🔒 Secure by design</h2>
+  <div class="row" style="max-width:1050px;margin:0 auto;color:#cbd5e1;font-size:14.5px;line-height:1.7;">
+    <div class="col-md-6"><ul style="padding-left:18px;margin:0;">
+      <li>Every operation runs <b style="color:#fff;">as the current user</b> — Odoo access rights and record rules apply.</li>
+      <li>Private / technical methods and security models are blocked.</li>
+      <li>Writes and deletes can require confirmation.</li></ul></div>
+    <div class="col-md-6"><ul style="padding-left:18px;margin:0;">
+      <li>Users only see their own chat sessions.</li>
+      <li>Module installs restricted to Claude admins with Settings rights.</li>
+      <li>Each operation runs in a savepoint — a failure never breaks the request.</li></ul></div>
+  </div>
+</div>
+
+<!-- SETUP -->
+<div style="margin-bottom:60px;">
+  <div style="text-align:center;margin:0 auto 34px;max-width:760px;">
+  <h2 style="font-size:32px;font-weight:800;color:#111827;margin:0 0 10px;letter-spacing:-.01em;">Up and running in 3 minutes</h2>
+  
+</div>
+  <div class="row" style="max-width:1100px;margin:0 auto;">
+    <div class="col-md-4" style="padding:10px;">
+  <div style="height:100%;border-radius:16px;padding:24px;background:#fff;border:1px solid #e5e7eb;border-top:5px solid #7c3aed;">
+    <div style="display:inline-block;width:34px;height:34px;line-height:34px;border-radius:50%;background:#7c3aed;color:#fff;font-weight:800;text-align:center;margin-bottom:10px;">1</div>
+    <div style="font-size:18px;font-weight:700;color:#111827;margin-bottom:6px;">Install</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;"><code>pip install anthropic</code>, then install the module from Apps.</div></div></div>
+    <div class="col-md-4" style="padding:10px;">
+  <div style="height:100%;border-radius:16px;padding:24px;background:#fff;border:1px solid #e5e7eb;border-top:5px solid #7c3aed;">
+    <div style="display:inline-block;width:34px;height:34px;line-height:34px;border-radius:50%;background:#7c3aed;color:#fff;font-weight:800;text-align:center;margin-bottom:10px;">2</div>
+    <div style="font-size:18px;font-weight:700;color:#111827;margin-bottom:6px;">Configure</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Claude AI → Configuration: paste your Anthropic API key and choose a model.</div></div></div>
+    <div class="col-md-4" style="padding:10px;">
+  <div style="height:100%;border-radius:16px;padding:24px;background:#fff;border:1px solid #e5e7eb;border-top:5px solid #7c3aed;">
+    <div style="display:inline-block;width:34px;height:34px;line-height:34px;border-radius:50%;background:#7c3aed;color:#fff;font-weight:800;text-align:center;margin-bottom:10px;">3</div>
+    <div style="font-size:18px;font-weight:700;color:#111827;margin-bottom:6px;">Chat</div>
+    <div style="font-size:14.5px;color:#4b5563;line-height:1.6;">Open Claude AI → AI Assistant. Quick actions work even before you add a key.</div></div></div>
+  </div>
+</div>
+
+<!-- COMPAT + SUPPORT -->
+<div class="row" style="max-width:1100px;margin:0 auto 20px;">
+  <div class="col-md-6" style="padding:10px;"><div style="height:100%;border:1px solid #e5e7eb;border-radius:16px;padding:24px;background:#fff;">
+    <div style="font-size:18px;font-weight:700;margin-bottom:10px;">✅ Compatibility</div>
+    <ul style="padding-left:18px;margin:0;color:#4b5563;font-size:14.5px;line-height:1.8;">
+      <li>Odoo 20.0 Community &amp; Enterprise</li>
+      <li>Works with Sales, Invoicing, Inventory, Purchase, HR and any custom model</li>
+      <li>Claude Opus 5.5, Sonnet 5.5, Haiku 4.5, Fable 5.1 or any custom model ID</li></ul></div></div>
+  <div class="col-md-6" style="padding:10px;"><div style="height:100%;border:1px solid #e5e7eb;border-radius:16px;padding:24px;background:linear-gradient(135deg,#f5f3ff,#ecfdf5);">
+    <div style="font-size:18px;font-weight:700;margin-bottom:10px;">💬 Support</div>
+    <p style="color:#4b5563;font-size:14.5px;line-height:1.7;margin:0 0 12px;">Questions, customisation or a feature request? Get in touch.</p>
+    <a href="mailto:raj.odoo2026@gmail.com" style="display:inline-block;background:#5b21b6;color:#fff;font-weight:700;padding:10px 20px;border-radius:10px;text-decoration:none;">raj.odoo2026@gmail.com</a></div></div>
+</div>
+
+</section>

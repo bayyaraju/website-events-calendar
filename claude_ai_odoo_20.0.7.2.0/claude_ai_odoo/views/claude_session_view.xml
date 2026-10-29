@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_claude_chat" model="ir.actions.client">
+        <field name="name">Claude AI Assistant</field>
+        <field name="tag">claude_ai.ChatWidget</field>
+    </record>
+
+    <record id="action_claude_sessions" model="ir.actions.act_window">
+        <field name="name">Chat Sessions</field>
+        <field name="res_model">claude.session</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_claude_session_list" model="ir.ui.view">
+        <field name="name">claude.session.list</field>
+        <field name="model">claude.session</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="user_id"/>
+                <field name="total_tokens"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_claude_session_form" model="ir.ui.view">
+        <field name="name">claude.session.form</field>
+        <field name="model">claude.session</field>
+        <field name="arch" type="xml">
+            <form create="false">
+                <header>
+                    <button name="action_clear" string="Clear History" type="object"/>
+                    <button name="action_close" string="Close Session" type="object"
+                            invisible="state == 'closed'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="user_id" readonly="1"/>
+                        <field name="total_tokens" readonly="1"/>
+                    </group>
+                    <field name="message_ids" readonly="1">
+                        <list>
+                            <field name="role"/>
+                            <field name="content"/>
+                            <field name="tokens"/>
+                            <field name="create_date"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
