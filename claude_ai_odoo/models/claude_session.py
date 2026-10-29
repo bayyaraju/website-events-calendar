@@ -21,6 +21,29 @@ class ClaudeSession(models.Model):
         except Exception:
             return []
 
+    def get_api_history(self):
+        """History in a shape the Anthropic API always accepts: starts with a user turn,
+        roles alternate (consecutive same-role turns are merged), no empty content."""
+        clean = []
+        for m in self.get_history():
+            role, content = m.get('role'), (m.get('content') or '').strip()
+            if role not in ('user', 'assistant') or not content:
+                continue
+            if clean and clean[-1]['role'] == role:
+                clean[-1]['content'] += '\n\n' + content
+            else:
+                clean.append({'role': role, 'content': content})
+        while clean and clean[0]['role'] != 'user':
+            clean.pop(0)
+        return clean
+
+    def drop_last_user_message(self):
+        """Remove the pending user turn when the API call failed (keeps history valid)."""
+        history = self.get_history()
+        if history and history[-1].get('role') == 'user':
+            history.pop()
+            self.history_json = json.dumps(history)
+
     def add_message(self, role, content):
         history = self.get_history()
         history.append({'role': role, 'content': content})
@@ -46,4 +69,3 @@ class ClaudeMessage(models.Model):
     role = fields.Selection([('user', 'User'), ('assistant', 'Claude')], required=True)
     content = fields.Text(required=True)
     tokens = fields.Integer(default=0)
-    create_date = fields.Datetime(readonly=True)

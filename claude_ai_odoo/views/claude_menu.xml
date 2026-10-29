@@ -8,6 +8,9 @@
     <menuitem id="menu_claude_sessions" name="Sessions"
               parent="menu_claude_root" action="action_claude_sessions"
               sequence="20" groups="claude_ai_odoo.group_claude_admin"/>
+    <menuitem id="menu_claude_cache" name="Answer Cache"
+              parent="menu_claude_root" action="action_claude_query_cache"
+              sequence="80" groups="claude_ai_odoo.group_claude_admin"/>
     <menuitem id="menu_claude_config" name="Configuration"
               parent="menu_claude_root" action="action_claude_config"
               sequence="90" groups="claude_ai_odoo.group_claude_admin"/>

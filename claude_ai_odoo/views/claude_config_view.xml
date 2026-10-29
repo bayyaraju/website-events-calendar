@@ -60,6 +60,7 @@
                             <field name="api_key" placeholder="sk-ant-api03-..."
                                    help="Type your key and click Save." password="True"/>
                             <field name="model_name"/>
+                            <field name="custom_model" placeholder="optional, e.g. claude-opus-5-5"/>
                         </group>
                         <group>
                             <field name="max_tokens"/>
@@ -68,9 +69,40 @@
                         </group>
                     </group>
 
+                    <group string="💰 Cost Saving – answer without the API when possible">
+                        <group>
+                            <field name="local_mode"/>
+                            <field name="cache_enabled"/>
+                            <field name="cache_ttl_days" invisible="not cache_enabled"/>
+                            <field name="price_per_mtok"/>
+                        </group>
+                        <group>
+                            <field name="stat_saved_pct" widget="progressbar"/>
+                            <field name="stat_local"/>
+                            <field name="stat_cache"/>
+                            <field name="stat_api_calls"/>
+                            <field name="stat_api_tokens"/>
+                            <field name="stat_tokens_saved"/>
+                            <field name="stat_money_saved"/>
+                        </group>
+                        <div colspan="2" class="d-flex gap-2">
+                            <button name="action_clear_cache" type="object" string="Clear Answer Cache"
+                                    class="btn-secondary" icon="fa-eraser"/>
+                            <button name="action_reset_stats" type="object" string="Reset Statistics"
+                                    class="btn-secondary" icon="fa-undo"
+                                    confirm="Reset all usage statistics?"/>
+                        </div>
+                        <div colspan="2" class="text-muted small">
+                            Tip for users: start a message with <code>!</code> (e.g. <code>!show customers</code>)
+                            to force Claude to answer instead of the local engine / cache.
+                        </div>
+                    </group>
+
                     <group string="Behaviour">
                         <group>
                             <field name="require_confirmation"/>
+                            <field name="confirm_deletes"/>
+                            <field name="use_prompt_cache"/>
                             <field name="log_all_actions"/>
                         </group>
                         <group>
@@ -124,11 +156,37 @@
     <!-- ════════════════════════════════════════════════
          WINDOW ACTION — list + form
     ════════════════════════════════════════════════ -->
+    <record id="view_claude_query_cache_list" model="ir.ui.view">
+        <field name="name">claude.query.cache.list</field>
+        <field name="model">claude.query.cache</field>
+        <field name="arch" type="xml">
+            <list create="false">
+                <field name="question"/>
+                <field name="title"/>
+                <field name="chart_type"/>
+                <field name="hits" sum="Total"/>
+                <field name="write_date" string="Last Updated"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_claude_query_cache" model="ir.actions.act_window">
+        <field name="name">Answer Cache</field>
+        <field name="res_model">claude.query.cache</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No cached answers yet</p>
+            <p>When Claude answers a read-only question, the query is remembered. Asking the same
+               question again re-runs it locally on fresh data – no API cost.</p>
+        </field>
+    </record>
+
     <record id="action_claude_config" model="ir.actions.act_window">
         <field name="name">Configuration</field>
         <field name="res_model">claude.config</field>
         <field name="view_mode">list,form</field>
         <field name="target">current</field>
+        <field name="context">{'active_test': False}</field>
     </record>
 
 </odoo>

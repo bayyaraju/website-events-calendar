@@ -37,20 +37,33 @@
     <span class="cl-stat-val" t-esc="state.totalTokens.toLocaleString()"/>
   </div>
 
+  <!-- Savings -->
+  <div class="cl-save-box" t-if="state.savings" title="Requests answered by Odoo itself (local answers + re-used answers) instead of the Claude API">
+    <div class="cl-save-head">💰 Saved without AI</div>
+    <div class="cl-save-row">
+      <span class="cl-save-big" t-esc="state.savings.saved_pct + '%'"/>
+      <span class="cl-save-sub">of requests</span>
+    </div>
+    <div class="cl-save-meta">
+      ⚡ <t t-esc="state.savings.local"/> local · ♻️ <t t-esc="state.savings.cache"/> re-used · 🤖 <t t-esc="state.savings.api_calls"/> AI
+    </div>
+    <div class="cl-save-meta">≈ <t t-esc="state.savings.tokens_saved.toLocaleString()"/> tokens · $<t t-esc="state.savings.money_saved.toFixed(2)"/></div>
+  </div>
+
   <div class="cl-divider"/>
   <p class="cl-section-title">⚡ Quick Actions</p>
 
   <!-- Quick prompts -->
-  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show today's sales orders with customer names and totals">📋 Today's Sales</button>
-  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show a pie chart of total revenue grouped by customer for this month">🥧 Revenue Pie Chart</button>
-  <button class="cl-q" t-on-click="onQuickAsk" data-q="List all unpaid invoices with customer name, amount and due date">💰 Unpaid Invoices</button>
-  <button class="cl-q" t-on-click="onQuickAsk" data-q="Generate a professional Excel report with sales orders for this month">📊 Monthly Excel Report</button>
-  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show a bar chart of top 10 products by revenue this year">📈 Top Products Chart</button>
-  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show current stock levels for all products with quantity available">📦 Stock Levels</button>
-  <button class="cl-q" t-on-click="onQuickAsk" data-q="List all employees with their department and job title">👥 Employees</button>
-  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show a line chart of monthly revenue for the past 6 months">📉 Revenue Trend</button>
-  <button class="cl-q" t-on-click="onQuickAsk" data-q="What Odoo modules are available to install? Show the most useful ones.">📦 Browse Modules</button>
-  <button class="cl-q" t-on-click="onQuickAsk" data-q="Show purchase orders pending approval with supplier names and amounts">🛒 Pending POs</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-key="today_sales" data-q="Show today's sales orders with customer names and totals">📋 Today's Sales</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-key="revenue_pie" data-q="Show a pie chart of total revenue grouped by customer for this month">🥧 Revenue Pie Chart</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-key="unpaid_invoices" data-q="List all unpaid invoices with customer name, amount and due date">💰 Unpaid Invoices</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-key="monthly_excel" data-q="Generate a professional Excel report with sales orders for this month">📊 Monthly Excel Report</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-key="top_products" data-q="Show a bar chart of top 10 products by revenue this year">📈 Top Products Chart</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-key="stock_levels" data-q="Show current stock levels for all products with quantity available">📦 Stock Levels</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-key="employees" data-q="List all employees with their department and job title">👥 Employees</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-key="revenue_trend" data-q="Show a line chart of monthly revenue for the past 6 months">📉 Revenue Trend</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-key="browse_modules" data-q="What Odoo modules are available to install? Show the most useful ones.">📦 Browse Modules</button>
+  <button class="cl-q" t-on-click="onQuickAsk" data-key="pending_pos" data-q="Show purchase orders pending approval with supplier names and amounts">🛒 Pending POs</button>
 
   <div class="cl-divider"/>
   <p class="cl-section-title">✚ Quick Create</p>
@@ -103,12 +116,24 @@
           <!-- Typing -->
           <div t-if="msg.status === 'typing'" class="cl-bubble cl-ai-bubble cl-typing-wrap">
             <span class="cl-dot cl-dot-1"/><span class="cl-dot cl-dot-2"/><span class="cl-dot cl-dot-3"/>
-            <span class="cl-thinking">Thinking…</span>
+            <span class="cl-thinking" t-esc="msg.loadingText || 'Thinking…'"/>
           </div>
 
           <!-- Text -->
           <div t-if="msg.status !== 'typing'" class="cl-bubble cl-ai-bubble">
             <t t-out="msg.html"/>
+          </div>
+          <div t-if="msg.source and msg.status !== 'typing'" t-att-class="'cl-src cl-src-' + msg.source">
+            <t t-if="msg.source === 'local'">⚡ Answered locally by Odoo · 0 tokens · $0</t>
+            <t t-elif="msg.source === 'cache'">♻️ Re-used answer on fresh data · 0 tokens · $0</t>
+            <t t-else="">🤖 Claude AI · <t t-esc="(msg.tokens || 0).toLocaleString()"/> tokens</t>
+          </div>
+          <div t-if="msg.refresh" class="cl-refresh">
+            <span t-if="msg.refresh === 'reload'">🔄 New app installed – reload Odoo to see its menus.</span>
+            <span t-else="">🔄 Data changed – refresh open views to see the changes.</span>
+            <button class="cl-btn-refresh" t-on-click="onRefresh" t-att-data-mode="msg.refresh">
+              <t t-if="msg.refresh === 'reload'">Reload Odoo</t><t t-else="">Refresh</t>
+            </button>
           </div>
 
           <!-- Install result -->
@@ -202,7 +227,9 @@
             </div>
             <pre class="cl-confirm-code" t-esc="JSON.stringify(msg.op, null, 2)"/>
             <div class="cl-confirm-btns">
-              <button class="cl-btn-exec" t-on-click="onConfirmOp" t-att-data-msgid="msg.id">✓ Execute</button>
+              <button class="cl-btn-exec" t-on-click="onConfirmOp" t-att-data-msgid="msg.id" t-att-disabled="msg.executing">
+                <t t-if="msg.executing"><span class="cl-spin"/> Executing…</t><t t-else="">✓ Execute</t>
+              </button>
               <button class="cl-btn-skip" t-on-click="onCancelOp"  t-att-data-msgid="msg.id">✕ Cancel</button>
             </div>
           </div>

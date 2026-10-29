@@ -3,3 +3,4 @@ access_claude_config_admin,claude.config admin,model_claude_config,claude_ai_odo
 access_claude_config_user,claude.config user,model_claude_config,claude_ai_odoo.group_claude_user,1,0,0,0
 access_claude_session_user,claude.session user,model_claude_session,claude_ai_odoo.group_claude_user,1,1,1,1
 access_claude_message_user,claude.message user,model_claude_message,claude_ai_odoo.group_claude_user,1,1,1,1
+access_claude_query_cache_admin,claude.query.cache admin,model_claude_query_cache,claude_ai_odoo.group_claude_admin,1,1,1,1

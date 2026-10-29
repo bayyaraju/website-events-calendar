@@ -11,7 +11,7 @@ def post_init_hook(env):
         config = Config.sudo().create({
             'name': 'Default Configuration',
             'active': True,
-            'model_name': 'claude-sonnet-4-5',
+            'model_name': 'claude-sonnet-5-5',
             'max_tokens': 8096,
             'temperature': 0.3,
             'request_timeout': 60,

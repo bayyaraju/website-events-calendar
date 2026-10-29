@@ -533,3 +533,28 @@
 .cl-crud-warn-icon { font-size:48px; display:block; margin-bottom:12px; }
 .cl-crud-warning p { color:#e2e8f0; margin:8px 0; font-size:14px; }
 .cl-crud-warn-sub { color:#94a3b8; font-size:12px; }
+
+/* ── Cost saving (19.0.7) ─────────────────────────────── */
+.cl-save-box { margin: 8px 10px; padding: 10px 12px; border-radius: 10px;
+  background: linear-gradient(135deg, rgba(16,185,129,.16), rgba(99,102,241,.14));
+  border: 1px solid rgba(16,185,129,.35); font-size: 11px; color: #a7f3d0; }
+.cl-save-head { font-weight: 700; letter-spacing: .02em; color: #6ee7b7; margin-bottom: 2px; }
+.cl-save-row { display: flex; align-items: baseline; gap: 6px; }
+.cl-save-big { font-size: 22px; font-weight: 800; color: #34d399; }
+.cl-save-sub { color: #9ca3af; }
+.cl-save-meta { color: #cbd5e1; opacity: .9; margin-top: 2px; }
+.cl-src { display: inline-flex; align-self: flex-start; width: fit-content; align-items: center; gap: 4px; margin: 6px 0 0 2px; padding: 2px 9px;
+  border-radius: 999px; font-size: 11px; font-weight: 600; }
+.cl-src-local { background: rgba(16,185,129,.15); color: #34d399; border: 1px solid rgba(16,185,129,.4); }
+.cl-src-cache { background: rgba(56,189,248,.14); color: #38bdf8; border: 1px solid rgba(56,189,248,.4); }
+.cl-src-ai    { background: rgba(167,139,250,.14); color: #c4b5fd; border: 1px solid rgba(167,139,250,.4); }
+.cl-refresh { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 8px; padding: 8px 12px;
+  border-radius: 10px; background: rgba(251,191,36,.12); border: 1px solid rgba(251,191,36,.45); color: #fcd34d; font-size: 12.5px; }
+.cl-btn-refresh { border: 0; border-radius: 8px; padding: 5px 12px; font-weight: 700; cursor: pointer;
+  background: #f59e0b; color: #1f2937; }
+.cl-btn-refresh:hover { background: #fbbf24; }
+.cl-btn-refresh:focus-visible, .cl-btn-exec:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.cl-spin { display: inline-block; width: 12px; height: 12px; margin-right: 4px; vertical-align: -2px;
+  border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: cl-spin .7s linear infinite; }
+@keyframes cl-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .cl-spin { animation: none; } }

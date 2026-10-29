@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import json, time, logging, traceback, re, io, base64, collections
 from odoo import http, fields
+from odoo.exceptions import AccessError
 from odoo.http import request
+
+from .local_engine import LocalEngine, cache_lookup, cache_store, normalize
 
 _logger = logging.getLogger(__name__)
 
@@ -14,6 +17,37 @@ def _get_active_key(env):
     env.cr.execute('SELECT api_key FROM claude_config WHERE id = %s', (config.id,))
     row = env.cr.fetchone()
     return (row[0] or '').strip() if row else '', config
+
+# Models that refuse the `temperature` parameter (filled at runtime on first refusal)
+_NO_TEMPERATURE_MODELS = set()
+
+GROUP_USER  = 'claude_ai_odoo.group_claude_user'
+GROUP_ADMIN = 'claude_ai_odoo.group_claude_admin'
+# Never callable through the assistant, whatever the model
+BLOCKED_METHODS = {
+    'sudo', 'with_user', 'with_env', 'with_context', 'with_company', 'browse', 'env',
+    'execute_kw', 'invalidate_cache', 'init', 'button_immediate_install',
+    'button_immediate_uninstall', 'button_immediate_upgrade', 'button_uninstall',
+}
+BLOCKED_MODELS = {'ir.config_parameter', 'ir.rule', 'ir.model.access', 'res.users.apikeys',
+                  'ir.cron', 'ir.actions.server', 'base.automation', 'ir.module.module'}
+
+
+def _check_user(env, admin=False):
+    """Only members of the Claude AI groups may use the assistant."""
+    group = GROUP_ADMIN if admin else GROUP_USER
+    if not env.user.has_group(group) and not env.is_superuser():
+        raise AccessError('You need the "%s" access right to use this feature.'
+                          % ('Claude AI / Administrator' if admin else 'Claude AI / User'))
+
+
+def _own_session(env, session_id):
+    """Return the session only if it belongs to the current user."""
+    session = env['claude.session'].sudo().browse(int(session_id or 0)).exists()
+    if not session or session.user_id.id != env.uid:
+        return env['claude.session']
+    return session
+
 
 def _extract_block(text, tag):
     m = re.search(rf'```{tag}\s*([\s\S]+?)\s*```', text)
@@ -264,17 +298,26 @@ RULES:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _execute_op(env, op):
+    """Run an operation proposed by Claude AS THE CURRENT USER (Odoo access rights and
+    record rules apply). Private/technical methods and security models are refused."""
+    if not isinstance(op, dict):
+        return None, 'Invalid operation.'
     model_name = op.get('model','')
-    method     = op.get('method','')
-    args       = op.get('args', [])
-    kwargs     = op.get('kwargs', {})
+    method     = op.get('method','') or ''
+    args       = op.get('args', []) or []
+    kwargs     = op.get('kwargs', {}) or {}
     blocked    = ['_sql','execute_kw','_cr','base_automation']
-    if any(b in method for b in blocked):
+    if (any(b in method for b in blocked) or method.startswith('_')
+            or method in BLOCKED_METHODS):
         return None, f'Method "{method}" is blocked.'
     if model_name not in env:
         return None, f'Model "{model_name}" not found.'
+    if model_name in BLOCKED_MODELS:
+        return None, f'Model "{model_name}" cannot be accessed through the assistant.'
+    if not isinstance(args, list) or not isinstance(kwargs, dict):
+        return None, 'Invalid arguments.'
     try:
-        obj = env[model_name].sudo()
+        obj = env[model_name]   # current user: access rights & record rules are enforced
         if method == 'search_read':
             domain = args[0] if args else []
             req_fields = kwargs.get('fields', [])
@@ -323,8 +366,36 @@ def _execute_op(env, op):
             if fn is None: return None, f'Method "{method}" not found on {model_name}.'
             result = fn(*args, **kwargs)
         return result, None
+    except AccessError as e:
+        return None, f'Access denied: {e}'
     except Exception as e:
         return None, str(e)
+
+
+class _OpError(Exception):
+    pass
+
+
+def _in_savepoint(env, fn, *a):
+    """Run fn in a DB savepoint: a failed operation is rolled back alone and never
+    breaks the rest of the request (chat history, token counters...)."""
+    try:
+        with env.cr.savepoint():
+            res, err = fn(env, *a)
+            if err:
+                raise _OpError(err)
+        return res, None
+    except _OpError as e:
+        return None, str(e)
+    except Exception as e:
+        return None, str(e)
+
+
+_execute_op_raw = _execute_op
+
+
+def _execute_op(env, op):
+    return _in_savepoint(env, _execute_op_raw, op)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Excel builder
@@ -333,9 +404,7 @@ def _execute_op(env, op):
 def _build_excel(env, spec):
     try: import openpyxl
     except ImportError:
-        import subprocess, sys
-        subprocess.run([sys.executable,'-m','pip','install','openpyxl','-q'], timeout=60)
-        import openpyxl
+        raise RuntimeError('Python package "openpyxl" is not installed on the server (pip install openpyxl).')
     from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
     from openpyxl.utils import get_column_letter
     from openpyxl.chart import BarChart, Reference
@@ -360,7 +429,7 @@ def _build_excel(env, spec):
         order = sh_spec.get('order')
         recs  = []
         if model and model in env:
-            recs = env[model].sudo().search_read(dom, flds, limit=lim, order=order)
+            recs = env[model].search_read(dom, flds, limit=lim, order=order)
 
         ncols = max(len(flds), 1)
         last_col = get_column_letter(ncols)
@@ -422,6 +491,8 @@ def _build_excel(env, spec):
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _install_module(env, module_name):
+    if not (env.user.has_group('base.group_system') and env.user.has_group(GROUP_ADMIN)):
+        return False, 'Only Claude AI administrators with Settings access can install modules.'
     mod = env['ir.module.module'].sudo().search([('name','=',module_name)], limit=1)
     if not mod: return False, f'Module "{module_name}" not found.'
     if mod.state == 'installed': return True, f'Module "{module_name}" is already installed.'
@@ -439,9 +510,17 @@ def _batch_create(env, spec):
     model_name = spec.get('model','')
     records    = spec.get('records', [])
     if model_name not in env: return None, f'Model "{model_name}" not found.'
+    if model_name in BLOCKED_MODELS:
+        return None, f'Model "{model_name}" cannot be imported through the assistant.'
+    if not isinstance(records, list) or not records:
+        return None, 'Nothing to import.'
     try:
-        created = env[model_name].sudo().create(records)
+        valid = set(env[model_name].fields_get().keys())
+        records = [{k: v for k, v in r.items() if k in valid} for r in records if isinstance(r, dict)]
+        created = env[model_name].create(records)
         return {'created': len(created), 'ids': created.ids}, None
+    except AccessError as e:
+        return None, f'Access denied: {e}'
     except Exception as e:
         return None, str(e)
 
@@ -483,6 +562,7 @@ class ClaudeController(http.Controller):
     @http.route('/claude_ai/session', type='jsonrpc', auth='user', methods=['POST'], csrf=False)
     def get_session(self, **kw):
         env = request.env
+        _check_user(env)
         _, config = _get_active_key(env)
         session = env['claude.session'].search(
             [('user_id','=',env.uid),('state','=','active')], order='id desc', limit=1)
@@ -493,23 +573,43 @@ class ClaudeController(http.Controller):
     @http.route('/claude_ai/config', type='jsonrpc', auth='user', methods=['POST'], csrf=False)
     def get_config(self, **kw):
         try:
+            _check_user(request.env)
             api_key, config = _get_active_key(request.env)
-            return {'model_name': config.model_name, 'has_api_key': bool(api_key)}
+            return {'model_name': config._effective_model(), 'has_api_key': bool(api_key),
+                    'is_admin': request.env.user.has_group(GROUP_ADMIN),
+                    'local_mode': config.local_mode,
+                    'savings': config.sudo().savings_summary()}
         except Exception as e:
             return {'error': str(e)}
 
     @http.route('/claude_ai/chat', type='jsonrpc', auth='user', methods=['POST'], csrf=False)
-    def chat(self, session_id, user_message, attachments=None, **kw):
+    def chat(self, session_id, user_message, attachments=None, quick_key=None, **kw):
         env = request.env
         t0  = time.time()
 
-        session = env['claude.session'].sudo().browse(session_id)
-        if not session.exists():
+        try:
+            _check_user(env)
+        except AccessError as e:
+            return {'error': True, 'message': str(e)}
+        session = _own_session(env, session_id)
+        if not session:
             return {'error': True, 'message': 'Session not found.'}
+        if not (user_message or '').strip() and not attachments:
+            return {'error': True, 'message': 'Empty message.'}
 
         api_key, config = _get_active_key(env)
+
+        # ── 1. Free answers first: local engine, then answer cache ─────────
+        force_ai = bool(re.match(r'^\s*(!|ai:)', user_message or '', re.I))
+        if force_ai:
+            user_message = re.sub(r'^\s*(!|ai:)\s*', '', user_message, flags=re.I)
+        if not force_ai and not attachments:
+            local = self._answer_without_api(env, config, session, user_message, quick_key)
+            if local:
+                return local
         if not api_key:
-            return {'error': True, 'message': 'API key not configured. Go to Claude AI → Configuration.'}
+            return {'error': True, 'message': 'API key not configured. Go to Claude AI → Configuration. '
+                                              '(Quick actions and simple questions still work without a key.)'}
 
         try:
             import anthropic
@@ -539,21 +639,49 @@ class ClaudeController(http.Controller):
 
         # ── Call Claude ────────────────────────────────────────────────────
         system = _build_system_prompt(env, config.system_prompt or '')
-        model  = config.model_name or 'claude-sonnet-4-5'
+        model  = config._effective_model()
         max_t  = max(config.max_tokens or 8096, 1)
         try:
-            client   = anthropic.Anthropic(api_key=api_key)
-            response = client.messages.create(
+            client   = anthropic.Anthropic(api_key=api_key,
+                                           timeout=float(config.request_timeout or 60),
+                                           max_retries=2)
+            req = dict(
                 model=model, max_tokens=max_t,
-                system=system, messages=session.get_history())
-            ai_text    = response.content[0].text if response.content else ''
-            tokens_used = response.usage.input_tokens + response.usage.output_tokens
+                # Prompt caching: the large system prompt (schema/modules) is re-used
+                # between turns -> cheaper and faster calls.
+                system=[{'type': 'text', 'text': system,
+                         'cache_control': {'type': 'ephemeral'}}] if config.use_prompt_cache else system,
+                messages=session.get_api_history())
+            if (config.temperature is not False and config.temperature is not None
+                    and model not in _NO_TEMPERATURE_MODELS):
+                req['temperature'] = max(0.0, min(1.0, config.temperature))
+            try:
+                response = client.messages.create(**req)
+            except anthropic.BadRequestError as e:
+                # Newer models reject sampling parameters ("`temperature` is deprecated
+                # for this model"): retry once without them and remember the model.
+                if 'temperature' in req and 'temperature' in str(e).lower():
+                    _NO_TEMPERATURE_MODELS.add(model)
+                    req.pop('temperature')
+                    _logger.info('Claude: model %s does not accept temperature; retrying without it', model)
+                    response = client.messages.create(**req)
+                else:
+                    raise
+            ai_text = ''.join(getattr(b, 'text', '') for b in (response.content or [])
+                              if getattr(b, 'type', '') == 'text')
+            usage = response.usage
+            tokens_used = (usage.input_tokens or 0) + (usage.output_tokens or 0) + \
+                (getattr(usage, 'cache_creation_input_tokens', 0) or 0) + \
+                (getattr(usage, 'cache_read_input_tokens', 0) or 0)
         except Exception as e:
             _logger.error('Claude API error: %s', traceback.format_exc())
+            session.drop_last_user_message()
             return {'error': True, 'message': f'Claude API error: {e}'}
 
         session.add_message('assistant', ai_text)
         session.sudo().write({'total_tokens': session.total_tokens + tokens_used})
+        config.sudo()._bump('stat_api_calls')
+        config.sudo()._bump('stat_api_tokens', tokens_used)
         msg_rec = env['claude.message'].sudo().create({
             'session_id': session.id, 'role': 'assistant',
             'content': ai_text, 'tokens': tokens_used})
@@ -583,7 +711,8 @@ class ClaudeController(http.Controller):
 
         if odoo_op:
             method = odoo_op.get('method','')
-            if method in write_methods and config.require_confirmation:
+            if (method in write_methods and config.require_confirmation) or \
+                    (method == 'unlink' and config.confirm_deletes):
                 needs_confirm = True
             else:
                 res, err = _execute_op(env, odoo_op)
@@ -603,7 +732,7 @@ class ClaudeController(http.Controller):
                 chart_spec = None  # don't render empty chart
 
         # ── Module install ─────────────────────────────────────────────────
-        if mod_spec and not needs_confirm:
+        if mod_spec and not needs_confirm:  # admin check inside _install_module
             ok, msg = _install_module(env, mod_spec.get('module_name',''))
             install_result = {'success': ok, 'message': msg}
 
@@ -611,7 +740,7 @@ class ClaudeController(http.Controller):
         if batch_spec and not needs_confirm:
             if parsed_att_rows and not batch_spec.get('records'):
                 batch_spec['records'] = parsed_att_rows
-            res, err = _batch_create(env, batch_spec)
+            res, err = _in_savepoint(env, _batch_create, batch_spec)
             batch_result = res if not err else {'error': err}
 
         # ── Excel ──────────────────────────────────────────────────────────
@@ -622,6 +751,27 @@ class ClaudeController(http.Controller):
                 excel_fn  = excel_spec.get('filename','report.xlsx')
             except Exception as ex:
                 _logger.error('Excel build failed: %s', ex)
+
+        # ── Refresh hints for the UI ───────────────────────────────────────
+        refresh_needed = False
+        if odoo_op and not needs_confirm and odoo_op.get('method') in write_methods \
+                and not (isinstance(op_result, dict) and op_result.get('error')):
+            refresh_needed = 'soft'
+        if batch_result and not batch_result.get('error'):
+            refresh_needed = 'soft'
+        if install_result and install_result.get('success') and 'already' not in install_result.get('message', ''):
+            refresh_needed = 'reload'
+
+        # ── Remember read-only answers: next time the same question is free ─
+        if config.cache_enabled and not needs_confirm and not mod_spec and not batch_spec \
+                and not crud_form and not attachments and not refresh_needed \
+                and not (isinstance(op_result, dict) and op_result.get('error')):
+            try:
+                title = re.sub(r'[#*_`>|]', '', ai_text.strip().split('\n')[0]).strip()[:120]
+                cache_store(env, user_message, title, odoo_op,
+                            (chart_spec or {}).get('type') if chart_spec else None, excel_spec)
+            except Exception:
+                _logger.warning('Claude cache store failed', exc_info=True)
 
         elapsed = int((time.time()-t0)*1000)
         _logger.info('Claude: %dms, %d tokens', elapsed, tokens_used)
@@ -640,13 +790,72 @@ class ClaudeController(http.Controller):
             'install_result':     install_result,
             'batch_result':       batch_result,
             'crud_form':          crud_form,
+            'source':             'ai',
+            'refresh_needed':     refresh_needed,
+            'savings':            config.sudo().savings_summary(),
         }
+
+    def _answer_without_api(self, env, config, session, user_message, quick_key=None):
+        """Answer from the local engine or the answer cache. Returns a chat response or None."""
+        engine = LocalEngine(env, _execute_op, _build_excel, _auto_build_chart, _install_module)
+        res = None
+        try:
+            if quick_key:
+                res = engine.quick(quick_key)
+            if res is None and config.local_mode:
+                res = engine.free_text(user_message)
+            if res is None and config.cache_enabled:
+                hit = cache_lookup(env, user_message, config.cache_ttl_days)
+                if hit:
+                    op = json.loads(hit.op_json) if hit.op_json else None
+                    op_result = chart_spec = excel_b64 = excel_fn = None
+                    if op:
+                        op_result, err = _execute_op(env, op)
+                        if err:
+                            op = None
+                    if hit.excel_json:
+                        spec = json.loads(hit.excel_json)
+                        excel_b64, excel_fn = _build_excel(env, spec), spec.get('filename', 'report.xlsx')
+                    if op or excel_b64:
+                        if hit.chart_type and isinstance(op_result, list) and op_result:
+                            chart_spec = _auto_build_chart(op_result, hit.chart_type, user_message, hit.title or '')
+                        hit.sudo().write({'hits': hit.hits + 1})
+                        res = {'message': f'♻️ **{(hit.title or "Answer").strip()}**\n\nFresh data from your database '
+                                          f'(same question answered before – no AI call needed).',
+                               'source': 'cache', 'tokens_used': 0, 'odoo_operation': op,
+                               'op_result': op_result, 'chart_spec': chart_spec,
+                               'excel_b64': excel_b64, 'excel_filename': excel_fn}
+        except Exception as e:
+            _logger.warning('Local answer failed, falling back to Claude: %s', e)
+            res = None
+        if not res:
+            return None
+        # keep the conversation coherent for later Claude calls
+        session.add_message('user', user_message)
+        session.add_message('assistant', res.get('message', ''))
+        env['claude.message'].sudo().create({'session_id': session.id, 'role': 'user', 'content': user_message})
+        msg = env['claude.message'].sudo().create({'session_id': session.id, 'role': 'assistant',
+                                                     'content': res.get('message', ''), 'tokens': 0})
+        config.sudo()._bump('stat_cache' if res.get('source') == 'cache' else 'stat_local')
+        res.setdefault('odoo_operation', None)
+        res['op_result'] = _safe_json(res.get('op_result'))
+        res.update({'message_id': msg.id, 'total_tokens': session.total_tokens,
+                    'needs_confirmation': False,
+                    'refresh_needed': res.get('refresh_needed', False),
+                    'savings': config.sudo().savings_summary()})
+        return res
 
     @http.route('/claude_ai/execute', type='jsonrpc', auth='user', methods=['POST'], csrf=False)
     def execute(self, operation, **kw):
+        try:
+            _check_user(request.env)
+        except AccessError as e:
+            return {'success': False, 'error': str(e)}
         result, error = _execute_op(request.env, operation)
         if error: return {'success': False, 'error': error}
-        return {'success': True, 'result': _safe_json(result)}
+        method = (operation or {}).get('method', '')
+        return {'success': True, 'result': _safe_json(result),
+                'refresh_needed': 'soft' if method in ('create', 'write', 'unlink') else False}
 
     @http.route('/claude_ai/install_module', type='jsonrpc', auth='user', methods=['POST'], csrf=False)
     def install_module(self, module_name, **kw):
@@ -655,8 +864,9 @@ class ClaudeController(http.Controller):
 
     @http.route('/claude_ai/clear', type='jsonrpc', auth='user', methods=['POST'], csrf=False)
     def clear_session(self, session_id, **kw):
-        session = request.env['claude.session'].sudo().browse(session_id)
-        if session.exists(): session.action_clear()
+        _check_user(request.env)
+        session = _own_session(request.env, session_id)
+        if session: session.sudo().action_clear()
         _, config = _get_active_key(request.env)
         new_s = request.env['claude.session'].create({'config_id':config.id,'user_id':request.env.uid})
         return {'ok': True, 'new_session_id': new_s.id}

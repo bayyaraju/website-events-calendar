@@ -260,3 +260,69 @@ Go to **Claude AI → Sessions** (admin only) to review all past conversations, 
 ## Support
 
 For issues contact: raj.odoo2026@gmail.com
+## What's new in 19.0.6.0.0
+- **Latest Claude models**: Opus 5.5, Sonnet 5.5 (default), Haiku 4.5, Fable 5.1 + *Custom Model ID* field for future models (old 4.5 values kept for existing configs).
+- **Prompt caching** (on by default): the large Odoo schema prompt is cached between messages – lower cost, faster replies.
+- **Security hardening**: every operation runs as the logged-in user (Odoo access rights & record rules apply, no more `sudo`); private/technical methods and security models (`ir.config_parameter`, `ir.rule`, `ir.cron`, …) are blocked; only *Claude AI* group members can use the chat; users can only open their own sessions; module install restricted to Claude admins with Settings rights.
+- **Always Confirm Deletes** (on by default): deletions proposed by Claude always need a click.
+- **Failed operations are isolated** in a DB savepoint – an error no longer breaks the chat request.
+- **Temperature and Timeout settings are now applied** to the API call; automatic retries on temporary API errors.
+- **More robust conversation history**: always valid for the API (starts with a user turn, roles alternate); a failed call no longer leaves a broken history.
+- Settings administrators automatically get *Claude AI / Administrator* (menus visible right after install); all configurations visible in the Configuration list.
+
+## 19.0.6.0.1
+- Fix: newer Claude models (e.g. Sonnet 5.5) reject the `temperature` parameter (`400 – temperature is deprecated for this model`). The request is now retried automatically without it, and the model is remembered so later messages skip it.
+
+---
+
+## 💰 New in 19.0.7.0.0 — Pay for AI only when you need it
+
+> **Up to 90 % of everyday requests are answered by Odoo itself — 0 tokens, $0, instant.**
+
+| | How it saves money |
+|---|---|
+| ⚡ **Local answers** | The 10 Quick Actions and simple questions are handled directly by Odoo, no API call: *Today's Sales, Revenue Pie Chart, Unpaid Invoices, Monthly Excel Report, Top Products Chart, Stock Levels, Employees, Revenue Trend, Browse Modules, Pending POs*, plus free text such as *"show customers"*, *"list vendors"*, *"how many invoices"*, *"count sales orders"*, *"install crm module"*, *"hello/help"*. **Works even without an API key.** |
+| ♻️ **Re-used answers (cache)** | When Claude answers a read-only question, its query is remembered. Asking the same question again re-runs the query **locally on fresh data** — no API call. Configurable lifetime; *Claude AI → Answer Cache* to review/clear. Write operations, installs and imports are never cached. |
+| 🧠 **Prompt caching** | When Claude *is* needed, the large Odoo schema prompt is cached between messages → cheaper and faster follow-ups. |
+| 📊 **Savings dashboard** | *Saved without AI* panel in the chat sidebar + statistics in *Configuration*: requests answered locally / re-used / by Claude, tokens used, **tokens saved** and **money saved** (estimate based on *Blended Price per 1M Tokens*). |
+| 🏷️ **Source badge** | Every reply shows where it came from: ⚡ *Answered locally · 0 tokens*, ♻️ *Re-used answer · 0 tokens*, 🤖 *Claude AI · N tokens*. |
+
+**Force Claude:** start a message with `!` (e.g. `!show customers`) to skip the local engine and the cache.
+
+### Typical savings
+
+| Request | Before | Now |
+|---|---|---|
+| Quick Action (e.g. Revenue Pie Chart) | ~3,000+ tokens | **0 tokens**, < 1 s |
+| "How many customers?" | ~3,000 tokens | **0 tokens** |
+| Same complex question asked again | full price every time | **0 tokens** (fresh data) |
+| Follow-up messages to Claude | full prompt re-sent | prompt caching → cheaper |
+
+*(Estimates – real numbers depend on your usage; see the statistics in Configuration.)*
+
+### Loaders and refresh
+- Loader text while waiting: **"Fetching from Odoo…"** for quick actions, **"Claude is working on it…"** when the AI takes longer, **"Executing…"** spinner on confirmed operations.
+- After records are created/updated/deleted or imported, a **🔄 Refresh** button refreshes the open views.
+- After an app is installed, a **🔄 Reload Odoo** button reloads the page so the new menus appear.
+
+### Settings (Claude AI → Configuration → *Cost Saving*)
+| Field | Default | |
+|---|---|---|
+| Answer Locally When Possible | ✅ | local engine on/off |
+| Re-use Previous Answers | ✅ | answer cache on/off |
+| Cache Lifetime (days) | 30 | |
+| Blended Price per 1M Tokens (USD) | 6.00 | only for the savings estimate |
+| Statistics | – | Requests without API (%), Answered Locally, Answered from Cache, Claude API Calls, Tokens Used/Saved, Money Saved; buttons *Clear Answer Cache*, *Reset Statistics* |
+
+### Security of local answers
+Local answers and cached queries run **as the logged-in user** (access rights and record rules apply), exactly like the Claude path. Module installation still requires *Claude AI / Administrator* + Settings rights.
+
+### Screenshots
+- `static/description/local-pie-chart.png` – pie chart answered locally, 0 tokens, savings panel
+- `static/description/local-top-products.png` – top products chart computed by Odoo
+- `static/description/local-install-refresh.png` – local app install with *Reload Odoo* prompt
+- `static/description/local-unpaid-invoices.png` – unpaid invoices list answered locally
+- `static/description/config-cost-saving.png` – cost-saving settings and statistics
+
+### Tested
+Fresh install and upgrade from 19.0.6.0.1 on Odoo 19 (no errors/warnings); all 10 quick actions, free-text patterns, cache hit on a repeated question, forced AI (`!`), savings statistics and the chat UI (no console errors) verified on a demo database with Sales, Purchase, Inventory, Invoicing and Employees.

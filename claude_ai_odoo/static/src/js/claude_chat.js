@@ -714,9 +714,11 @@ const QUICK_CREATE_TEMPLATES = {
 ══════════════════════════════════════════════════════════ */
 class ClaudeChatWidget extends Component {
     static template = "claude_ai.ChatWidget";
+    static props = ["*"];
 
     setup() {
         this.notif  = useService("notification");
+        this.action = useService("action");
         this.msgEl  = useRef("msgEl");
         this.fileEl = useRef("fileInput");
         this.state  = useState({
@@ -726,6 +728,7 @@ class ClaudeChatWidget extends Component {
             attachments: [],   // [{name, b64, type}]
             showAttachPrev: false,
             suggestions: [],
+            savings: null,
         });
         onWillStart(() => this._boot());
         onMounted(()  => this._scroll());
@@ -742,13 +745,16 @@ class ClaudeChatWidget extends Component {
     async _boot() {
         try {
             const cfg = await rpc("/claude_ai/config");
-            if (!cfg.error) { this.state.modelName=cfg.model_name||""; this.state.hasKey=cfg.has_api_key; }
+            if (!cfg.error) {
+                this.state.modelName=cfg.model_name||""; this.state.hasKey=cfg.has_api_key;
+                this.state.savings=cfg.savings||null;
+            }
             const s = await rpc("/claude_ai/session");
             if (s.session_id) this.state.sessionId=s.session_id;
         } catch(e) { console.error("boot:",e); }
 
         if (!this.state.hasKey) {
-            this._push("assistant","⚠️ **API key not configured.**\n\nGo to **Claude AI → Configuration**, enter your Anthropic API key and click Save.");
+            this._push("assistant","⚠️ **API key not configured.**\n\nGo to **Claude AI → Configuration**, enter your Anthropic API key and click Save.\n\n⚡ Meanwhile the **Quick Actions** and simple questions (*show customers*, *how many invoices*, *install crm module*) already work – they are answered locally, for free.");
         } else {
             this._push("assistant",
                 "👋 **Hello! I'm your Odoo AI Assistant.**\n\n" +
@@ -787,6 +793,10 @@ class ClaudeChatWidget extends Component {
             batchResult:   extras.batch_result   || null,
             crudForm:      extras.crud_form       || null,
             attachNames:  extras.attachNames     || [],
+            source:       extras.source          || null,
+            tokens:       extras.tokens_used     || 0,
+            refresh:      extras.refresh_needed  || false,
+            executing:    false,
         };
         this.state.msgs.push(m);
         this._scroll();
@@ -807,7 +817,17 @@ class ClaudeChatWidget extends Component {
 
     onQuickAsk(ev) {
         const q = ev.currentTarget.dataset.q;
-        if (q) { this.state.input=q; this.send(); }
+        if (q) { this.state.input=q; this.send(ev.currentTarget.dataset.key || null); }
+    }
+
+    onRefresh(ev) {
+        if (ev.currentTarget.dataset.mode === "reload") {
+            window.location.reload();
+        } else {
+            // reload the action stack (other open views) without leaving the chat
+            this.action.doAction("soft_reload");
+            this.notif.add("Views refreshed.", {type: "info"});
+        }
     }
 
     onToggleResult(ev) {
@@ -823,14 +843,18 @@ class ClaudeChatWidget extends Component {
     async onConfirmOp(ev) {
         const m = this._getMsgById(ev.currentTarget.dataset.msgid);
         if (!m) return;
-        m.confirmed=true;
+        if (m.executing) return;
+        m.executing=true;
         try {
             const r = await rpc("/claude_ai/execute",{operation:m.op});
+            m.executing=false;
+            m.confirmed=true;
             if (r.success) {
                 m.opResult=r.result; m.opResultHtml=fmtResult(r.result); m.showResult=true;
+                m.refresh=r.refresh_needed||false;
                 this.notif.add("✅ Operation executed successfully!",{type:"success"});
             } else { this._push("assistant",`❌ **Error:** ${r.error}`); }
-        } catch(e) { this._push("assistant",`❌ ${e}`); }
+        } catch(e) { m.executing=false; this._push("assistant",`❌ ${e}`); }
         this._scroll();
     }
     onCancelOp(ev) { const m=this._getMsgById(ev.currentTarget.dataset.msgid); if(m) m.cancelled=true; }
@@ -858,7 +882,8 @@ class ClaudeChatWidget extends Component {
     }
 
     /* ── Send ────────────────────────────────────────── */
-    async send() {
+    async send(quickKey=null) {
+        if (quickKey && typeof quickKey !== "string") quickKey = null; // called from a DOM event
         const txt = this.state.input.trim();
         if (!txt||this.state.loading) return;
         const atts = [...this.state.attachments];
@@ -868,21 +893,34 @@ class ClaudeChatWidget extends Component {
         this._push("user", txt+(attachNames.length?`\n📎 ${attachNames.join(", ")}`:""), {attachNames});
         this.state.loading=true;
         const tid=uid();
-        this.state.msgs.push({id:tid,role:"assistant",status:"typing",html:markup(""),time:ts()});
+        const willBeLocal = !!quickKey;
+        this.state.msgs.push({id:tid,role:"assistant",status:"typing",html:markup(""),time:ts(),
+            loadingText: willBeLocal ? "Fetching from Odoo…" : "Thinking…"});
+        // after a moment, tell the user Claude is working (local answers return before this)
+        const slowTimer = setTimeout(() => {
+            const t = this.state.msgs.find(m => m.id === tid);
+            if (t) t.loadingText = "Claude is working on it…";
+        }, 1500);
         this._scroll();
         try {
             const res = await rpc("/claude_ai/chat",{
                 session_id: this.state.sessionId,
                 user_message: txt,
                 attachments: atts.map(a=>({filename:a.name,data:a.b64,type:a.type})),
+                quick_key: quickKey,
             });
+            clearTimeout(slowTimer);
             const idx=this.state.msgs.findIndex(m=>m.id===tid);
             if(idx!==-1) this.state.msgs.splice(idx,1);
             if (res.error) {
                 this._push("assistant",`⚠️ ${res.message}`);
             } else {
                 this.state.totalTokens=res.total_tokens||0;
+                if (res.savings) this.state.savings=res.savings;
                 this._push("assistant",res.message,{
+                    source:             res.source,
+                    tokens_used:        res.tokens_used,
+                    refresh_needed:     res.refresh_needed,
                     excel_b64:          res.excel_b64,
                     excel_filename:     res.excel_filename,
                     chart_spec:         res.chart_spec,
@@ -895,6 +933,7 @@ class ClaudeChatWidget extends Component {
                 });
             }
         } catch(e) {
+            clearTimeout(slowTimer);
             const idx=this.state.msgs.findIndex(m=>m.id===tid);
             if(idx!==-1) this.state.msgs.splice(idx,1);
             this._push("assistant",`⚠️ ${e.message||e}`);
