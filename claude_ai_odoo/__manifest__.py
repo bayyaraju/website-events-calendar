@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'Claude AI Assistant | AI Chatbot, Reports, Charts & Excel',
+    'version': '20.0.7.2.1',
+    'category': 'Extra Tools',
+    'summary': 'Claude AI chatbot for Odoo: ask your data in plain English, AI reports, interactive charts, Excel export, invoices & CRUD - most answers free without API calls',
+    'depends': ['base', 'web', 'mail'],
+    'data': [
+        'security/claude_security.xml',
+        'security/ir.access.csv',
+        'views/claude_config_view.xml',
+        'views/claude_session_view.xml',
+        'views/claude_menu.xml',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'claude_ai_odoo/static/src/css/claude_chat.css',
+            'claude_ai_odoo/static/src/xml/claude_chat.xml',
+            'claude_ai_odoo/static/src/js/claude_chat.js',
+        ],
+    },
+    'images': ['static/description/banner.png'],
+    'post_init_hook': 'post_init_hook',
+    'external_dependencies': {'python': ['anthropic']},
+    'author': 'Rajashekar B',
+    'website': '',
+    'license': 'OPL-1',
+    'price': 269.0,
+    'currency': 'USD',
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'support': 'raj.odoo2026@gmail.com',
+}

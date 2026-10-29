@@ -1,0 +1,6 @@
+id,name,model_id,group_id/id,operation,domain
+access_claude_config_admin,claude.config admin,claude.config,claude_ai_odoo.group_claude_admin,crud,
+access_claude_config_user,claude.config user,claude.config,claude_ai_odoo.group_claude_user,r,
+access_claude_session_user,claude.session user,claude.session,claude_ai_odoo.group_claude_user,crud,
+access_claude_message_user,claude.message user,claude.message,claude_ai_odoo.group_claude_user,crud,
+access_claude_query_cache_admin,claude.query.cache admin,claude.query.cache,claude_ai_odoo.group_claude_admin,crud,

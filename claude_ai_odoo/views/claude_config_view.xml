@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ════════════════════════════════════════════════
+         FORM VIEW
+    ════════════════════════════════════════════════ -->
+    <record id="view_claude_config_form" model="ir.ui.view">
+        <field name="name">claude.config.form</field>
+        <field name="model">claude.config</field>
+        <field name="arch" type="xml">
+            <form string="Claude AI Configuration">
+                <header>
+                    <button name="action_set_active"
+                            string="Set as Active"
+                            type="object"
+                            class="btn-primary"
+                            invisible="active"/>
+                    <button name="action_test_connection"
+                            string="Test Connection"
+                            type="object"
+                            class="btn-secondary"/>
+                    <field name="connection_status" widget="statusbar"
+                           statusbar_visible="untested,ok,error"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object"
+                                name="action_set_active"
+                                icon="power"
+                                invisible="active">
+                            <span class="o_stat_text">Set Active</span>
+                        </button>
+                        <div class="oe_stat_button" style="cursor:default;" invisible="not active">
+                            <i class="oi" data-icon="check_circle" style="color:#28a745;font-size:20px;margin:8px;"/>
+                            <span class="o_stat_text" style="color:#28a745;">Active</span>
+                        </div>
+                    </div>
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+
+                    <div class="alert alert-success mb-3" role="alert"
+                         invisible="connection_status != 'ok'">
+                        ✅ <field name="connection_message" readonly="1" nolabel="1"/>
+                    </div>
+                    <div class="alert alert-danger mb-3" role="alert"
+                         invisible="connection_status != 'error'">
+                        ❌ <field name="connection_message" readonly="1" nolabel="1"/>
+                    </div>
+                    <div class="alert alert-info mb-3" role="alert"
+                         invisible="connection_status != 'untested'">
+                        Enter your API key below, click <strong>Save</strong>, then <strong>Test Connection</strong>.
+                        Get a key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>
+                    </div>
+
+                    <group string="Anthropic API">
+                        <group>
+                            <field name="api_key" placeholder="sk-ant-api03-..."
+                                   help="Type your key and click Save." password="True"/>
+                            <field name="model_name"/>
+                            <field name="custom_model" placeholder="optional, e.g. claude-opus-5-5"/>
+                        </group>
+                        <group>
+                            <field name="max_tokens"/>
+                            <field name="temperature"/>
+                            <field name="request_timeout"/>
+                        </group>
+                    </group>
+
+                    <group string="💰 Cost Saving – answer without the API when possible">
+                        <group>
+                            <field name="local_mode"/>
+                            <field name="cache_enabled"/>
+                            <field name="cache_ttl_days" invisible="not cache_enabled"/>
+                            <field name="price_per_mtok"/>
+                        </group>
+                        <group>
+                            <field name="stat_saved_pct" widget="progressbar"/>
+                            <field name="stat_local"/>
+                            <field name="stat_cache"/>
+                            <field name="stat_api_calls"/>
+                            <field name="stat_api_tokens"/>
+                            <field name="stat_tokens_saved"/>
+                            <field name="stat_money_saved"/>
+                        </group>
+                        <div colspan="2" class="d-flex gap-2">
+                            <button name="action_clear_cache" type="object" string="Clear Answer Cache"
+                                    class="btn-secondary" icon="ink_eraser"/>
+                            <button name="action_reset_stats" type="object" string="Reset Statistics"
+                                    class="btn-secondary" icon="undo"
+                                    confirm="Reset all usage statistics?"/>
+                        </div>
+                        <div colspan="2" class="text-muted small">
+                            Tip for users: start a message with <code>!</code> (e.g. <code>!show customers</code>)
+                            to force Claude to answer instead of the local engine / cache.
+                        </div>
+                    </group>
+
+                    <group string="Behaviour">
+                        <group>
+                            <field name="require_confirmation"/>
+                            <field name="confirm_deletes"/>
+                            <field name="use_prompt_cache"/>
+                            <field name="log_all_actions"/>
+                        </group>
+                        <group>
+                            <field name="last_tested" readonly="1"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+
+                    <group string="System Prompt">
+                        <field name="system_prompt" nolabel="1" widget="text"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ════════════════════════════════════════════════
+         LIST VIEW
+    ════════════════════════════════════════════════ -->
+    <record id="view_claude_config_list" model="ir.ui.view">
+        <field name="name">claude.config.list</field>
+        <field name="model">claude.config</field>
+        <field name="arch" type="xml">
+            <list string="Claude AI Configurations"
+                  decoration-success="active == True"
+                  decoration-muted="active == False">
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="connection_status"
+                       decoration-success="connection_status == 'ok'"
+                       decoration-danger="connection_status == 'error'"
+                       decoration-warning="connection_status == 'untested'"/>
+                <field name="last_tested"/>
+                <field name="active" widget="boolean_toggle" string="Active"/>
+                <button name="action_set_active"
+                        string="Set Active"
+                        type="object"
+                        icon="toggle_off"
+                        invisible="active"
+                        title="Make this the active configuration"/>
+                <button name="action_test_connection"
+                        string="Test"
+                        type="object"
+                        icon="wifi"
+                        title="Test API connection"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ════════════════════════════════════════════════
+         WINDOW ACTION — list + form
+    ════════════════════════════════════════════════ -->
+    <record id="view_claude_query_cache_list" model="ir.ui.view">
+        <field name="name">claude.query.cache.list</field>
+        <field name="model">claude.query.cache</field>
+        <field name="arch" type="xml">
+            <list create="false">
+                <field name="question"/>
+                <field name="title"/>
+                <field name="chart_type"/>
+                <field name="hits" sum="Total"/>
+                <field name="write_date" string="Last Updated"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_claude_query_cache" model="ir.actions.act_window">
+        <field name="name">Answer Cache</field>
+        <field name="res_model">claude.query.cache</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No cached answers yet</p>
+            <p>When Claude answers a read-only question, the query is remembered. Asking the same
+               question again re-runs it locally on fresh data – no API cost.</p>
+        </field>
+    </record>
+
+    <record id="action_claude_config" model="ir.actions.act_window">
+        <field name="name">Configuration</field>
+        <field name="res_model">claude.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="target">current</field>
+        <field name="context">{'active_test': False}</field>
+    </record>
+
+</odoo>
