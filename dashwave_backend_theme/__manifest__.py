@@ -1,6 +1,6 @@
 {
-    'name': 'Aurora Backend Theme | Modern Sidebar, Home Dashboard & Enterprise Views',
-    'version': '19.0.1.2.0',
+    'name': 'Dashwave Backend Theme | Modern Sidebar, Home Dashboard & Enterprise Views',
+    'version': '19.0.1.0.0',
     'category': 'Themes/Backend',
     'summary': 'Modern Odoo 19 backend theme with collapsible sidebar menus, interactive home dashboard, company logo and brand colours, and enterprise list, kanban and pivot views',
     'author': 'Rajashekar B',
@@ -9,12 +9,12 @@
     'support': 'raj.odoo2026@gmail.com',
     'license': 'OPL-1',
     'depends': ['web', 'mail'],
-    'data': ['data/aurora_data.xml'],
+    'data': ['data/dashwave_data.xml'],
     'assets': {
         'web.assets_backend': [
-            'aurora_backend_theme/static/src/scss/theme.scss',
-            'aurora_backend_theme/static/src/sidebar/*',
-            'aurora_backend_theme/static/src/dashboard/*',
+            'dashwave_backend_theme/static/src/scss/theme.scss',
+            'dashwave_backend_theme/static/src/sidebar/*',
+            'dashwave_backend_theme/static/src/dashboard/*',
         ],
     },
     'images': ['static/description/banner.png', 'static/description/banner.gif'],

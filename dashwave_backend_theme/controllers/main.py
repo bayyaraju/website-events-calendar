@@ -48,11 +48,11 @@ def _dt(d):
     return fields.Datetime.to_string(datetime.combine(d, time.min))
 
 
-class AuroraDashboard(http.Controller):
+class DashwaveDashboard(http.Controller):
     """All figures are read with the current user's access rights; every block is optional
     (hidden when its app is not installed or the user has no access)."""
 
-    @http.route('/aurora/dashboard', type='jsonrpc', auth='user')
+    @http.route('/dashwave/dashboard', type='jsonrpc', auth='user')
     def dashboard(self, period='month', year=None):
         env = _pg_env(request.env)
         today = date.today()
@@ -68,7 +68,7 @@ class AuroraDashboard(http.Controller):
                 with env.cr.savepoint():
                     out[key] = fn(env, today)
             except Exception as e:  # missing app / access rights -> block hidden
-                _logger.debug('Aurora block %s skipped: %s', key, e)
+                _logger.debug('Dashwave block %s skipped: %s', key, e)
                 out[key] = None
         return out
 
@@ -215,9 +215,9 @@ class AuroraDashboard(http.Controller):
                 for o in env['sale.order'].search([], order='date_order desc, id desc', limit=5)]
 
 
-class AuroraBrand(http.Controller):
+class DashwaveBrand(http.Controller):
 
-    @http.route('/aurora/brand', type='jsonrpc', auth='user')
+    @http.route('/dashwave/brand', type='jsonrpc', auth='user')
     def brand(self):
         """Theme colours follow the company: its report colours, else colours read from its logo."""
         _heal_tz(request.env)

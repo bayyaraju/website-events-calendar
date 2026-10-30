@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_dashwave_home" model="ir.actions.client">
+        <field name="name">Home</field>
+        <field name="tag">dashwave_home</field>
+    </record>
+    <menuitem id="menu_dashwave_home" name="Home" action="action_dashwave_home" sequence="-100"
+              web_icon="dashwave_backend_theme,static/description/icon.png"/>
+</odoo>

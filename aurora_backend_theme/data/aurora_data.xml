@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <record id="action_aurora_home" model="ir.actions.client">
-        <field name="name">Home</field>
-        <field name="tag">aurora_home</field>
-    </record>
-    <menuitem id="menu_aurora_home" name="Home" action="action_aurora_home" sequence="-100"
-              web_icon="aurora_backend_theme,static/description/icon.png"/>
-</odoo>

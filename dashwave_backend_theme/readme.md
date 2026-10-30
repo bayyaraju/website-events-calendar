@@ -1,8 +1,8 @@
-# Aurora Backend Theme | Modern Sidebar, Home Dashboard & Enterprise Views (Odoo 19)
+# Dashwave Backend Theme | Modern Sidebar, Home Dashboard & Enterprise Views (Odoo 19)
 
 A modern, professional backend theme for Odoo 19 Community and Enterprise: all menus in a collapsible sidebar, an interactive home dashboard, your company logo and colours, and enterprise-grade list, kanban and pivot views.
 
-![Aurora Backend Theme](static/description/banner.png)
+![Dashwave Backend Theme](static/description/banner.png)
 
 ## Features
 - **Sidebar navigation** - every app with its icon; expand an app to browse its menus and sub-menus (accordion). The default top-bar app switcher, app name and child menus are hidden on desktop. Collapse to icons (remembered per browser) with hover flyout menus; icon-only on tablets; standard menu kept on phones.
@@ -14,8 +14,8 @@ A modern, professional backend theme for Odoo 19 Community and Enterprise: all m
 - **Everything else** - form, graph, settings, dialogs, dropdowns and thin modern scrollbars.
 
 ## Installation
-1. Copy `aurora_backend_theme` to your addons path and restart Odoo.
-2. Apps > Update Apps List > install **Aurora Backend Theme**.
+1. Copy `dashwave_backend_theme` to your addons path and restart Odoo.
+2. Apps > Update Apps List > install **Dashwave Backend Theme**.
 3. Hard-refresh the browser (Ctrl+Shift+R).
 
 ## Notes
@@ -27,13 +27,5 @@ A modern, professional backend theme for Odoo 19 Community and Enterprise: all m
 raj.odoo2026@gmail.com
 
 ## Changelog
-### 19.0.1.2.0
-- Child menus only in the sidebar; top-bar Home/app name and menus hidden on desktop.
-- Sidebar keeps the current app highlighted when an action opens without a menu (no more "Home" on pivot/kanban).
-- Home page scroll bar.
-- Enterprise look for list, kanban and pivot views.
-- New logo, banner.gif, screenshots and store page.
-### 19.0.1.1.0
-- Expandable sub-menus, collapsed flyouts, company logo and colours, scrollbars, view restyling.
 ### 19.0.1.0.0
-- Initial release: sidebar, top bar, home dashboard.
+- First release as **Dashwave Backend Theme**: sidebar with expandable menus and flyouts, company logo and brand colours, interactive home dashboard, enterprise list, kanban and pivot views, scrollbars.

@@ -3,7 +3,7 @@ from . import controllers
 
 def post_init_hook(env):
     """Open the dashboard after login for internal users without their own home action."""
-    action = env.ref('aurora_backend_theme.action_aurora_home')
+    action = env.ref('dashwave_backend_theme.action_dashwave_home')
     env['res.users'].with_context(active_test=False).search(
         [('share', '=', False), ('action_id', '=', False)]).write({'action_id': action.id})
 
@@ -17,7 +17,7 @@ def post_init_hook(env):
 
 
 def uninstall_hook(env):
-    action = env.ref('aurora_backend_theme.action_aurora_home', raise_if_not_found=False)
+    action = env.ref('dashwave_backend_theme.action_dashwave_home', raise_if_not_found=False)
     if action:
         env['res.users'].with_context(active_test=False).search(
             [('action_id', '=', action.id)]).write({'action_id': False})

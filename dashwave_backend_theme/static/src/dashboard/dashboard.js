@@ -17,10 +17,10 @@ const QUOTES = [
     "Quality is not an act, it is a habit.",
     "The secret of getting ahead is getting started.",
 ];
-const PIE = ["var(--aur-p)", "#3b82f6", "#22c55e", "#f59e0b", "#94a3b8"];
+const PIE = ["var(--dw-p)", "#3b82f6", "#22c55e", "#f59e0b", "#94a3b8"];
 
-export class AuroraHome extends Component {
-    static template = "aurora.Home";
+export class DashwaveHome extends Component {
+    static template = "dashwave.Home";
     static props = ["*"];
 
     setup() {
@@ -40,7 +40,7 @@ export class AuroraHome extends Component {
     async load() {
         this.state.busy = true;
         try {
-            this.state.d = await rpc("/aurora/dashboard", { period: this.state.period, year: this.state.year });
+            this.state.d = await rpc("/dashwave/dashboard", { period: this.state.period, year: this.state.year });
             this.state.year = this.state.d.year;
         } finally { this.state.busy = false; }
     }
@@ -67,7 +67,7 @@ export class AuroraHome extends Component {
         const d = new Date(s + "T00:00:00");
         return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
     }
-    get apps() { return this.menu.getApps().filter((a) => a.xmlid !== "aurora_backend_theme.menu_aurora_home"); }
+    get apps() { return this.menu.getApps().filter((a) => a.xmlid !== "dashwave_backend_theme.menu_dashwave_home"); }
     openApp(app) { this.menu.selectMenu(app); }
 
     /* ── navigation ─────────────────────────────── */
@@ -97,7 +97,7 @@ export class AuroraHome extends Component {
 
     /* ── hover / tooltips ───────────────────────── */
     hov(chart, i, text, ev) {
-        const box = ev.currentTarget.closest(".aur_card").getBoundingClientRect();
+        const box = ev.currentTarget.closest(".dw_card").getBoundingClientRect();
         this.state.hover = { chart, i, text, x: ev.clientX - box.left + 12, y: ev.clientY - box.top - 12 };
     }
     unhov() { this.state.hover = null; }
@@ -142,4 +142,4 @@ export class AuroraHome extends Component {
     }
 }
 
-registry.category("actions").add("aurora_home", AuroraHome);
+registry.category("actions").add("dashwave_home", DashwaveHome);

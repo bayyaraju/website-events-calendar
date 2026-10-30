@@ -4,19 +4,19 @@ import { registry } from "@web/core/registry";
 import { useService, useBus } from "@web/core/utils/hooks";
 import { rpc } from "@web/core/network/rpc";
 
-const HOME_XMLID = "aurora_backend_theme.menu_aurora_home";
-const KEY = "aurora.sidebar.collapsed";
+const HOME_XMLID = "dashwave_backend_theme.menu_dashwave_home";
+const KEY = "dashwave.sidebar.collapsed";
 const read = () => { try { return localStorage.getItem(KEY) === "1"; } catch { return false; } };
 
 /** Apply the company colours as CSS variables used by the whole theme. */
 function applyBrand(b) {
     const r = document.documentElement.style;
-    r.setProperty("--aur-p", b.primary);
-    r.setProperty("--aur-s", b.secondary);
+    r.setProperty("--dw-p", b.primary);
+    r.setProperty("--dw-s", b.secondary);
 }
 
-export class AuroraSidebar extends Component {
-    static template = "aurora.Sidebar";
+export class DashwaveSidebar extends Component {
+    static template = "dashwave.Sidebar";
     static props = ["*"];
 
     setup() {
@@ -25,10 +25,10 @@ export class AuroraSidebar extends Component {
         useBus(this.env.bus, "MENUS:APP-CHANGED", () => this.syncOpen());
         useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", () => this.syncOpen());
         onWillStart(async () => {
-            try { this.state.brand = await rpc("/aurora/brand"); applyBrand(this.state.brand); } catch {}
+            try { this.state.brand = await rpc("/dashwave/brand"); applyBrand(this.state.brand); } catch {}
         });
         onMounted(() => { this.apply(); this.syncOpen(); });
-        onWillUnmount(() => document.body.classList.remove("aurora_sb", "aurora_sb_mini"));
+        onWillUnmount(() => document.body.classList.remove("dashwave_sb", "dashwave_sb_mini"));
         this.flyTimer = null;
     }
 
@@ -56,8 +56,8 @@ export class AuroraSidebar extends Component {
 
     /* ── layout ── */
     apply() {
-        document.body.classList.add("aurora_sb");
-        document.body.classList.toggle("aurora_sb_mini", this.state.collapsed);
+        document.body.classList.add("dashwave_sb");
+        document.body.classList.toggle("dashwave_sb_mini", this.state.collapsed);
     }
     toggle() {
         this.state.collapsed = !this.state.collapsed;
@@ -101,4 +101,4 @@ export class AuroraSidebar extends Component {
     isMini() { return this.state.collapsed || window.innerWidth < 1200; }
 }
 
-registry.category("main_components").add("AuroraSidebar", { Component: AuroraSidebar });
+registry.category("main_components").add("DashwaveSidebar", { Component: DashwaveSidebar });
