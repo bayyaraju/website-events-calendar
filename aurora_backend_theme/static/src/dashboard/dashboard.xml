@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<t t-name="aurora.Tiles">
+  <div class="aur_tiles">
+    <t t-foreach="tiles" t-as="t" t-key="t.label">
+      <button class="aur_tile" t-att-class="'tone-' + t.tone" t-on-click="() => ctx.openTile(t)" t-att-title="'Open ' + t.label">
+        <span class="aur_tile_ic"><i t-att-class="'fa ' + ctx.icons[t.icon]"/></span>
+        <b t-esc="t.value"/>
+        <small t-esc="t.label"/>
+      </button>
+    </t>
+  </div>
+</t>
+
+<t t-name="aurora.Home">
+<div class="aurora_home" t-att-class="{'is-busy': state.busy}">
+<t t-set="d" t-value="state.d"/>
+<t t-if="d">
+
+  <!-- HERO -->
+  <section class="aur_hero">
+    <svg class="aur_hero_art" viewBox="0 0 1200 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="aurSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" style="stop-color:color-mix(in srgb, var(--aur-p) 30%, #0b0820)"/><stop offset=".6" style="stop-color:var(--aur-p)"/><stop offset="1" style="stop-color:color-mix(in srgb, var(--aur-s) 70%, #f59e8b)"/>
+        </linearGradient>
+        <linearGradient id="aurM1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:color-mix(in srgb, var(--aur-p) 55%, #ffffff)"/><stop offset="1" style="stop-color:color-mix(in srgb, var(--aur-p) 70%, #0b0820)"/></linearGradient>
+        <linearGradient id="aurM2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:color-mix(in srgb, var(--aur-p) 60%, #0b0820)"/><stop offset="1" style="stop-color:color-mix(in srgb, var(--aur-p) 30%, #0b0820)"/></linearGradient>
+      </defs>
+      <rect width="1200" height="260" fill="url(#aurSky)"/>
+      <circle cx="560" cy="150" r="64" fill="#fde68a" opacity=".3"/>
+      <path d="M0 200 L140 120 L230 170 L360 70 L470 160 L560 110 L700 190 L820 90 L930 160 L1040 60 L1200 150 L1200 260 L0 260Z" fill="url(#aurM1)" opacity=".75"/>
+      <path d="M0 230 L120 170 L260 215 L400 140 L520 210 L660 160 L790 225 L900 170 L1020 210 L1200 120 L1200 260 L0 260Z" fill="url(#aurM2)"/>
+      <path d="M980 260 L1050 150 L1120 120 L1200 90 L1200 260Z" style="fill:color-mix(in srgb, var(--aur-p) 22%, #0b0820)"/>
+      <g class="aur_balloon"><ellipse cx="700" cy="66" rx="24" ry="30" fill="#f97316"/><path d="M678 71 Q700 111 722 71" fill="#c2410c"/><path d="M688 92 L694 100 M712 92 L706 100" stroke="#7c2d12" stroke-width="1.5"/><rect x="694" y="100" width="12" height="9" rx="2" fill="#7c2d12"/></g>
+      <g fill="#0f0a2e"><circle cx="820" cy="70" r="5"/><path d="M814 76 h12 l2 22 h-5 l-1 18 h-4 l-1-18 h-5z"/></g>
+    </svg>
+    <div class="aur_hero_body">
+      <div>
+        <p class="aur_hello"><t t-esc="greeting"/>,</p>
+        <h1><t t-esc="userName"/> <span class="aur_wave">👋</span></h1>
+        <p class="aur_sub">Here's what's happening with your business today.</p>
+        <div class="aur_kpis">
+          <t t-foreach="d.kpis or []" t-as="k" t-key="k.label">
+            <button class="aur_kpi" t-on-click="() => this.openTile(k)" t-att-title="'Open ' + k.label">
+              <span class="aur_kpi_ic" t-att-class="'tone-' + k.tone"><i t-att-class="'fa ' + icons[k.icon]"/></span>
+              <span><b t-esc="k.value"/><small t-esc="k.label"/></span>
+            </button>
+          </t>
+        </div>
+      </div>
+      <blockquote class="aur_quote" t-on-click="nextQuote" title="Next quote">
+        <i class="fa fa-quote-left"/>
+        <p t-esc="quote"/>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- APP SHORTCUTS -->
+  <section class="aur_shortcuts">
+    <t t-foreach="apps" t-as="app" t-key="app.id">
+      <button class="aur_shortcut" t-on-click="() => this.openApp(app)" t-att-title="app.name">
+        <img t-if="app.webIconData" t-att-src="app.webIconData" alt=""/>
+        <span t-else="" class="aur_app_fallback" t-esc="app.name[0]"/>
+        <span t-esc="app.name"/>
+      </button>
+    </t>
+  </section>
+
+  <div class="aur_grid">
+    <!-- SALES OVERVIEW -->
+    <div class="aur_card span-4" t-if="d.sales">
+      <header><h3>Sales Overview</h3><a href="#" t-on-click.prevent="() => this.openList(d.sales.model, d.sales.domain, 'Sales Orders')">View Details <i class="fa fa-angle-right"/></a></header>
+      <div class="aur_big"><t t-esc="money(d.sales.total)"/>
+        <span t-if="d.sales.change !== null" t-att-class="d.sales.change >= 0 ? 'up' : 'down'">
+          <i t-att-class="'fa ' + (d.sales.change >= 0 ? 'fa-arrow-up' : 'fa-arrow-down')"/> <t t-esc="Math.abs(d.sales.change)"/>%
+          <small>vs last month</small></span>
+      </div>
+      <svg class="aur_svg" viewBox="0 0 480 170">
+        <defs><linearGradient id="aurArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--aur-p);stop-opacity:.35"/><stop offset="1" style="stop-color:var(--aur-p);stop-opacity:0"/></linearGradient></defs>
+        <path t-att-d="salesArea" fill="url(#aurArea)"/>
+        <path t-att-d="salesLine" fill="none" style="stroke:var(--aur-p)" stroke-width="3" stroke-linecap="round"/>
+        <t t-foreach="salesPts" t-as="p" t-key="p_index">
+          <circle t-att-cx="p.x" t-att-cy="p.y" t-att-r="isHot('sales', p_index) ? 6 : 0" style="fill:var(--aur-p)" stroke="#fff" stroke-width="2"/>
+          <rect class="aur_hit" t-att-x="p.x - 19" y="0" width="38" height="145"
+                t-on-mousemove="(ev) => this.hov('sales', p_index, p.label + ': ' + this.money(p.v), ev)"
+                t-on-mouseleave="unhov" t-on-click="() => this.openSalesMonth(p_index)"/>
+          <text t-att-x="p.x" y="164" text-anchor="middle" class="aur_axis" t-esc="p.label"/>
+        </t>
+      </svg>
+      <div class="aur_tip" t-if="state.hover and state.hover.chart === 'sales'" t-att-style="'left:' + state.hover.x + 'px;top:' + state.hover.y + 'px'" t-esc="state.hover.text"/>
+    </div>
+
+    <!-- INVOICES -->
+    <div class="aur_card span-4" t-if="d.invoices">
+      <header><h3>Invoices</h3><a href="#" t-on-click.prevent="() => this.openList('account.move', [['move_type','=','out_invoice']], 'Invoices')">View All <i class="fa fa-angle-right"/></a></header>
+      <t t-call="aurora.Tiles"><t t-set="tiles" t-value="d.invoices"/><t t-set="ctx" t-value="this"/></t>
+    </div>
+
+    <!-- TOP PRODUCTS -->
+    <div class="aur_card span-4" t-if="d.products">
+      <header><h3>Top Products</h3>
+        <select class="aur_select" t-on-change="setPeriod">
+          <option value="month" t-att-selected="state.period === 'month'">This Month</option>
+          <option value="quarter" t-att-selected="state.period === 'quarter'">This Quarter</option>
+          <option value="year" t-att-selected="state.period === 'year'">This Year</option>
+        </select></header>
+      <div class="aur_donut_wrap" t-if="d.products.total">
+        <svg viewBox="0 0 160 160" class="aur_donut">
+          <circle cx="80" cy="80" r="62" fill="none" stroke="#eef0f6" stroke-width="22"/>
+          <t t-foreach="donut" t-as="s" t-key="s_index">
+            <circle cx="80" cy="80" r="62" fill="none" t-att-style="'stroke:' + s.color" t-att-stroke-width="isHot('pie', s_index) ? 28 : 22"
+                    t-att-stroke-dasharray="s.dash" t-att-stroke-dashoffset="s.off" transform="rotate(-90 80 80)" class="aur_seg"
+                    t-on-mousemove="(ev) => this.hov('pie', s_index, s.label + ': ' + this.money(s.value) + ' (' + s.pct + '%)', ev)"
+                    t-on-mouseleave="unhov" t-on-click="() => this.openList(d.products.model, s.domain, s.label)"/>
+          </t>
+          <text x="80" y="78" text-anchor="middle" class="aur_donut_big" t-esc="money(d.products.total)"/>
+          <text x="80" y="96" text-anchor="middle" class="aur_axis">Total Sales</text>
+        </svg>
+        <ul class="aur_legend">
+          <t t-foreach="donut" t-as="s" t-key="s_index">
+            <li t-att-class="{'hot': isHot('pie', s_index)}" t-on-click="() => this.openList(d.products.model, s.domain, s.label)"
+                t-on-mouseenter="(ev) => this.hov('pie', s_index, s.label + ': ' + this.money(s.value), ev)" t-on-mouseleave="unhov">
+              <span class="dot" t-att-style="'background:' + s.color"/><span class="nm" t-esc="s.label"/><b t-esc="s.pct + '%'"/>
+            </li>
+          </t>
+        </ul>
+      </div>
+      <p class="aur_empty" t-else="">No sales in this period.</p>
+      <div class="aur_tip" t-if="state.hover and state.hover.chart === 'pie'" t-att-style="'left:' + state.hover.x + 'px;top:' + state.hover.y + 'px'" t-esc="state.hover.text"/>
+    </div>
+
+    <!-- PURCHASE ORDERS -->
+    <div class="aur_card span-4" t-if="d.purchases">
+      <header><h3>Purchase Orders</h3><a href="#" t-on-click.prevent="() => this.openList('purchase.order', [], 'Purchase Orders')">View All <i class="fa fa-angle-right"/></a></header>
+      <t t-call="aurora.Tiles"><t t-set="tiles" t-value="d.purchases"/><t t-set="ctx" t-value="this"/></t>
+    </div>
+
+    <!-- PROJECT PROGRESS -->
+    <div class="aur_card span-4" t-if="d.projects">
+      <header><h3>Project Progress</h3><a href="#" t-on-click.prevent="() => this.openList('project.project', [], 'Projects')">View All <i class="fa fa-angle-right"/></a></header>
+      <div class="aur_progress">
+        <p class="aur_empty" t-if="!d.projects.length">No projects yet.</p>
+        <button t-foreach="d.projects" t-as="p" t-key="p.id" class="aur_prog_row" t-on-click="() => this.openProject(p)"
+                t-att-title="p.done + ' of ' + p.count + ' tasks done'">
+          <span class="nm" t-esc="p.label"/>
+          <span class="bar"><span t-att-class="'fill c' + (p_index % 3)" t-att-style="'width:' + p.value + '%'"/></span>
+          <b t-esc="p.value + '%'"/>
+        </button>
+      </div>
+    </div>
+
+    <!-- ACTIVITIES -->
+    <div class="aur_card span-4" t-if="d.activities">
+      <header><h3>Activities</h3><a href="#" t-on-click.prevent="() => this.openList('mail.activity', [['user_id','=',userId]], 'My Activities')">View All <i class="fa fa-angle-right"/></a></header>
+      <p class="aur_empty" t-if="!d.activities.length">You're all caught up 🎉</p>
+      <ul class="aur_acts">
+        <li t-foreach="d.activities" t-as="a" t-key="a.id" t-on-click="() => this.openRecord(a.model, a.res_id)" t-att-class="'st-' + a.state">
+          <span class="ic"><i t-att-class="'fa ' + a.icon"/></span>
+          <span class="tx"><b t-esc="a.title"/><small><t t-esc="a.record"/> · <t t-esc="a.date"/></small></span>
+          <img t-att-src="'/web/image/res.users/' + a.user_id + '/avatar_128'" t-att-title="a.user" alt=""/>
+        </li>
+      </ul>
+    </div>
+
+    <!-- REVENUE VS EXPENSES -->
+    <div class="aur_card span-5" t-if="d.revexp">
+      <header><h3>Revenue vs Expenses</h3>
+        <select class="aur_select" t-on-change="setYear">
+          <t t-foreach="d.revexp.years" t-as="y" t-key="y"><option t-att-value="y" t-att-selected="y === state.year" t-esc="y"/></t>
+        </select></header>
+      <div class="aur_lg">
+        <button t-att-class="{'off': state.hideRev}" t-on-click="() => this.state.hideRev = !this.state.hideRev"><span class="dot rev"/>Revenue</button>
+        <button t-att-class="{'off': state.hideExp}" t-on-click="() => this.state.hideExp = !this.state.hideExp"><span class="dot exp"/>Expenses</button>
+      </div>
+      <t t-set="b" t-value="bars"/>
+      <svg class="aur_svg" viewBox="0 0 650 235">
+        <t t-foreach="b.ticks" t-as="tk" t-key="tk_index">
+          <line x1="40" x2="645" t-att-y1="tk.y" t-att-y2="tk.y" class="aur_gridline"/>
+          <text x="34" t-att-y="tk.y + 4" text-anchor="end" class="aur_axis" t-esc="tk.v"/>
+        </t>
+        <t t-foreach="b.groups" t-as="g" t-key="g.i">
+          <rect t-if="!state.hideRev" class="aur_bar rev" t-att-x="g.x - 11" t-att-y="210 - g.rh" width="9" t-att-height="g.rh" rx="3"
+                t-on-mousemove="(ev) => this.hov('bars', 'r' + g.i, 'Revenue ' + g.l + ': ' + this.money(g.rv), ev)" t-on-mouseleave="unhov"
+                t-on-click="() => this.openRevExp(g.i, 'rev')"/>
+          <rect t-if="!state.hideExp" class="aur_bar exp" t-att-x="g.x + 2" t-att-y="210 - g.eh" width="9" t-att-height="g.eh" rx="3"
+                t-on-mousemove="(ev) => this.hov('bars', 'e' + g.i, 'Expenses ' + g.l + ': ' + this.money(g.ev), ev)" t-on-mouseleave="unhov"
+                t-on-click="() => this.openRevExp(g.i, 'exp')"/>
+          <text t-att-x="g.x" y="230" text-anchor="middle" class="aur_axis" t-esc="g.l"/>
+        </t>
+      </svg>
+      <div class="aur_tip" t-if="state.hover and state.hover.chart === 'bars'" t-att-style="'left:' + state.hover.x + 'px;top:' + state.hover.y + 'px'" t-esc="state.hover.text"/>
+    </div>
+
+    <!-- TASKS -->
+    <div class="aur_card span-3" t-if="d.tasks">
+      <header><h3>Tasks</h3><a href="#" t-on-click.prevent="() => this.openList('project.task', [['user_ids','in',userId]], 'My Tasks')">View All <i class="fa fa-angle-right"/></a></header>
+      <t t-call="aurora.Tiles"><t t-set="tiles" t-value="d.tasks"/><t t-set="ctx" t-value="this"/></t>
+    </div>
+
+    <!-- RECENT ORDERS -->
+    <div class="aur_card span-4" t-if="d.orders">
+      <header><h3>Recent Orders</h3><a href="#" t-on-click.prevent="() => this.openList('sale.order', [], 'Sales Orders')">View All <i class="fa fa-angle-right"/></a></header>
+      <table class="aur_table">
+        <thead><tr><th>#</th><th>Customer</th><th>Date</th><th class="r">Amount</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr t-foreach="d.orders" t-as="o" t-key="o.id" t-on-click="() => this.openRecord('sale.order', o.id)">
+            <td t-esc="o.name"/><td class="nm" t-esc="o.customer"/><td class="nw" t-esc="shortDate(o.date)"/><td class="r nw" t-esc="money(o.amount)"/>
+            <td><span t-att-class="'aur_badge st-' + o.state" t-esc="o.state_label"/></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</t>
+<div t-else="" class="aur_loading"><i class="fa fa-circle-o-notch fa-spin"/> Loading your dashboard…</div>
+</div>
+</t>
+</templates>

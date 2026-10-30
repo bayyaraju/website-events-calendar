@@ -1,0 +1,26 @@
+{
+    'name': 'Aurora Backend Theme | Modern Sidebar, Home Dashboard & Enterprise Views',
+    'version': '19.0.1.2.0',
+    'category': 'Themes/Backend',
+    'summary': 'Modern Odoo 19 backend theme with collapsible sidebar menus, interactive home dashboard, company logo and brand colours, and enterprise list, kanban and pivot views',
+    'author': 'Rajashekar B',
+    'price': 149.0,
+    'currency': 'USD',
+    'support': 'raj.odoo2026@gmail.com',
+    'license': 'OPL-1',
+    'depends': ['web', 'mail'],
+    'data': ['data/aurora_data.xml'],
+    'assets': {
+        'web.assets_backend': [
+            'aurora_backend_theme/static/src/scss/theme.scss',
+            'aurora_backend_theme/static/src/sidebar/*',
+            'aurora_backend_theme/static/src/dashboard/*',
+        ],
+    },
+    'images': ['static/description/banner.png', 'static/description/banner.gif'],
+    'keywords': 'odoo 19 theme, backend theme, sidebar menu, dashboard, kanban, pivot, list view, dark sidebar, branding',
+    'post_init_hook': 'post_init_hook',
+    'uninstall_hook': 'uninstall_hook',
+    'installable': True,
+    'application': True,
+}
